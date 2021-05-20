@@ -1,0 +1,75 @@
+<resources>
+
+    <style name="Theme.STC" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="fontFamily">@font/dm_sans</item>
+        <item name="android:alertDialogTheme">@style/AlertDialog</item>
+
+        <item name="android:statusBarColor">#2025CB</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <style name="heading1" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="body1" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="body2" parent="TextAppearance.AppCompat.Body2">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/textColorSecondary</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/textColorSecondary</item>
+        <item name="android:fontFamily">@font/dm_sans_italic</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+    <style name="AlertDialog" parent="android:Theme.Material.Light.Dialog.Alert">
+        <item name="android:colorPrimary">@color/white</item>
+        <item name="android:colorAccent">@color/colorPrimary</item>
+        <item name="fontFamily">@font/dm_sans</item>
+    </style>
+
+
+
+    <style name="resources_red">
+        <item name="color_background">@color/colorTertiaryRed</item>
+        <item name="color_ellipse">#FECBC7</item>
+        <item name="color_toolbar_background">@color/colorTertiaryRed</item>
+        <item name="android:statusBarColor">@color/colorTertiaryRed</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="color_salary_card">#FFF2F1</item>
+    </style>
+
+    <style name="resources_blue" parent="resources_red">
+        <item name="color_background">@color/colorTertiaryBlue</item>
+        <item name="color_ellipse">#D0D3FE</item>
+        <item name="color_toolbar_background">@color/colorTertiaryBlue</item>
+        <item name="android:statusBarColor">@color/colorTertiaryBlue</item>
+        <item name="color_salary_card">#F1F2FE</item>
+    </style>
+
+    <style name="resources_yellow" parent="resources_red">
+        <item name="color_background">@color/colorTertiaryYellow</item>
+        <item name="color_ellipse">#FCE4BE</item>
+        <item name="color_toolbar_background">@color/colorTertiaryYellow</item>
+        <item name="android:statusBarColor">@color/colorTertiaryYellow</item>
+        <item name="color_salary_card">#FFF7EB</item>
+    </style>
+
+    <style name="ExpandedToolbarTitle" parent="Theme.STC">
+        <item name="android:textColor">@android:color/transparent</item>
+        <item name="android:textSize">0sp</item>
+    </style>
+</resources>

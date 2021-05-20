@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="attributes">
+        <attr name="color_background" format="color" />
+        <attr name="color_ellipse" format="color" />
+        <attr name="color_toolbar_background" format="color" />
+        <attr name="color_salary_card" format="color" />
+    </declare-styleable>
+</resources>

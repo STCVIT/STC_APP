@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2025CB</color>
+    <color name="colorAccent">#FFB949</color>
+
+    <color name="colorTertiaryRed">#FFD4D1</color>
+    <color name="colorTertiaryYellow">#FFECCC</color>
+    <color name="colorTertiaryBlue">#DADDFE</color>
+
+
+
+    <color name="textColorPrimary">#121212</color>
+    <color name="textColorSecondary">#6A6A6A</color>
+
+    <!--    <color name="background_color">#EBEFF8</color>-->
+
+    <color name="log_bg_color">#332CAB</color>
+
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+
+    <color name="ic_launcher_background">#332CAB</color>
+    <color name="gray">#828282</color>
+</resources>

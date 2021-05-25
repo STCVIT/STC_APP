@@ -29,10 +29,10 @@ public class MainActivity extends AppCompatActivity {
     public static int feed_position = 0;
     public static boolean isHome = false;
     int exitCount = 0;
-    private Context context = this;
+    private final Context context = this;
     private NavController navController;
     private DrawerLayout drawerLayout;
-    private int[] ids = {R.id.home, R.id.resources, R.id.explore};
+    private final int[] ids = {R.id.home, R.id.resources, R.id.explore};
 
     public static int getFeed_position() {
         return feed_position;

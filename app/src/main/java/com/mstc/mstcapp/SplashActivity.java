@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.mstc.mstcapp.util.Constants;
 
 public class SplashActivity extends AppCompatActivity {
-    Context context = this;
-    SharedPreferences sharedPreferences;
+    private final Context context = this;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

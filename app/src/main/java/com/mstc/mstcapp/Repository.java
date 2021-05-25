@@ -35,10 +35,10 @@ import static com.mstc.mstcapp.util.Functions.isNetworkAvailable;
 public class Repository {
     private static final String TAG = "Repository";
     public DatabaseDao databaseDao;
-    private RetrofitInterface retrofitInterface;
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
-    private Context context;
+    private final RetrofitInterface retrofitInterface;
+    private final SharedPreferences sharedPreferences;
+    private final SharedPreferences.Editor editor;
+    private final Context context;
 
     public Repository(Context context) {
         this.context = context;

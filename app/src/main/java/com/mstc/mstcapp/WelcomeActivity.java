@@ -19,22 +19,21 @@ import com.mstc.mstcapp.util.Constants;
 public class WelcomeActivity extends AppCompatActivity {
     private static final String TAG = "WelcomeActivity";
     SharedPreferences.Editor editor;
-    private Context context = this;
-    private SharedPreferences sharedPreferences;
-    private int NoOfSlides = 3, position = 0;
-    private TextView[] dots;
+    private final Context context = this;
+    private final int NoOfSlides = 3;
+    private int position = 0;
     private LinearLayout dotsLayout;
     private ImageView imageView;
     private TextView textView;
 
-    private int[] images = {R.drawable.ic_onboarding_1, R.drawable.ic_onboarding_2, R.drawable.ic_onboarding_3};
-    private int[] texts = {R.string.onboarding1, R.string.onboarding2, R.string.onboarding3};
+    private final int[] images = {R.drawable.ic_onboarding_1, R.drawable.ic_onboarding_2, R.drawable.ic_onboarding_3};
+    private final int[] texts = {R.string.onboarding1, R.string.onboarding2, R.string.onboarding3};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        sharedPreferences = context.getSharedPreferences(Constants.STC_SHARED_PREFERENCES, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.STC_SHARED_PREFERENCES, MODE_PRIVATE);
         editor = sharedPreferences.edit();
         dotsLayout = findViewById(R.id.layoutDots);
         imageView = findViewById(R.id.imageView);
@@ -62,7 +61,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void addBottomDots(int currentPage) {
-        dots = new TextView[NoOfSlides];
+        TextView[] dots = new TextView[NoOfSlides];
         int colorsActive = ContextCompat.getColor(context, R.color.colorPrimary);
         int colorsInactive = ContextCompat.getColor(context, R.color.gray);
         dotsLayout.removeAllViews();
@@ -74,10 +73,8 @@ public class WelcomeActivity extends AppCompatActivity {
             dots[i].setPadding(15, 15, 15, 15);
             dotsLayout.addView(dots[i]);
         }
-        if (dots.length > 0) {
-            dots[currentPage].setTextColor(colorsActive);
-            dots[currentPage].setTextSize(40);
-        }
+        dots[currentPage].setTextColor(colorsActive);
+        dots[currentPage].setTextSize(40);
     }
 
     @Override

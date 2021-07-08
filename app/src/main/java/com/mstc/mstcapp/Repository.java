@@ -29,16 +29,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.internal.EverythingIsNonNull;
 
 import static com.mstc.mstcapp.util.Functions.isNetworkAvailable;
 
 public class Repository {
     private static final String TAG = "Repository";
-    public DatabaseDao databaseDao;
     private final RetrofitInterface retrofitInterface;
     private final SharedPreferences sharedPreferences;
     private final SharedPreferences.Editor editor;
     private final Context context;
+    public DatabaseDao databaseDao;
 
     public Repository(Context context) {
         this.context = context;
@@ -57,12 +58,10 @@ public class Repository {
                 @Override
                 public void onResponse(@NonNull Call<List<EventModel>> call, @NonNull Response<List<EventModel>> response) {
                     if (response.isSuccessful()) {
-                        Log.i(TAG, "onResponse: successfull");
                         Log.d(TAG, "onResponse() returned: " + response.body());
                         List<EventModel> events = response.body();
-                        STCDatabase.databaseWriteExecutor.execute(() -> {
-                            databaseDao.insertEvents(events);
-                        });
+                        assert events != null;
+                        STCDatabase.databaseWriteExecutor.execute(() -> databaseDao.insertEvents(events));
                     } else {
                         Log.d(TAG, "onResponse() returned: " + response.message());
                     }
@@ -81,13 +80,12 @@ public class Repository {
     @MainThread
     public LiveData<List<ProjectsModel>> getProjects() {
         if (isNetworkAvailable(context) && !MainActivity.isFetchedData("projects")) {
-            Call<List<ProjectsModel>> call = retrofitInterface.getProjects();
+            Call<List<ProjectsModel>> call = retrofitInterface.getProjects(1);
 
             call.enqueue(new Callback<List<ProjectsModel>>() {
                 @Override
                 public void onResponse(@NonNull Call<List<ProjectsModel>> call, @NonNull Response<List<ProjectsModel>> response) {
                     if (response.isSuccessful()) {
-                        Log.i(TAG, "onResponse: successfull");
                         Log.d(TAG, "onResponse() returned: " + response.body());
                         List<ProjectsModel> projectsModels = response.body();
                         assert projectsModels != null;
@@ -131,9 +129,9 @@ public class Repository {
                 Call<List<BoardMemberModel>> call = retrofitInterface.getBoard();
                 call.enqueue(new Callback<List<BoardMemberModel>>() {
                     @Override
+                    @EverythingIsNonNull
                     public void onResponse(Call<List<BoardMemberModel>> call, Response<List<BoardMemberModel>> response) {
                         if (response.isSuccessful()) {
-                            Log.i(TAG, "onResponse: successfull");
                             Log.d(TAG, "onResponse() returned: " + response.body());
                             List<BoardMemberModel> boardMembers = response.body();
                             assert boardMembers != null;
@@ -145,6 +143,7 @@ public class Repository {
                     }
 
                     @Override
+                    @EverythingIsNonNull
                     public void onFailure(Call<List<BoardMemberModel>> call, Throwable t) {
                         Log.e(TAG, "onFailure: " + t.getLocalizedMessage());
                     }
@@ -162,7 +161,6 @@ public class Repository {
                 @Override
                 public void onResponse(@NonNull Call<DetailModel> call, @NonNull Response<DetailModel> response) {
                     if (response.isSuccessful()) {
-                        Log.i(TAG, "onResponse: successfull");
                         Log.d(TAG, "onResponse() returned: " + response.body());
                         DetailModel details = response.body();
                         assert details != null;
@@ -192,7 +190,6 @@ public class Repository {
                 @Override
                 public void onResponse(@NonNull Call<RoadmapModel> call, @NonNull Response<RoadmapModel> response) {
                     if (response.isSuccessful()) {
-                        Log.i(TAG, "onResponse: successfull");
                         Log.d(TAG, "onResponse() returned: " + response.body());
                         RoadmapModel roadmap = response.body();
                         assert roadmap != null;
@@ -222,7 +219,6 @@ public class Repository {
                 @Override
                 public void onResponse(@NonNull Call<List<ResourceModel>> call, @NonNull Response<List<ResourceModel>> response) {
                     if (response.isSuccessful()) {
-                        Log.i(TAG, "onResponse: successfull");
                         Log.d(TAG, "onResponse() returned: " + response.body());
                         List<ResourceModel> list = response.body();
                         assert list != null;
@@ -252,7 +248,6 @@ public class Repository {
                 @Override
                 public void onResponse(@NonNull Call<List<FeedModel>> call, @NonNull Response<List<FeedModel>> response) {
                     if (response.isSuccessful()) {
-                        Log.i(TAG, "onResponse: successfull");
                         Log.d(TAG, "onResponse() returned: " + response.body());
                         List<FeedModel> feeds = response.body();
                         STCDatabase.databaseWriteExecutor.execute(() -> {
@@ -312,5 +307,9 @@ public class Repository {
 
     public void insertEvents(List<EventModel> list) {
         STCDatabase.databaseWriteExecutor.execute(() -> databaseDao.insertEvents(list));
+    }
+
+    public void insertProjects(List<ProjectsModel> list) {
+        STCDatabase.databaseWriteExecutor.execute(() -> databaseDao.insertProjects(list));
     }
 }

@@ -1,15 +1,12 @@
 package com.mstc.mstcapp.adapter.explore;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mstc.mstcapp.R;
 import com.mstc.mstcapp.model.explore.BoardMemberModel;
+import com.mstc.mstcapp.util.Functions;
 
 import java.util.List;
 
@@ -48,9 +46,13 @@ public class BoardMemberAdapter extends RecyclerView.Adapter<BoardMemberAdapter.
 
         new Thread(() -> holder.photo.post(() -> {
             String pic = list.get(position).getPhoto();
-            byte[] decodedString = Base64.decode(pic, Base64.DEFAULT);
-            Bitmap picture = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            holder.photo.setImageBitmap(picture);
+            try {
+                byte[] decodedString = Base64.decode(pic, Base64.DEFAULT);
+                Bitmap picture = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                holder.photo.setImageBitmap(picture);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         })).start();
 
         if (position % 3 == 0)
@@ -59,6 +61,7 @@ public class BoardMemberAdapter extends RecyclerView.Adapter<BoardMemberAdapter.
             holder.photo.setBackgroundColor(ContextCompat.getColor(context, R.color.colorTertiaryBlue));
         else
             holder.photo.setBackgroundColor(ContextCompat.getColor(context, R.color.colorTertiaryYellow));
+        holder.mView.setOnClickListener(v -> Functions.openURL(v, context, list.get(position).getLink()));
     }
 
     @Override
@@ -71,14 +74,16 @@ public class BoardMemberAdapter extends RecyclerView.Adapter<BoardMemberAdapter.
         notifyDataSetChanged();
     }
 
-    public class BoardViewHolder extends RecyclerView.ViewHolder {
+    public static class BoardViewHolder extends RecyclerView.ViewHolder {
         public final ImageView photo;
         public final TextView name;
         public final TextView position;
         public final TextView phrase;
+        public View mView;
 
         public BoardViewHolder(View view) {
             super(view);
+            mView = view;
             photo = view.findViewById(R.id.image);
             name = view.findViewById(R.id.name);
             position = view.findViewById(R.id.position);

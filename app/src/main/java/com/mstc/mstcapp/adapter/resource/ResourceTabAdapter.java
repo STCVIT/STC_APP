@@ -2,12 +2,10 @@ package com.mstc.mstcapp.adapter.resource;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mstc.mstcapp.R;
 import com.mstc.mstcapp.model.resources.ResourceModel;
 import com.mstc.mstcapp.util.Constants;
+import com.mstc.mstcapp.util.Functions;
 
 import java.util.List;
 
@@ -42,7 +41,7 @@ public class ResourceTabAdapter extends RecyclerView.Adapter<ResourceTabAdapter.
         holder.title.setText(list.get(position).getTitle());
         holder.description.setText(list.get(position).getDescription());
         holder.share.setOnClickListener(v -> shareResource(list.get(position).getTitle(), list.get(position).getLink()));
-        holder.relativeLayout.setOnClickListener(v -> openURL(list.get(position).getLink()));
+        holder.mView.setOnClickListener(v -> Functions.openURL(v, context, list.get(position).getLink()));
     }
 
     private void shareResource(String title, String link) {
@@ -52,11 +51,6 @@ public class ResourceTabAdapter extends RecyclerView.Adapter<ResourceTabAdapter.
         context.startActivity(Intent.createChooser(intent, "Share Using"));
     }
 
-    public void openURL(String url) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(url));
-        context.startActivity(intent);
-    }
 
     @Override
     public int getItemCount() {
@@ -68,18 +62,18 @@ public class ResourceTabAdapter extends RecyclerView.Adapter<ResourceTabAdapter.
         notifyDataSetChanged();
     }
 
-    public class ResourceViewHolder extends RecyclerView.ViewHolder {
+    public static class ResourceViewHolder extends RecyclerView.ViewHolder {
         public final TextView title;
         public final TextView description;
         public final ImageButton share;
-        public final RelativeLayout relativeLayout;
+        public final View mView;
 
         public ResourceViewHolder(View view) {
             super(view);
+            mView = view;
             title = view.findViewById(R.id.title);
             description = view.findViewById(R.id.description);
             share = view.findViewById(R.id.share);
-            relativeLayout = view.findViewById(R.id.relativeLayout);
         }
 
         @Override

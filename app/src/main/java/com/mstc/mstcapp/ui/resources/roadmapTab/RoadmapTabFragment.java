@@ -55,18 +55,20 @@ public class RoadmapTabFragment extends Fragment {
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(() -> getData(view));
         mViewModel.getRoadmap(domain).observe(getViewLifecycleOwner(), roadmapModel -> {
-            if (roadmapModel==null) view.findViewById(R.id.loading).setVisibility(View.VISIBLE);
+            if (roadmapModel == null) getData(view);
             else {
                 view.findViewById(R.id.loading).setVisibility(View.GONE);
                 new Thread(() -> imageView.post(() -> {
-                    if (roadmapModel != null) {
-                        String pic = roadmapModel.getImage();
-                        byte[] decodedString = Base64.decode(pic, Base64.DEFAULT);
+                    try {
+                        byte[] decodedString = Base64.decode(roadmapModel.getImage(), Base64.DEFAULT);
                         Bitmap picture = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         imageView.setImageBitmap(picture);
-                    } else {
-                        Snackbar.make(view, "Uh oh! We are unable to load the roadmap. Please try again later.", BaseTransientBottomBar.LENGTH_SHORT)
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        swipeRefreshLayout.setRefreshing(false);
+                        Snackbar.make(view, "Please check your internet connection…", BaseTransientBottomBar.LENGTH_SHORT)
                                 .show();
+
                     }
                 })).start();
             }
@@ -83,10 +85,10 @@ public class RoadmapTabFragment extends Fragment {
                 if (response.isSuccessful()) {
                     swipeRefreshLayout.setRefreshing(false);
                     RoadmapModel roadmap = response.body();
-                    assert roadmap != null;
-                    mViewModel.insertRoadmap(domain, roadmap);
+                    if (roadmap != null) mViewModel.insertRoadmap(domain, roadmap);
                 } else {
                     swipeRefreshLayout.setRefreshing(false);
+                    view.findViewById(R.id.loading).setVisibility(View.GONE);
                     Snackbar.make(view, "Uh oh! We are unable to load the roadmap. Please try again later.\n", BaseTransientBottomBar.LENGTH_SHORT)
                             .show();
                 }
@@ -95,6 +97,7 @@ public class RoadmapTabFragment extends Fragment {
             @Override
             public void onFailure(Call<RoadmapModel> call, Throwable t) {
                 swipeRefreshLayout.setRefreshing(false);
+                view.findViewById(R.id.loading).setVisibility(View.GONE);
                 Snackbar.make(view, "Please check your internet connection…", BaseTransientBottomBar.LENGTH_SHORT)
                         .show();
             }

@@ -30,8 +30,8 @@
         <action
             android:id="@+id/action_navigation_resources_to_navigation_view_resource_activity"
             app:destination="@id/navigation_view_resource_activity"
-            app:enterAnim="@anim/fragment_open_enter"
-            app:exitAnim="@anim/fragment_open_exit" />
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit" />
     </fragment>
     <activity
         android:id="@+id/navigation_view_resource_activity"

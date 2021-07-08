@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.view.ContextThemeWrapper;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,7 +39,7 @@ public class DomainAdapter extends RecyclerView.Adapter<DomainAdapter.ResourceVi
     @Override
     public void onBindViewHolder(@NonNull ResourceViewHolder holder, int position) {
         holder.textView.setText(list.get(position).getDomain());
-        holder.image.setImageDrawable(context.getDrawable(list.get(position).getDrawable()));
+        holder.image.setImageDrawable(ContextCompat.getDrawable(context, list.get(position).getDrawable()));
 
         final ContextThemeWrapper wrapper;
         if (position % 3 == 0)
@@ -56,7 +57,7 @@ public class DomainAdapter extends RecyclerView.Adapter<DomainAdapter.ResourceVi
         return list.size();
     }
 
-    public class ResourceViewHolder extends RecyclerView.ViewHolder {
+    public static class ResourceViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout background;
         ImageView image;
         TextView textView;

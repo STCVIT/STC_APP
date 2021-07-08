@@ -13,12 +13,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.mstc.mstcapp.ui.ProjectIdeaFragment;
 import com.mstc.mstcapp.util.Constants;
 
 import java.util.Random;
@@ -28,11 +30,11 @@ public class MainActivity extends AppCompatActivity {
     public static boolean isAppRunning = false;
     public static int feed_position = 0;
     public static boolean isHome = false;
-    int exitCount = 0;
     private final Context context = this;
+    private final int[] ids = {R.id.home, R.id.resources, R.id.explore};
+    int exitCount = 0;
     private NavController navController;
     private DrawerLayout drawerLayout;
-    private final int[] ids = {R.id.home, R.id.resources, R.id.explore};
 
     public static int getFeed_position() {
         return feed_position;
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout.findViewById(R.id.share).setOnClickListener(v -> share());
         drawerLayout.findViewById(R.id.feedback).setOnClickListener(v -> openURL("market://details?id=" + context.getPackageName()));
-        drawerLayout.findViewById(R.id.idea).setOnClickListener(v -> sendMail());
+        drawerLayout.findViewById(R.id.idea).setOnClickListener(v -> openIdeaDialog());
 
         drawerLayout.findViewById(R.id.instagram).setOnClickListener(v -> openURL(Constants.INSTAGRAM_URL));
         drawerLayout.findViewById(R.id.facebook).setOnClickListener(v -> openURL(Constants.FACEBOOK_URL));
@@ -118,12 +120,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(Intent.createChooser(intent, "Share Using"));
     }
 
-    private void sendMail() {
-        Intent email = new Intent(Intent.ACTION_SEND);
-        email.putExtra(Intent.EXTRA_EMAIL, new String[]{Constants.STC_EMAIL});
-        email.putExtra(Intent.EXTRA_SUBJECT, "New Idea");
-        email.setType("message/rfc822");
-        startActivity(Intent.createChooser(email, "Choose an Email client :"));
+
+    private void openIdeaDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        ProjectIdeaFragment cardViewFragment = ProjectIdeaFragment.newInstance();
+        cardViewFragment.show(fm, "fullscreen");
     }
 
     public void openURL(String url) {

@@ -1,5 +1,4 @@
 <resources>
-
     <style name="Theme.STC" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/white</item>
@@ -35,12 +34,12 @@
         <item name="android:fontFamily">@font/dm_sans_italic</item>
         <item name="android:textStyle">italic</item>
     </style>
+
     <style name="AlertDialog" parent="android:Theme.Material.Light.Dialog.Alert">
         <item name="android:colorPrimary">@color/white</item>
         <item name="android:colorAccent">@color/colorPrimary</item>
         <item name="fontFamily">@font/dm_sans</item>
     </style>
-
 
 
     <style name="resources_red">
@@ -72,4 +71,5 @@
         <item name="android:textColor">@android:color/transparent</item>
         <item name="android:textSize">0sp</item>
     </style>
+
 </resources>

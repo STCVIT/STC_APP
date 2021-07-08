@@ -14,4 +14,5 @@
     <string name="onboarding3"><strong>Welcome to the STC app!</strong>\nWe are equally excited for you to know more about us, while we both learn and grow together! </string>
     <string name="expected_salary_2">The data may vary with location and population changes</string>
     <string name="expected_salary_1">Avg Salary Expectation</string>
+    <string name="choose_domain_helper_text">The best and trusted resources for you to get started</string>
 </resources>

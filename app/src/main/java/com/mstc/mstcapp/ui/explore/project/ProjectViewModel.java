@@ -24,4 +24,9 @@ public class ProjectViewModel extends AndroidViewModel {
     public LiveData<List<ProjectsModel>> getList() {
         return list;
     }
+
+    public void insertProjects(List<ProjectsModel> list) {
+        repository.insertProjects(list);
+    }
+
 }

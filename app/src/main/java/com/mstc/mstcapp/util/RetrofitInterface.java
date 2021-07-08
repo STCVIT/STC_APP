@@ -1,6 +1,7 @@
 package com.mstc.mstcapp.util;
 
 import com.mstc.mstcapp.model.FeedModel;
+import com.mstc.mstcapp.model.ProjectIdeaModel;
 import com.mstc.mstcapp.model.explore.BoardMemberModel;
 import com.mstc.mstcapp.model.explore.EventModel;
 import com.mstc.mstcapp.model.explore.ProjectsModel;
@@ -9,16 +10,19 @@ import com.mstc.mstcapp.model.resources.ResourceModel;
 import com.mstc.mstcapp.model.resources.RoadmapModel;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface RetrofitInterface {
 
     @GET("project")
-    Call<List<ProjectsModel>> getProjects();
+    Call<List<ProjectsModel>> getProjects(@Query("skip") int skip);
 
     @GET("event")
     Call<List<EventModel>> getEvents(@Query("skip") int skip);
@@ -38,6 +42,8 @@ public interface RetrofitInterface {
     @GET("board")
     Call<List<BoardMemberModel>> getBoard();
 
+    @POST("idea")
+    Call<Map<String, String>> postIdea(@Body ProjectIdeaModel projectIdeaModel);
 }
 
 

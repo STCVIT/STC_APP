@@ -1,6 +1,11 @@
 package com.mstc.mstcapp.adapter.explore;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mstc.mstcapp.R;
 import com.mstc.mstcapp.model.explore.EventModel;
+import com.mstc.mstcapp.util.Functions;
 
 import java.util.List;
 
@@ -58,12 +64,23 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private void populateItemRows(ItemViewHolder holder, int position) {
         holder.title.setText(list.get(position).getTitle());
         holder.description.setText(list.get(position).getDescription());
+        new Thread(() -> holder.image.post(() -> {
+            String pic = list.get(position).getImage();
+            try {
+                byte[] decodedString = Base64.decode(pic, Base64.DEFAULT);
+                Bitmap picture = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                holder.image.setImageBitmap(picture);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        })).start();
         if (position % 3 == 0)
             holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.colorTertiaryRed));
         else if (position % 3 == 1)
             holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.colorTertiaryBlue));
         else
             holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.colorTertiaryYellow));
+        holder.mView.setOnClickListener(v -> Functions.openURL(v, context, list.get(position).getLink()));
     }
 
     @Override
@@ -90,9 +107,11 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         public final TextView status;
         public final TextView title;
         public final TextView description;
+        public final View mView;
 
         public ItemViewHolder(View view) {
             super(view);
+            mView = view;
             image = view.findViewById(R.id.image);
             status = view.findViewById(R.id.status);
             title = view.findViewById(R.id.title);

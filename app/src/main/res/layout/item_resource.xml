@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/margin_medium"
-    android:foreground="?android:attr/selectableItemBackground"
     android:clickable="true"
-    android:id="@+id/relativeLayout">
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:padding="@dimen/margin_medium">
 
     <TextView
         android:id="@+id/title"
@@ -22,8 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@id/share"
-        android:maxLines="4" />
+        android:layout_toStartOf="@id/share" />
 
     <ImageButton
         android:id="@+id/share"

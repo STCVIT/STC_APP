@@ -7,10 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.mstc.mstcapp.Repository;
 import com.mstc.mstcapp.model.FeedModel;
 import com.mstc.mstcapp.model.explore.BoardMemberModel;
 import com.mstc.mstcapp.model.explore.EventModel;
@@ -18,7 +16,6 @@ import com.mstc.mstcapp.model.explore.ProjectsModel;
 import com.mstc.mstcapp.model.resources.DetailModel;
 import com.mstc.mstcapp.model.resources.ResourceModel;
 import com.mstc.mstcapp.model.resources.RoadmapModel;
-import com.mstc.mstcapp.util.Converters;
 import com.mstc.mstcapp.util.RetrofitInstance;
 import com.mstc.mstcapp.util.RetrofitInterface;
 
@@ -42,7 +39,6 @@ import retrofit2.Retrofit;
         },
         version = 1,
         exportSchema = false)
-@TypeConverters({Converters.class})
 public abstract class STCDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "STCDatabase";
     public static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(4);

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mstc.mstcapp.R;
 import com.mstc.mstcapp.model.FeedModel;
+import com.mstc.mstcapp.util.Functions;
 
 import java.util.List;
 
@@ -64,11 +65,15 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         holder.description.setText(list.get(position).getLink());
         new Thread(() -> holder.imageView.post(() -> {
             String pic = list.get(position).getImage();
-            byte[] decodedString = Base64.decode(pic, Base64.DEFAULT);
-            Bitmap picture = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            holder.imageView.setImageBitmap(picture);
+            try {
+                byte[] decodedString = Base64.decode(pic, Base64.DEFAULT);
+                Bitmap picture = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                holder.imageView.setImageBitmap(picture);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         })).start();
-
+        holder.mView.setOnClickListener(v -> Functions.openURL(v, context, list.get(position).getLink()));
         if (position % 3 == 0)
             holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.colorTertiaryBlue));
         else if (position % 3 == 1)
@@ -85,6 +90,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return list.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
+
     @Override
     public int getItemCount() {
         return list.size();
@@ -95,7 +101,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    private class ItemViewHolder extends RecyclerView.ViewHolder {
+    private static class ItemViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView title;
         public final TextView description;
@@ -118,7 +124,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    private class LoadingViewHolder extends RecyclerView.ViewHolder {
+    private static class LoadingViewHolder extends RecyclerView.ViewHolder {
         public ProgressBar progressBar;
 
         public LoadingViewHolder(@NonNull View itemView) {

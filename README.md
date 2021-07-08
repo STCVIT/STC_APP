@@ -2,8 +2,9 @@
     <a href="https://stcvit.in/" target="_blank"><img src="https://github.com/STCVIT/STC-README/blob/master/gitbanner.png" title="STC-VIT" alt="STC-VIT"></a>
 </p>
 <h1>STC APP</h1> 
-[![VERSION](https://img.shields.io/badge/version-2.0.0-green)]()
-[![PRIVACY POLICY](https://img.shields.io/badge/Privacy%20Policy-Click%20Here-blue)](https://stcvit.github.io/STC_APP_PRIVACY_POLICY/)
+
+[![](https://img.shields.io/badge/version-2.0.0-green)](https://github.com/STCVIT/STC_APP)
+[![](https://img.shields.io/badge/Privacy%20Policy-Click%20Here-blue)](https://stcvit.github.io/STC_APP_PRIVACY_POLICY/)
 
 The Official App of Student Technical Community - Vellore Institute of Technology, Vellore!
 

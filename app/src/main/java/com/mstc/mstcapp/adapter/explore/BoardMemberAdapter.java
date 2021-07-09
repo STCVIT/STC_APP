@@ -44,23 +44,24 @@ public class BoardMemberAdapter extends RecyclerView.Adapter<BoardMemberAdapter.
         holder.position.setText(list.get(position).getPosition());
         holder.phrase.setText(list.get(position).getPhrase());
 
-        new Thread(() -> holder.photo.post(() -> {
+        new Thread(() -> holder.image.post(() -> {
             String pic = list.get(position).getPhoto();
             try {
                 byte[] decodedString = Base64.decode(pic, Base64.DEFAULT);
                 Bitmap picture = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                holder.photo.setImageBitmap(picture);
+                holder.image.setImageBitmap(picture);
             } catch (Exception e) {
+                holder.image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_error));
                 e.printStackTrace();
             }
         })).start();
 
         if (position % 3 == 0)
-            holder.photo.setBackgroundColor(ContextCompat.getColor(context, R.color.colorTertiaryRed));
+            holder.image.setBackgroundColor(ContextCompat.getColor(context, R.color.colorTertiaryRed));
         else if (position % 3 == 1)
-            holder.photo.setBackgroundColor(ContextCompat.getColor(context, R.color.colorTertiaryBlue));
+            holder.image.setBackgroundColor(ContextCompat.getColor(context, R.color.colorTertiaryBlue));
         else
-            holder.photo.setBackgroundColor(ContextCompat.getColor(context, R.color.colorTertiaryYellow));
+            holder.image.setBackgroundColor(ContextCompat.getColor(context, R.color.colorTertiaryYellow));
         holder.mView.setOnClickListener(v -> Functions.openURL(v, context, list.get(position).getLink()));
     }
 
@@ -75,7 +76,7 @@ public class BoardMemberAdapter extends RecyclerView.Adapter<BoardMemberAdapter.
     }
 
     public static class BoardViewHolder extends RecyclerView.ViewHolder {
-        public final ImageView photo;
+        public final ImageView image;
         public final TextView name;
         public final TextView position;
         public final TextView phrase;
@@ -84,16 +85,10 @@ public class BoardMemberAdapter extends RecyclerView.Adapter<BoardMemberAdapter.
         public BoardViewHolder(View view) {
             super(view);
             mView = view;
-            photo = view.findViewById(R.id.image);
+            image = view.findViewById(R.id.image);
             name = view.findViewById(R.id.name);
             position = view.findViewById(R.id.position);
             phrase = view.findViewById(R.id.phrase);
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return super.toString() + " '" + position.getText() + "'";
         }
     }
 }

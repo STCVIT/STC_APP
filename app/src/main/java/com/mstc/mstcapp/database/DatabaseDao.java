@@ -15,7 +15,6 @@ import com.mstc.mstcapp.model.resources.RoadmapModel;
 
 import java.util.List;
 
-import static androidx.room.OnConflictStrategy.IGNORE;
 import static androidx.room.OnConflictStrategy.REPLACE;
 
 @Dao
@@ -68,7 +67,7 @@ public interface DatabaseDao {
     @Insert(onConflict = REPLACE)
     void insertFeeds(List<FeedModel> list);
 
-    @Query(value = "SELECT * FROM FEED ORDER BY createdAt DESC")
+    @Query(value = "SELECT * FROM FEED ORDER BY id DESC")
     LiveData<List<FeedModel>> getFeedList();
 
     @Query(value = "DELETE FROM FEED")
@@ -80,11 +79,8 @@ public interface DatabaseDao {
     @Insert(onConflict = REPLACE)
     void insertEvents(List<EventModel> eventModels);
 
-    @Query(value = "SELECT * FROM EVENTS ORDER BY createdAt DESC")
+    @Query(value = "SELECT * FROM EVENTS ORDER BY id DESC")
     LiveData<List<EventModel>> getEventsList();
-
-    @Query("DELETE FROM EVENTS")
-    void deleteEvents();
 
     /**
      * PROJECTS
@@ -92,11 +88,9 @@ public interface DatabaseDao {
     @Insert(entity = ProjectsModel.class, onConflict = REPLACE)
     void insertProjects(List<ProjectsModel> projectsModels);
 
-    @Query(value = "SELECT * FROM PROJECTS")
+    @Query(value = "SELECT * FROM PROJECTS ORDER BY id DESC")
     LiveData<List<ProjectsModel>> getProjects();
 
-    @Query("DELETE FROM PROJECTS")
-    void deleteProjects();
 
     /**
      * BOARD MEMBER

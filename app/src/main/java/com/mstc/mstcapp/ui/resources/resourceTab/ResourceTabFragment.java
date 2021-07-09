@@ -1,8 +1,6 @@
 package com.mstc.mstcapp.ui.resources.resourceTab;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +20,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.mstc.mstcapp.R;
 import com.mstc.mstcapp.adapter.resource.ResourceTabAdapter;
 import com.mstc.mstcapp.model.resources.ResourceModel;
-import com.mstc.mstcapp.util.ClickListener;
-import com.mstc.mstcapp.util.RecyclerTouchListener;
 import com.mstc.mstcapp.util.RetrofitInstance;
 import com.mstc.mstcapp.util.RetrofitInterface;
 
@@ -34,6 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.internal.EverythingIsNonNull;
 
 public class ResourceTabFragment extends Fragment {
     private RecyclerView recyclerView;
@@ -42,7 +39,6 @@ public class ResourceTabFragment extends Fragment {
     private List<ResourceModel> list;
     private String domain;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private Context context;
 
     public ResourceTabFragment() {
     }
@@ -61,7 +57,7 @@ public class ResourceTabFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(ResourceTabViewModel.class);
-        context = view.getContext();
+        Context context = view.getContext();
         recyclerView = view.findViewById(R.id.recyclerView);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -70,16 +66,17 @@ public class ResourceTabFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         mViewModel.getList(domain).observe(getViewLifecycleOwner(), eventObjects -> {
-            if (eventObjects.size() == 0) view.findViewById(R.id.loading).setVisibility(View.VISIBLE);
+            if (eventObjects.size() == 0)
+                view.findViewById(R.id.loading).setVisibility(View.VISIBLE);
             else view.findViewById(R.id.loading).setVisibility(View.GONE);
             list = eventObjects;
             adapter.setList(list);
         });
-        swipeRefreshLayout.setOnRefreshListener(() -> getData());
+        swipeRefreshLayout.setOnRefreshListener(() -> getData(view));
     }
 
 
-    private void getData() {
+    private void getData(View view) {
         Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
         RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
         Call<List<ResourceModel>> call = retrofitInterface.getResources(domain);
@@ -89,19 +86,20 @@ public class ResourceTabFragment extends Fragment {
                 if (response.isSuccessful()) {
                     swipeRefreshLayout.setRefreshing(false);
                     List<ResourceModel> list = response.body();
-                    assert list != null;
-                    mViewModel.insertResources(domain, list);
+                    if (list != null)
+                        mViewModel.insertResources(domain, list);
                 } else {
                     swipeRefreshLayout.setRefreshing(false);
-                    Snackbar.make(recyclerView, "Unable to fetch resources", BaseTransientBottomBar.LENGTH_SHORT)
+                    Snackbar.make(view, "Unable to fetch resources", BaseTransientBottomBar.LENGTH_SHORT)
                             .show();
                 }
             }
 
             @Override
+            @EverythingIsNonNull
             public void onFailure(Call<List<ResourceModel>> call, Throwable t) {
                 swipeRefreshLayout.setRefreshing(false);
-                Snackbar.make(recyclerView, "Please check your internet connection…", BaseTransientBottomBar.LENGTH_SHORT)
+                Snackbar.make(view, "Please check your internet connection…", BaseTransientBottomBar.LENGTH_SHORT)
                         .show();
             }
         });

@@ -20,6 +20,8 @@ import com.mstc.mstcapp.R;
 import com.mstc.mstcapp.model.FeedModel;
 import com.mstc.mstcapp.util.Functions;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -36,7 +38,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         View view;
         if (viewType == VIEW_TYPE_ITEM) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_feed, parent, false);
@@ -48,28 +50,21 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NotNull final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder)
             populateItemRows((ItemViewHolder) holder, position);
-        else if (holder instanceof LoadingViewHolder)
-            showLoadingView((LoadingViewHolder) holder, position);
-    }
-
-    private void showLoadingView(LoadingViewHolder holder, int position) {
-
     }
 
     private void populateItemRows(ItemViewHolder holder, int position) {
-        holder.mItem = list.get(position);
         holder.title.setText(list.get(position).getTitle());
         holder.description.setText(list.get(position).getLink());
-        new Thread(() -> holder.imageView.post(() -> {
-            String pic = list.get(position).getImage();
+        new Thread(() -> holder.image.post(() -> {
             try {
-                byte[] decodedString = Base64.decode(pic, Base64.DEFAULT);
+                byte[] decodedString = Base64.decode(list.get(position).getImage(), Base64.DEFAULT);
                 Bitmap picture = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                holder.imageView.setImageBitmap(picture);
+                holder.image.setImageBitmap(picture);
             } catch (Exception e) {
+                holder.image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_error));
                 e.printStackTrace();
             }
         })).start();
@@ -105,22 +100,16 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public final View mView;
         public final TextView title;
         public final TextView description;
-        public final ImageView imageView;
+        public final ImageView image;
         public final CardView cardView;
-        public FeedModel mItem;
 
         public ItemViewHolder(View view) {
             super(view);
             mView = view;
             title = view.findViewById(R.id.title);
             description = view.findViewById(R.id.description);
-            imageView = view.findViewById(R.id.image);
+            image = view.findViewById(R.id.image);
             cardView = view.findViewById(R.id.cardView);
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + description.getText() + "'";
         }
     }
 

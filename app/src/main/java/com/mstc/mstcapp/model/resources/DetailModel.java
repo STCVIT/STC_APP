@@ -6,6 +6,8 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.jetbrains.annotations.NotNull;
+
 @Entity(tableName = "DETAILS")
 public class DetailModel {
     @SerializedName("description")
@@ -26,12 +28,13 @@ public class DetailModel {
         this.expectation = expectation;
     }
 
-    public void setId(@NonNull String id) {
-        this.id = id;
-    }
-
+    @NotNull
     public String getId() {
         return id;
+    }
+
+    public void setId(@NonNull String id) {
+        this.id = id;
     }
 
     public String getDescription() {

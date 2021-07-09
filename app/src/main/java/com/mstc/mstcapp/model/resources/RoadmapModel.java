@@ -6,6 +6,8 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.jetbrains.annotations.NotNull;
+
 @Entity(tableName = "ROADMAPS")
 public class RoadmapModel {
 
@@ -24,6 +26,7 @@ public class RoadmapModel {
         this.image = image;
     }
 
+    @NotNull
     public String getId() {
         return id;
     }

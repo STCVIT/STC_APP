@@ -20,11 +20,12 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/on_boarding"
+            android:paddingHorizontal="@dimen/margin_large"
             android:src="@drawable/ic_onboarding_1"
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:paddingHorizontal="@dimen/margin_large"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -33,9 +34,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_large"
             android:paddingHorizontal="@dimen/margin_large"
-            android:textStyle="bold"
             android:text="@string/onboarding1"
-            android:textAppearance="@style/body1" />
+            android:textAppearance="@style/body1"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -43,16 +44,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="@dimen/margin_large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:padding="@dimen/margin_large">
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
             android:id="@+id/layoutDots"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/view_pager"
             android:layout_marginVertical="@dimen/margin_large"
             android:gravity="center"
             android:orientation="horizontal" />
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/margin_medium"
             android:paddingBottom="@dimen/margin_medium"
-            android:text="Continue"
+            android:text="@string/continue_btn"
             app:cornerRadius="5dp" />
     </LinearLayout>
 

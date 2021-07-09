@@ -75,10 +75,5 @@ public class ResourceTabAdapter extends RecyclerView.Adapter<ResourceTabAdapter.
             description = view.findViewById(R.id.description);
             share = view.findViewById(R.id.share);
         }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + description.getText() + "'";
-        }
     }
 }

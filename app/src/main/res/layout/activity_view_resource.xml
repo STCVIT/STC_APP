@@ -33,7 +33,6 @@
                     android:id="@+id/toolbar_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="APP DEVELOPMENT"
                     android:textAllCaps="true"
                     android:textAppearance="@style/heading1" />
 
@@ -42,7 +41,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
-                    android:text="The best and trusted resourceModels for you to get started"
                     android:textAppearance="@style/body2" />
 
                 <ImageView
@@ -50,7 +48,7 @@
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_marginTop="@dimen/margin_large"
-                    android:src="@drawable/ic_app_dev" />
+                    android:contentDescription="@string/domain" />
             </LinearLayout>
 
             <androidx.appcompat.widget.Toolbar
@@ -74,19 +72,19 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.core.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/viewPager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
 
-        </androidx.core.widget.NestedScrollView>
-
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

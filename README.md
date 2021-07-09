@@ -6,7 +6,10 @@
 [![](https://img.shields.io/badge/version-2.0.0-green)](https://github.com/STCVIT/STC_APP)
 [![](https://img.shields.io/badge/Privacy%20Policy-Click%20Here-blue)](https://stcvit.github.io/STC_APP_PRIVACY_POLICY/)
 
-The Official App of Student Technical Community - Vellore Institute of Technology, Vellore!
+The Official App of Student Technical Community - Vellore Institute of Technology, Vellore.
+
+Student Technical Community, VIT, is a team of enthusiastic students driven by their passion for technology. We have always worked together to empower students with new technical skills and thus aim to create a tech community that supports collaboration, creativity, and experimentation.
+
 
 ## Features
 * Gain insight into the happenings at the community like Events, Workshops, Medium Articles, Webinars as well as our unique projects 

@@ -21,7 +21,6 @@ import com.mstc.mstcapp.ui.resources.ViewPagerAdapter;
 import java.util.Objects;
 
 public class ViewResourceActivity extends AppCompatActivity {
-    private static final String TAG = "ViewResourceActivity";
     private final Context context = this;
 
 

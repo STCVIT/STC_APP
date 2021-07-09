@@ -30,14 +30,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.internal.EverythingIsNonNull;
 
 public class AboutFragment extends Fragment {
     private AboutViewModel mViewModel;
     private BoardMemberAdapter boardMemberAdapter;
     private List<BoardMemberModel> list;
-    private RecyclerView recyclerView;
-    private Context context;
     private SwipeRefreshLayout swipeRefreshLayout;
+
     public AboutFragment() {
     }
 
@@ -60,9 +60,9 @@ public class AboutFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         postponeEnterTransition();
         mViewModel = new ViewModelProvider(this).get(AboutViewModel.class);
-        recyclerView = view.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
-        context = view.getContext();
+        Context context = view.getContext();
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         list = new ArrayList<>();
         boardMemberAdapter = new BoardMemberAdapter(context, list);
@@ -77,18 +77,19 @@ public class AboutFragment extends Fragment {
         });
     }
 
-    private void loadData(View view){
+    private void loadData(View view) {
         Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
         RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
         Call<List<BoardMemberModel>> call = retrofitInterface.getBoard();
         call.enqueue(new Callback<List<BoardMemberModel>>() {
             @Override
-            public void onResponse(@NonNull Call<List<BoardMemberModel>> call, @NonNull Response<List<BoardMemberModel>> response) {
+            @EverythingIsNonNull
+            public void onResponse(Call<List<BoardMemberModel>> call, Response<List<BoardMemberModel>> response) {
                 if (response.isSuccessful()) {
                     swipeRefreshLayout.setRefreshing(false);
                     List<BoardMemberModel> list = response.body();
-                    assert list != null;
-                    mViewModel.insertBoardMembers(list);
+                    if (list != null)
+                        mViewModel.insertBoardMembers(list);
                 } else {
                     swipeRefreshLayout.setRefreshing(false);
                     Snackbar.make(view, "Unable to fetch details", BaseTransientBottomBar.LENGTH_SHORT)
@@ -97,6 +98,7 @@ public class AboutFragment extends Fragment {
             }
 
             @Override
+            @EverythingIsNonNull
             public void onFailure(Call<List<BoardMemberModel>> call, Throwable t) {
                 swipeRefreshLayout.setRefreshing(false);
                 Snackbar.make(view, "Please check your internet connection…", BaseTransientBottomBar.LENGTH_SHORT)
@@ -104,7 +106,6 @@ public class AboutFragment extends Fragment {
             }
         });
     }
-
 
 
 }

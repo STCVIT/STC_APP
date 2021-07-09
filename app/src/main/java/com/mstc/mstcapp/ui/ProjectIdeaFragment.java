@@ -156,19 +156,17 @@ public class ProjectIdeaFragment extends BottomSheetDialogFragment {
                 progressDialog.dismiss();
                 Log.d(TAG, "onResponse() returned: " + response.body());
                 Map<String, String> map = response.body();
-                assert map != null;
-                if (Objects.equals(map.get("statusCode"), "201")) {
-                    dismiss();
-                    new MaterialAlertDialogBuilder(context)
-                            .setTitle("Idea Posted Successfully")
-                            .setMessage("Your idea has been posted successfully! " +
-                                    "Please feel free to check out the resources while we contact you.")
-                            .setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss())
-                            .show();
-                } else
-                    Toast.makeText(context, "Could not post idea! Try Again", Toast.LENGTH_SHORT).show();
-
-
+                if (map != null)
+                    if (Objects.equals(map.get("statusCode"), "201")) {
+                        dismiss();
+                        new MaterialAlertDialogBuilder(context)
+                                .setTitle("Idea Posted Successfully")
+                                .setMessage("Your idea has been posted successfully! " +
+                                        "Please feel free to check out the resources while we contact you.")
+                                .setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss())
+                                .show();
+                    } else
+                        Toast.makeText(context, "Could not post idea! Try Again", Toast.LENGTH_SHORT).show();
             }
 
             @Override

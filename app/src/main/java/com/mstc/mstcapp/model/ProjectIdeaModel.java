@@ -34,31 +34,16 @@ public class ProjectIdeaModel {
         return phone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getIdea() {
         return idea;
     }
 
-    public void setIdea(String idea) {
-        this.idea = idea;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

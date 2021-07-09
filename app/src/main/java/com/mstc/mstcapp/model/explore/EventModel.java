@@ -16,29 +16,23 @@ public class EventModel {
     private final String link;
     @SerializedName("description")
     private final String description;
-    @SerializedName("status")
-    private final String status;
     @SerializedName("startDate")
     private final String startDate;
     @SerializedName("endDate")
     private final String endDate;
-    @SerializedName("createdAt")
-    private final String createdAt;
 
     @PrimaryKey
     @NonNull
     @SerializedName("_id")
     public String id;
 
-    public EventModel(String title, String description, String link, String image, String status, String startDate, String endDate, String createdAt) {
+    public EventModel(String title, String description, String link, String image, String startDate, String endDate) {
         this.title = title;
         this.description = description;
         this.link = link;
         this.image = image;
-        this.status = status;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.createdAt = createdAt;
     }
 
     @NonNull
@@ -74,11 +68,4 @@ public class EventModel {
         return startDate;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
 }

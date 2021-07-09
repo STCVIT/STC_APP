@@ -1,4 +1,5 @@
 <resources>
+
     <style name="Theme.STC" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/white</item>

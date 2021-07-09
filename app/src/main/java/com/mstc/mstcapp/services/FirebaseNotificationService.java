@@ -74,13 +74,11 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
             Map<String, String> map = remoteMessage.getData();
             String title = map.get("title") + " on " + map.get("startDate");
             String description = map.get("description");
-            assert title != null;
             sendTopicNotification(title, description);
         } else if (remoteMessage.getFrom().equalsIgnoreCase("/topics/other")) {
             Map<String, String> map = remoteMessage.getData();
             String title = map.get("title") + " on " + map.get("startDate");
             String description = map.get("description");
-            assert title != null;
             sendOtherNotification(title, description);
         }
     }

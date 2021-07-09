@@ -21,6 +21,7 @@
             android:layout_height="match_parent"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
+            android:focusable="true"
             android:paddingHorizontal="24dp"
             android:paddingVertical="@dimen/margin_medium">
 
@@ -30,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
+                android:contentDescription="@string/refer_a_friend"
                 android:src="@drawable/ic_invitation" />
 
             <TextView
@@ -40,9 +42,8 @@
                 android:layout_marginEnd="@dimen/margin_medium"
                 android:layout_toStartOf="@id/a1"
                 android:layout_toEndOf="@id/i1"
-                android:text="Refer a friend"
-                android:textColor="@color/textColorPrimary"
-                android:textFontWeight="500" />
+                android:text="@string/refer_a_friend"
+                android:textColor="@color/textColorPrimary" />
 
             <ImageView
                 android:id="@+id/a1"
@@ -50,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:contentDescription="@string/view"
                 android:src="@drawable/ic_arrow" />
         </RelativeLayout>
 
@@ -64,6 +66,8 @@
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
+            android:contentDescription="@string/feedback"
+            android:focusable="true"
             android:paddingHorizontal="24dp"
             android:paddingVertical="@dimen/margin_medium">
 
@@ -73,6 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
+                android:contentDescription="@string/feedback"
                 android:src="@drawable/ic_help" />
 
             <TextView
@@ -83,9 +88,8 @@
                 android:layout_marginEnd="@dimen/margin_medium"
                 android:layout_toStartOf="@id/a2"
                 android:layout_toEndOf="@id/i2"
-                android:text="Give us a feedback"
-                android:textColor="@color/textColorPrimary"
-                android:textFontWeight="500" />
+                android:text="@string/feedback"
+                android:textColor="@color/textColorPrimary" />
 
             <ImageView
                 android:id="@+id/a2"
@@ -93,6 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:contentDescription="@string/view"
                 android:src="@drawable/ic_arrow" />
         </RelativeLayout>
 
@@ -107,6 +112,7 @@
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
+            android:focusable="true"
             android:paddingHorizontal="24dp"
             android:paddingVertical="@dimen/margin_medium">
 
@@ -116,6 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
+                android:contentDescription="@string/project_idea_helper"
                 android:src="@drawable/ic_message" />
 
             <TextView
@@ -126,9 +133,8 @@
                 android:layout_marginEnd="@dimen/margin_medium"
                 android:layout_toStartOf="@id/a3"
                 android:layout_toEndOf="@id/i3"
-                android:text="Have a great project idea? Reach out to us and we’ll help you make it happen :)"
-                android:textColor="@color/textColorPrimary"
-                android:textFontWeight="500" />
+                android:text="@string/project_idea_helper"
+                android:textColor="@color/textColorPrimary" />
 
             <ImageView
                 android:id="@+id/a3"
@@ -136,6 +142,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:contentDescription="@string/view"
                 android:src="@drawable/ic_arrow" />
         </RelativeLayout>
 
@@ -158,10 +165,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="Follow us on"
-            android:textColor="@color/textColorPrimary"
-            android:textFontWeight="500" />
+            android:text="@string/follow_us_on"
+            android:textColor="@color/textColorPrimary" />
 
         <com.google.android.flexbox.FlexboxLayout
             android:layout_width="300dp"
@@ -177,6 +182,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@string/instagram"
                 android:src="@drawable/ic_instagram" />
 
             <ImageButton
@@ -184,6 +190,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@string/facebook"
                 android:src="@drawable/ic_facebook" />
 
             <ImageButton
@@ -191,6 +198,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@string/linked_in"
                 android:src="@drawable/ic_linkedin" />
 
             <ImageButton
@@ -198,6 +206,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@string/github"
                 android:src="@drawable/ic_github" />
         </com.google.android.flexbox.FlexboxLayout>
 
@@ -205,25 +214,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginTop="@dimen/margin_large"
-            android:text="Illustration credits - Freepik stories"
-            android:textColor="@color/textColorSecondary"
-            android:textFontWeight="500" />
+            android:text="@string/illustration_credits"
+            android:textColor="@color/textColorSecondary" />
 
 
         <TextView
             android:id="@+id/privacy_policy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
+            android:focusable="true"
             android:paddingHorizontal="@dimen/margin_small"
             android:paddingVertical="@dimen/margin_small"
-            android:text="Privacy policy"
-            android:textColor="@color/textColorSecondary"
-            android:textFontWeight="500" />
+            android:text="@string/privacy_policy"
+            android:textColor="@color/textColorSecondary" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

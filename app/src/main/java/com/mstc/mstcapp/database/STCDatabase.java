@@ -63,12 +63,9 @@ public abstract class STCDatabase extends RoomDatabase {
                     @Override
                     public void onResponse(@NonNull Call<List<FeedModel>> call, @NonNull Response<List<FeedModel>> response) {
                         if (response.isSuccessful()) {
-                            Log.i(TAG, "onResponse: successfull");
                             Log.d(TAG, "onResponse() returned: " + response.body());
                             List<FeedModel> feeds = response.body();
-                            STCDatabase.databaseWriteExecutor.execute(() -> {
-                                databaseDao.insertFeeds(feeds);
-                            });
+                            STCDatabase.databaseWriteExecutor.execute(() -> databaseDao.insertFeeds(feeds));
                         } else {
                             Log.d(TAG, "onResponse() returned: " + response.message());
                         }
@@ -84,12 +81,9 @@ public abstract class STCDatabase extends RoomDatabase {
                     @Override
                     public void onResponse(@NonNull Call<List<EventModel>> call, @NonNull Response<List<EventModel>> response) {
                         if (response.isSuccessful()) {
-                            Log.i(TAG, "onResponse: successfull");
                             Log.d(TAG, "onResponse() returned: " + response.body());
                             List<EventModel> events = response.body();
-                            STCDatabase.databaseWriteExecutor.execute(() -> {
-                                databaseDao.insertEvents(events);
-                            });
+                            STCDatabase.databaseWriteExecutor.execute(() -> databaseDao.insertEvents(events));
                         } else {
                             Log.d(TAG, "onResponse() returned: " + response.message());
                         }
@@ -106,12 +100,9 @@ public abstract class STCDatabase extends RoomDatabase {
                     @Override
                     public void onResponse(@NonNull Call<List<BoardMemberModel>> call, @NonNull Response<List<BoardMemberModel>> response) {
                         if (response.isSuccessful()) {
-                            Log.i(TAG, "onResponse: successfull");
                             Log.d(TAG, "onResponse() returned: " + response.body());
                             List<BoardMemberModel> list = response.body();
-                            STCDatabase.databaseWriteExecutor.execute(() -> {
-                                databaseDao.insertBoard(list);
-                            });
+                            STCDatabase.databaseWriteExecutor.execute(() -> databaseDao.insertBoard(list));
                         } else {
                             Log.d(TAG, "onResponse() returned: " + response.message());
                         }

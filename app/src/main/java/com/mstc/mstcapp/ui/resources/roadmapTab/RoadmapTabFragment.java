@@ -26,6 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.internal.EverythingIsNonNull;
 
 public class RoadmapTabFragment extends Fragment {
 
@@ -95,6 +96,7 @@ public class RoadmapTabFragment extends Fragment {
             }
 
             @Override
+            @EverythingIsNonNull
             public void onFailure(Call<RoadmapModel> call, Throwable t) {
                 swipeRefreshLayout.setRefreshing(false);
                 view.findViewById(R.id.loading).setVisibility(View.GONE);

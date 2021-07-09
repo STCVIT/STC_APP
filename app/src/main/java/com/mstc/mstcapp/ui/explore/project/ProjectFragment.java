@@ -29,6 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.internal.EverythingIsNonNull;
 
 import static com.mstc.mstcapp.util.Functions.isNetworkAvailable;
 
@@ -63,9 +64,7 @@ public class ProjectFragment extends Fragment {
         list = new ArrayList<>();
         projectsAdapter = new ProjectsAdapter(context, list);
         recyclerView.setAdapter(projectsAdapter);
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            getData(1, 0);
-        });
+        swipeRefreshLayout.setOnRefreshListener(() -> getData(view, 1));
         mViewModel.getList().observe(getViewLifecycleOwner(), projectsModels -> {
             if (projectsModels.size() == 0)
                 view.findViewById(R.id.loading).setVisibility(View.VISIBLE);
@@ -81,7 +80,7 @@ public class ProjectFragment extends Fragment {
                 if (!isLoading) {
                     if (linearLayoutManager != null &&
                             linearLayoutManager.findLastCompletelyVisibleItemPosition() == list.size() - 1) {
-                        loadMore(++skip);
+                        loadMore(view, ++skip);
                         isLoading = true;
                     }
                 }
@@ -89,49 +88,54 @@ public class ProjectFragment extends Fragment {
         });
     }
 
-    private void loadMore(int skip) {
+    private void loadMore(View view, int skip) {
         if (isNetworkAvailable(context)) {
             isLoading = true;
             list.add(null);
-            recyclerView.post(() -> {
-                projectsAdapter.notifyItemInserted(list.size() - 1);
-            });
-            getData(skip, 1);
-
+            recyclerView.post(() -> projectsAdapter.notifyItemInserted(list.size() - 1));
+            getData(view, skip);
         } else {
             isLoading = false;
             swipeRefreshLayout.setRefreshing(false);
-            Snackbar.make(recyclerView, "Please check your internet connection…", BaseTransientBottomBar.LENGTH_SHORT)
+            Snackbar.make(view, "Please check your internet connection…", BaseTransientBottomBar.LENGTH_SHORT)
+                    .setAction("Try Again", v -> loadMore(view, skip))
                     .show();
         }
     }
 
-    private void getData(int skip, int flag) {
+    private void getData(View view, int skip) {
         Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
         RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
         Call<List<ProjectsModel>> call = retrofitInterface.getProjects(skip);
         call.enqueue(new Callback<List<ProjectsModel>>() {
             @Override
-            public void onResponse(@NonNull Call<List<ProjectsModel>> call, @NonNull Response<List<ProjectsModel>> response) {
+            @EverythingIsNonNull
+            public void onResponse(Call<List<ProjectsModel>> call, Response<List<ProjectsModel>> response) {
                 if (response.isSuccessful()) {
                     isLoading = false;
                     swipeRefreshLayout.setRefreshing(false);
-                    if (flag == 1) {
+                    if (list.get(list.size() - 1) == null) {
                         list.remove(list.size() - 1);
                         projectsAdapter.notifyItemRemoved(list.size());
                     }
                     List<ProjectsModel> list = response.body();
-                    assert list != null;
-                    mViewModel.insertProjects(list);
+                    if (list != null) {
+                        mViewModel.insertProjects(list);
+                    }
                 }
             }
 
             @Override
+            @EverythingIsNonNull
             public void onFailure(Call<List<ProjectsModel>> call, Throwable t) {
                 isLoading = false;
-                list.remove(list.size() - 1);
+                if (list.get(list.size() - 1) == null) {
+                    list.remove(list.size() - 1);
+                    projectsAdapter.notifyItemRemoved(list.size());
+                }
                 swipeRefreshLayout.setRefreshing(false);
-                Snackbar.make(recyclerView, "Please check your internet connection…", BaseTransientBottomBar.LENGTH_SHORT)
+                Snackbar.make(view, "Please check your internet connection…",
+                        BaseTransientBottomBar.LENGTH_SHORT)
                         .show();
             }
         });

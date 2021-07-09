@@ -17,17 +17,15 @@ import androidx.core.content.ContextCompat;
 import com.mstc.mstcapp.util.Constants;
 
 public class WelcomeActivity extends AppCompatActivity {
-    private static final String TAG = "WelcomeActivity";
-    SharedPreferences.Editor editor;
     private final Context context = this;
     private final int NoOfSlides = 3;
+    private final int[] images = {R.drawable.ic_onboarding_1, R.drawable.ic_onboarding_2, R.drawable.ic_onboarding_3};
+    private final int[] texts = {R.string.onboarding1, R.string.onboarding2, R.string.onboarding3};
+    SharedPreferences.Editor editor;
     private int position = 0;
     private LinearLayout dotsLayout;
     private ImageView imageView;
     private TextView textView;
-
-    private final int[] images = {R.drawable.ic_onboarding_1, R.drawable.ic_onboarding_2, R.drawable.ic_onboarding_3};
-    private final int[] texts = {R.string.onboarding1, R.string.onboarding2, R.string.onboarding3};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

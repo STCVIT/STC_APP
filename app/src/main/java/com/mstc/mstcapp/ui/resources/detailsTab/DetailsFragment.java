@@ -23,6 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.internal.EverythingIsNonNull;
 
 
 public class DetailsFragment extends Fragment {
@@ -55,8 +56,7 @@ public class DetailsFragment extends Fragment {
             if (detailModel == null) {
                 view.findViewById(R.id.loading).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.linearLayout).setVisibility(View.GONE);
-            }
-            else {
+            } else {
                 view.findViewById(R.id.loading).setVisibility(View.GONE);
                 view.findViewById(R.id.linearLayout).setVisibility(View.VISIBLE);
                 details.setText(detailModel.getDescription());
@@ -76,8 +76,8 @@ public class DetailsFragment extends Fragment {
                 if (response.isSuccessful()) {
                     swipeRefreshLayout.setRefreshing(false);
                     DetailModel details = response.body();
-                    assert details != null;
-                    mViewModel.insertDetails(domain, details);
+                    if (details != null)
+                        mViewModel.insertDetails(domain, details);
                 } else {
                     swipeRefreshLayout.setRefreshing(false);
                     Snackbar.make(view, "Unable to fetch details", BaseTransientBottomBar.LENGTH_SHORT)
@@ -86,6 +86,7 @@ public class DetailsFragment extends Fragment {
             }
 
             @Override
+            @EverythingIsNonNull
             public void onFailure(Call<DetailModel> call, Throwable t) {
                 swipeRefreshLayout.setRefreshing(false);
                 Snackbar.make(view, "Please check your internet connection…", BaseTransientBottomBar.LENGTH_SHORT)

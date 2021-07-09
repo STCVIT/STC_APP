@@ -7,12 +7,12 @@
     <color name="colorTertiaryYellow">#FFECCC</color>
     <color name="colorTertiaryBlue">#DADDFE</color>
 
-
+    <color name="colorSecondaryRed">#E14956</color>
+    <color name="colorSecondaryYellow">#FFB949</color>
+    <color name="colorSecondaryBlue">#4F5AE8</color>
 
     <color name="textColorPrimary">#121212</color>
     <color name="textColorSecondary">#6A6A6A</color>
-
-    <!--    <color name="background_color">#EBEFF8</color>-->
 
     <color name="log_bg_color">#332CAB</color>
 

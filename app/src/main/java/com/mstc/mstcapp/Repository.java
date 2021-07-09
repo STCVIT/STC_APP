@@ -37,7 +37,6 @@ public class Repository {
     private static final String TAG = "Repository";
     private final RetrofitInterface retrofitInterface;
     private final SharedPreferences sharedPreferences;
-    private final SharedPreferences.Editor editor;
     private final Context context;
     public DatabaseDao databaseDao;
 
@@ -47,7 +46,6 @@ public class Repository {
         Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
         retrofitInterface = retrofit.create(RetrofitInterface.class);
         sharedPreferences = context.getSharedPreferences(Constants.STC_SHARED_PREFERENCES, Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
     }
 
     @MainThread
@@ -60,8 +58,8 @@ public class Repository {
                     if (response.isSuccessful()) {
                         Log.d(TAG, "onResponse() returned: " + response.body());
                         List<EventModel> events = response.body();
-                        assert events != null;
-                        STCDatabase.databaseWriteExecutor.execute(() -> databaseDao.insertEvents(events));
+                        if (events != null)
+                            STCDatabase.databaseWriteExecutor.execute(() -> databaseDao.insertEvents(events));
                     } else {
                         Log.d(TAG, "onResponse() returned: " + response.message());
                     }
@@ -88,9 +86,10 @@ public class Repository {
                     if (response.isSuccessful()) {
                         Log.d(TAG, "onResponse() returned: " + response.body());
                         List<ProjectsModel> projectsModels = response.body();
-                        assert projectsModels != null;
-                        STCDatabase.databaseWriteExecutor.execute(() -> databaseDao.insertProjects(projectsModels));
-                        MainActivity.setFetchedData("projects");
+                        if (projectsModels != null) {
+                            STCDatabase.databaseWriteExecutor.execute(() -> databaseDao.insertProjects(projectsModels));
+                            MainActivity.setFetchedData("projects");
+                        }
                     } else {
                         Log.d(TAG, "onResponse() returned: " + response.message());
                     }
@@ -134,8 +133,8 @@ public class Repository {
                         if (response.isSuccessful()) {
                             Log.d(TAG, "onResponse() returned: " + response.body());
                             List<BoardMemberModel> boardMembers = response.body();
-                            assert boardMembers != null;
-                            insertBoardMembers(boardMembers);
+                            if (boardMembers != null)
+                                insertBoardMembers(boardMembers);
 
                         } else {
                             Log.e(TAG, "onResponse() returned: " + response);
@@ -163,9 +162,10 @@ public class Repository {
                     if (response.isSuccessful()) {
                         Log.d(TAG, "onResponse() returned: " + response.body());
                         DetailModel details = response.body();
-                        assert details != null;
-                        insertDetails(domain, details);
-                        MainActivity.setFetchedData(domain + "_details");
+                        if (details != null) {
+                            insertDetails(domain, details);
+                            MainActivity.setFetchedData(domain + "_details");
+                        }
                     } else {
                         Log.d(TAG, "onResponse() returned: " + response.message());
                     }
@@ -192,9 +192,10 @@ public class Repository {
                     if (response.isSuccessful()) {
                         Log.d(TAG, "onResponse() returned: " + response.body());
                         RoadmapModel roadmap = response.body();
-                        assert roadmap != null;
-                        insertRoadmap(domain, roadmap);
-                        MainActivity.setFetchedData(domain + "_roadmap");
+                        if (roadmap != null) {
+                            insertRoadmap(domain, roadmap);
+                            MainActivity.setFetchedData(domain + "_roadmap");
+                        }
                     } else {
                         Log.d(TAG, "onResponse() returned: " + response.message());
                     }
@@ -221,9 +222,10 @@ public class Repository {
                     if (response.isSuccessful()) {
                         Log.d(TAG, "onResponse() returned: " + response.body());
                         List<ResourceModel> list = response.body();
-                        assert list != null;
-                        insertResources(domain, list);
-                        MainActivity.setFetchedData(domain + "_resources");
+                        if (list != null) {
+                            insertResources(domain, list);
+                            MainActivity.setFetchedData(domain + "_resources");
+                        }
                     } else {
                         Log.d(TAG, "onResponse() returned: " + response.message());
                     }
@@ -296,6 +298,7 @@ public class Repository {
         STCDatabase.databaseWriteExecutor.execute(() -> {
             databaseDao.deleteBoard();
             databaseDao.insertBoard(boardMembers);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putLong("lastChecked", new Date().getTime());
             editor.apply();
         });
@@ -312,4 +315,5 @@ public class Repository {
     public void insertProjects(List<ProjectsModel> list) {
         STCDatabase.databaseWriteExecutor.execute(() -> databaseDao.insertProjects(list));
     }
+
 }

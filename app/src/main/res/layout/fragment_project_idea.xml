@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_large"
-            android:text="Project Idea"
+            android:text="@string/project_idea"
             android:textAppearance="@style/heading1"
             android:textSize="24sp" />
 
@@ -22,9 +22,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_small"
-            android:text="Have a great project idea? Reach out to us and we’ll help you make it happen :)"
-            android:textSize="13dp"
-            android:textAppearance="@style/subtitle1"/>
+            android:text="@string/project_idea_helper"
+            android:textAppearance="@style/subtitle1"
+            android:textSize="13sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/name1"
@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/margin_small"
-            android:hint="Name"
+            android:hint="@string/name"
             app:boxBackgroundColor="@android:color/transparent"
             app:boxBackgroundMode="outline"
             app:boxCornerRadiusBottomEnd="5dp"
@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/margin_small"
-            android:hint="Email"
+            android:hint="@string/email"
             app:boxBackgroundColor="@android:color/transparent"
             app:boxBackgroundMode="outline"
             app:boxCornerRadiusBottomEnd="5dp"
@@ -74,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/margin_small"
-            android:hint="Phone"
+            android:hint="@string/phone"
             app:boxBackgroundColor="@android:color/transparent"
             app:boxBackgroundMode="outline"
             app:boxCornerRadiusBottomEnd="5dp"
@@ -95,7 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/margin_small"
-            android:hint="Idea"
+            android:hint="@string/idea"
             app:boxBackgroundColor="@android:color/transparent"
             app:boxBackgroundMode="outline"
             app:boxCornerRadiusBottomEnd="5dp"
@@ -116,7 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_small"
-            android:hint="Description"
+            android:hint="@string/description"
             app:boxBackgroundColor="@android:color/transparent"
             app:boxBackgroundMode="outline"
             app:boxCornerRadiusBottomEnd="5dp"
@@ -139,7 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_large"
             android:paddingVertical="@dimen/margin_medium"
-            android:text="POST" />
+            android:text="@string/post" />
 
     </LinearLayout>
 </ScrollView>

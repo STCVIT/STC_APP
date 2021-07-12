@@ -123,8 +123,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void openIdeaDialog() {
         FragmentManager fm = getSupportFragmentManager();
-        ProjectIdeaFragment cardViewFragment = ProjectIdeaFragment.newInstance();
-        cardViewFragment.show(fm, "fullscreen");
+        ProjectIdeaFragment projectIdeaFragment = ProjectIdeaFragment.newInstance();
+        projectIdeaFragment.show(fm, "projectFragment");
     }
 
     public void openURL(String url) {
@@ -144,14 +144,15 @@ public class MainActivity extends AppCompatActivity {
         } else {
             exitCount++;
             View view = findViewById(android.R.id.content);
-            Snackbar.make(context, view, "Press back again to exit",
-                    BaseTransientBottomBar.LENGTH_SHORT)
-                    .addCallback(new Snackbar.Callback() {
-                        @Override
-                        public void onDismissed(Snackbar transientBottomBar, int event) {
-                            exitCount = 0;
-                        }
-                    }).show();
+            Snackbar snackbar = Snackbar.make(context, view, "Press back again to exit",
+                    BaseTransientBottomBar.LENGTH_SHORT);
+            snackbar.addCallback(new Snackbar.Callback() {
+                @Override
+                public void onDismissed(Snackbar transientBottomBar, int event) {
+                    exitCount = 0;
+                }
+            });
+            snackbar.show();
             if (exitCount == 2) {
                 super.onBackPressed();
             }

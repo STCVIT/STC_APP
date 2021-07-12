@@ -2,7 +2,6 @@ package com.mstc.mstcapp.ui.home;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +37,6 @@ import retrofit2.internal.EverythingIsNonNull;
 import static com.mstc.mstcapp.util.Functions.isNetworkAvailable;
 
 public class HomeFragment extends Fragment {
-    private static final String TAG = "HomeFragment";
     RecyclerView recyclerView;
     HomeViewModel mViewModel;
     FeedAdapter adapter;
@@ -75,7 +73,10 @@ public class HomeFragment extends Fragment {
         feedList = new ArrayList<>();
         adapter = new FeedAdapter(context, feedList);
         recyclerView.setAdapter(adapter);
-        swipeRefreshLayout.setOnRefreshListener(() -> getData(view, 1));
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            MainActivity.setFeed_position(0);
+            getData(view, 1);
+        });
         mViewModel.getList().observe(getViewLifecycleOwner(), list -> {
             if (list.size() == 0) view.findViewById(R.id.loading).setVisibility(View.VISIBLE);
             else view.findViewById(R.id.loading).setVisibility(View.GONE);
@@ -90,12 +91,10 @@ public class HomeFragment extends Fragment {
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 if (linearLayoutManager != null) {
                     int position = linearLayoutManager.findLastCompletelyVisibleItemPosition();
-                    if (position != -1) {
+                    if (position != -1)
                         MainActivity.setFeed_position(position);
-                        Log.e(TAG, "onScrolled: " + MainActivity.feed_position);
-                    }
                     if (!isLoading) {
-                        if (linearLayoutManager.findLastCompletelyVisibleItemPosition() == feedList.size() - 1) {
+                        if (linearLayoutManager.findLastVisibleItemPosition() == feedList.size() - 1) {
                             loadMore(view, ++skip);
                             isLoading = true;
                         }

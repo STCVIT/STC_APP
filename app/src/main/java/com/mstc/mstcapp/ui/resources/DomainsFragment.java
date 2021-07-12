@@ -58,7 +58,7 @@ public class DomainsFragment extends Fragment {
         list.add(new DomainModel("Backend", R.drawable.ic_backend, color3));
         list.add(new DomainModel("Design", R.drawable.ic_design, color1));
         list.add(new DomainModel("Machine Learning", R.drawable.ic_ml, color2));
-//        list.add(new DomainModel("Competitive Coding", R.drawable.ic_cc, color3));
+        list.add(new DomainModel("Competitive Coding", R.drawable.ic_cc, color3));
 
         DomainAdapter domainAdapter = new DomainAdapter(getContext(), list);
         recyclerView.setAdapter(domainAdapter);

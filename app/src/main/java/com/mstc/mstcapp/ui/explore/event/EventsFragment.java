@@ -79,7 +79,7 @@ public class EventsFragment extends Fragment {
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 if (!isLoading) {
                     if (linearLayoutManager != null &&
-                            linearLayoutManager.findLastCompletelyVisibleItemPosition() == list.size() - 1) {
+                            linearLayoutManager.findLastVisibleItemPosition() == list.size() - 1) {
                         loadMore(view, ++skip);
                         isLoading = true;
                     }
@@ -94,7 +94,6 @@ public class EventsFragment extends Fragment {
             list.add(null);
             recyclerView.post(() -> eventAdapter.notifyItemInserted(list.size() - 1));
             getData(view, skip);
-
         } else {
             isLoading = false;
             swipeRefreshLayout.setRefreshing(false);

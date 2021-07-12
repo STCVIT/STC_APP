@@ -79,7 +79,7 @@ public class ProjectFragment extends Fragment {
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 if (!isLoading) {
                     if (linearLayoutManager != null &&
-                            linearLayoutManager.findLastCompletelyVisibleItemPosition() == list.size() - 1) {
+                            linearLayoutManager.findLastVisibleItemPosition() == list.size() - 1) {
                         loadMore(view, ++skip);
                         isLoading = true;
                     }
@@ -119,9 +119,8 @@ public class ProjectFragment extends Fragment {
                         projectsAdapter.notifyItemRemoved(list.size());
                     }
                     List<ProjectsModel> list = response.body();
-                    if (list != null) {
+                    if (list != null)
                         mViewModel.insertProjects(list);
-                    }
                 }
             }
 

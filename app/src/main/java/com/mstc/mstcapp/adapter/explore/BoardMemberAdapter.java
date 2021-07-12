@@ -45,9 +45,8 @@ public class BoardMemberAdapter extends RecyclerView.Adapter<BoardMemberAdapter.
         holder.phrase.setText(list.get(position).getPhrase());
 
         new Thread(() -> holder.image.post(() -> {
-            String pic = list.get(position).getPhoto();
             try {
-                byte[] decodedString = Base64.decode(pic, Base64.DEFAULT);
+                byte[] decodedString = Base64.decode(list.get(position).getPhoto(), Base64.DEFAULT);
                 Bitmap picture = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                 holder.image.setImageBitmap(picture);
             } catch (Exception e) {

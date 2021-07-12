@@ -19,6 +19,8 @@ import com.mstc.mstcapp.R;
 import com.mstc.mstcapp.model.explore.ProjectsModel;
 import com.mstc.mstcapp.util.Functions;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class ProjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -34,7 +36,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         View view;
         if (viewType == VIEW_TYPE_ITEM) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_project, parent, false);
@@ -46,7 +48,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NotNull final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder)
             populateItemRows((ItemViewHolder) holder, position);
     }
@@ -59,7 +61,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return list.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
-    private void populateItemRows(ItemViewHolder holder, int position) {
+    private void populateItemRows(@NotNull ItemViewHolder holder, int position) {
         holder.title.setText(list.get(position).getTitle());
         holder.description.setText(list.get(position).getDescription());
         new Thread(() -> holder.image.post(() -> {
@@ -103,12 +105,6 @@ public class ProjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             image = view.findViewById(R.id.image);
             title = view.findViewById(R.id.title);
             description = view.findViewById(R.id.details);
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return super.toString() + " '" + description.getText() + "'";
         }
     }
 

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,6 @@ import java.util.List;
 import retrofit2.internal.EverythingIsNonNull;
 
 public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final String TAG = "EventAdapter";
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
     private final Context context;
@@ -59,13 +57,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder)
             populateItemRows((ItemViewHolder) holder, position);
-//        else if (holder instanceof LoadingViewHolder)
-//            showLoadingView();
     }
-
-//    private void showLoadingView() {
-//
-//    }
 
     private void populateItemRows(ItemViewHolder holder, int position) {
         String status;
@@ -139,12 +131,6 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             title = view.findViewById(R.id.title);
             description = view.findViewById(R.id.description);
             cardView = view.findViewById(R.id.cardView);
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return super.toString() + " '" + description.getText() + "'";
         }
     }
 

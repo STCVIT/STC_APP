@@ -57,7 +57,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private void populateItemRows(ItemViewHolder holder, int position) {
         holder.title.setText(list.get(position).getTitle());
-        holder.description.setText(list.get(position).getLink());
+        holder.description.setText(list.get(position).getDescription());
         new Thread(() -> holder.image.post(() -> {
             try {
                 byte[] decodedString = Base64.decode(list.get(position).getImage(), Base64.DEFAULT);

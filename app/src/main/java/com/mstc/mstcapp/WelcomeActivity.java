@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat;
 
 import com.mstc.mstcapp.util.Constants;
 
+
 public class WelcomeActivity extends AppCompatActivity {
     private final Context context = this;
     private final int NoOfSlides = 3;

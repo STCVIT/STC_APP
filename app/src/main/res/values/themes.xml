@@ -6,9 +6,21 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="fontFamily">@font/dm_sans</item>
         <item name="android:alertDialogTheme">@style/AlertDialog</item>
-
         <item name="android:statusBarColor">#2025CB</item>
         <item name="android:windowLightStatusBar">false</item>
+
+        <item name="android:windowActivityTransitions">true</item>
+<!--        <item name="android:windowEnterTransition">@transition/domain_transition</item>-->
+<!--        <item name="android:windowExitTransition">@transition/domain_transition</item>-->
+
+
+    </style>
+
+    <style name="BottomNavigationChip">
+        <item name="chipBackgroundColor">@color/white</item>
+        <item name="chipCornerRadius">5dp</item>
+        <item name="chipStartPadding">18dp</item>
+        <item name="chipIconSize">18dp</item>
     </style>
 
     <style name="heading1" parent="TextAppearance.AppCompat.Headline">

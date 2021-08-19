@@ -35,10 +35,10 @@
             android:hint="@string/name"
             app:boxBackgroundColor="@android:color/transparent"
             app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="5dp"
-            app:boxCornerRadiusBottomStart="5dp"
-            app:boxCornerRadiusTopEnd="5dp"
-            app:boxCornerRadiusTopStart="5dp">
+            app:boxCornerRadiusBottomEnd="@dimen/corner_radius"
+            app:boxCornerRadiusBottomStart="@dimen/corner_radius"
+            app:boxCornerRadiusTopEnd="@dimen/corner_radius"
+            app:boxCornerRadiusTopStart="@dimen/corner_radius">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name"
@@ -56,10 +56,10 @@
             android:hint="@string/email"
             app:boxBackgroundColor="@android:color/transparent"
             app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="5dp"
-            app:boxCornerRadiusBottomStart="5dp"
-            app:boxCornerRadiusTopEnd="5dp"
-            app:boxCornerRadiusTopStart="5dp">
+            app:boxCornerRadiusBottomEnd="@dimen/corner_radius"
+            app:boxCornerRadiusBottomStart="@dimen/corner_radius"
+            app:boxCornerRadiusTopEnd="@dimen/corner_radius"
+            app:boxCornerRadiusTopStart="@dimen/corner_radius">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email"
@@ -77,10 +77,10 @@
             android:hint="@string/phone"
             app:boxBackgroundColor="@android:color/transparent"
             app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="5dp"
-            app:boxCornerRadiusBottomStart="5dp"
-            app:boxCornerRadiusTopEnd="5dp"
-            app:boxCornerRadiusTopStart="5dp">
+            app:boxCornerRadiusBottomEnd="@dimen/corner_radius"
+            app:boxCornerRadiusBottomStart="@dimen/corner_radius"
+            app:boxCornerRadiusTopEnd="@dimen/corner_radius"
+            app:boxCornerRadiusTopStart="@dimen/corner_radius">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/phone"
@@ -98,10 +98,10 @@
             android:hint="@string/idea"
             app:boxBackgroundColor="@android:color/transparent"
             app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="5dp"
-            app:boxCornerRadiusBottomStart="5dp"
-            app:boxCornerRadiusTopEnd="5dp"
-            app:boxCornerRadiusTopStart="5dp">
+            app:boxCornerRadiusBottomEnd="@dimen/corner_radius"
+            app:boxCornerRadiusBottomStart="@dimen/corner_radius"
+            app:boxCornerRadiusTopEnd="@dimen/corner_radius"
+            app:boxCornerRadiusTopStart="@dimen/corner_radius">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/idea"
@@ -119,10 +119,10 @@
             android:hint="@string/description"
             app:boxBackgroundColor="@android:color/transparent"
             app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="5dp"
-            app:boxCornerRadiusBottomStart="5dp"
-            app:boxCornerRadiusTopEnd="5dp"
-            app:boxCornerRadiusTopStart="5dp">
+            app:boxCornerRadiusBottomEnd="@dimen/corner_radius"
+            app:boxCornerRadiusBottomStart="@dimen/corner_radius"
+            app:boxCornerRadiusTopEnd="@dimen/corner_radius"
+            app:boxCornerRadiusTopStart="@dimen/corner_radius">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/description"

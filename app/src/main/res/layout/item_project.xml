@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/relativeLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/margin_medium"
     android:layout_marginVertical="@dimen/margin_small"
     android:clickable="true"
+    android:elevation="0dp"
     android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="@dimen/corner_radius"
+    app:cardElevation="0dp"
+    app:contentPadding="1dp"
+    tools:cardBackgroundColor="@color/colorTertiaryBlue">
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="128dp"
-            android:layout_height="128dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:background="@color/colorTertiaryBlue"
-            android:contentDescription="@string/project_logo" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_project">
 
         <TextView
             android:id="@+id/title"
@@ -28,30 +29,45 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_small"
             android:layout_marginVertical="@dimen/margin_small"
-            android:layout_toStartOf="@id/view"
+            android:layout_alignParentTop="true"
             android:layout_toEndOf="@id/image"
-            android:textAppearance="@style/body1" />
+            android:layout_toStartOf="@id/viewMore"
+            android:textAppearance="@style/heading1" />
+
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@string/event_image"
+            android:background="@drawable/bg_project"
+            tools:src="@drawable/ic_error" />
 
         <TextView
             android:id="@+id/details"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/title"
-            android:layout_marginHorizontal="@dimen/margin_small"
-            android:layout_toStartOf="@id/view"
-            android:layout_toEndOf="@id/image"
-            android:maxLines="5" />
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/viewMore"
+            android:ellipsize="end"
+            android:paddingHorizontal="@dimen/margin_small"
+            android:paddingBottom="@dimen/margin_small"
+            tools:text="@string/placeholder_text_long" />
 
 
         <ImageButton
-            android:id="@+id/view"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:id="@+id/viewMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/view"
-            android:src="@drawable/ic_arrow" />
+            android:padding="@dimen/margin_small"
+            android:src="@drawable/ic_baseline_keyboard_arrow_down_24" />
 
     </RelativeLayout>
 

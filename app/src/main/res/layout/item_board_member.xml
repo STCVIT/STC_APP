@@ -1,61 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/margin_medium"
     android:layout_marginVertical="@dimen/margin_small"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="0dp"
+    tools:cardBackgroundColor="@color/colorTertiaryBlue">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
         <ImageView
             android:id="@+id/image"
-            android:layout_width="112dp"
-            android:layout_height="112dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:background="@color/colorTertiaryBlue"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
             android:contentDescription="@string/member_photo"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@color/colorTertiaryBlue" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginHorizontal="@dimen/margin_small"
-            android:layout_toEndOf="@id/image"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginVertical="1dp"
+            android:layout_marginEnd="1dp"
+            android:background="@drawable/bg_board"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/image"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/margin_small"
-                android:textAppearance="@style/body1" />
+                android:layout_marginTop="@dimen/margin_small"
+                android:textAppearance="@style/body1"
+                tools:text="Name" />
 
             <TextView
                 android:id="@+id/position"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_small"
                 android:textAppearance="@style/subtitle1"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                tools:text="Position" />
 
             <TextView
                 android:id="@+id/phrase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/margin_small"
-                android:textAppearance="@style/body2" />
+                android:layout_marginTop="@dimen/margin_small"
+                android:textAppearance="@style/body2"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
         </LinearLayout>
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

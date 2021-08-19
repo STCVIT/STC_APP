@@ -2,11 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@id/navigation_home">
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.mstc.mstcapp.ui.home.HomeFragment"
+        android:name="com.mstc.mstcapp.ui.home.FeedFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_swipe_recycler" />
 
@@ -18,20 +18,13 @@
         tools:layout="@layout/fragment_explore" />
 
     <fragment
-        android:id="@+id/navigation_about"
-        android:name="com.mstc.mstcapp.ui.explore.about.AboutFragment"
-        android:label="@string/title_about"
-        tools:layout="@layout/fragment_recycler_view" />
-    <fragment
         android:id="@+id/navigation_resources"
         android:name="com.mstc.mstcapp.ui.resources.DomainsFragment"
         android:label="@string/title_resources"
-        tools:layout="@layout/fragment_resources" >
+        tools:layout="@layout/fragment_resources">
         <action
             android:id="@+id/action_navigation_resources_to_navigation_view_resource_activity"
-            app:destination="@id/navigation_view_resource_activity"
-            app:enterAnim="@anim/fragment_fade_enter"
-            app:exitAnim="@anim/fragment_fade_exit" />
+            app:destination="@id/navigation_view_resource_activity" />
     </fragment>
     <activity
         android:id="@+id/navigation_view_resource_activity"
@@ -40,6 +33,6 @@
         tools:layout="@layout/activity_view_resource">
         <argument
             android:name="domain"
-            app:argType="com.mstc.mstcapp.model.DomainModel" />
+            app:argType="com.mstc.mstcapp.model.Domain" />
     </activity>
 </navigation>

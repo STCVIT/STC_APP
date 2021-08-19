@@ -9,13 +9,14 @@
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
+            android:background="@drawable/bg_explore"
             android:layout_height="300dp"
             app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
-            app:layout_scrollInterpolator="@android:anim/decelerate_interpolator"
-
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
+<!--            app:layout_scrollInterpolator="@android:anim/decelerate_interpolator"-->
 
             <ImageView
                 android:layout_width="150dp"
@@ -34,7 +35,8 @@
             android:layout_gravity="bottom"
             app:layout_scrollFlags="noScroll"
             app:tabIndicatorColor="@color/textColorPrimary"
-            app:tabSelectedTextColor="@color/textColorPrimary">
+            app:tabSelectedTextColor="@color/textColorPrimary"
+            app:tabTextAppearance="@style/body1">
 
         </com.google.android.material.tabs.TabLayout>
 

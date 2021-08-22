@@ -140,7 +140,7 @@ class FeedFragment : Fragment() {
                 // Show loading spinner during initial load or refresh.
                 swipeRefreshLayout.isRefreshing = loadState.mediator?.refresh is LoadState.Loading
                 // Show the retry state if initial load or refresh fails.
-                retryButton.isVisible =
+                errorLayout.isVisible =
                     loadState.mediator?.refresh is LoadState.Error && feedAdapter.itemCount == 0
                 // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
 //                val errorState = loadState.source.append as? LoadState.Error

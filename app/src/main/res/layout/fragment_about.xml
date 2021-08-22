@@ -2,6 +2,7 @@
 
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -16,41 +17,62 @@
             android:animateLayoutChanges="true"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/helper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_medium"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:text="Student Technical Community is a student community in VIT Vellore aimed at enhancing skills of its members in various domains through quality projects and events tailored for cutting edge skill development"
-                android:textAppearance="@style/body1"
-                android:textColor="#000000" />
+                android:animateLayoutChanges="true"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
 
-            <TextView
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_medium"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:text="@string/about_text"
+                    android:textAppearance="@style/body1"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_medium"
+                    android:text="@string/the_team"
+                    android:textAppearance="@style/body1"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/errorLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_medium"
-                android:text="The Team"
-                android:textAppearance="@style/body1"
-                android:textColor="#000000"
-                android:textStyle="bold" />
+                android:orientation="vertical"
+                android:padding="@dimen/margin_large"
+                android:visibility="gone"
+                tools:visibility="visible">
 
-            <ProgressBar
-                android:id="@+id/loading"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:indeterminate="true"
-                android:indeterminateTint="@color/colorPrimary"
-                android:visibility="gone" />
+                <TextView
+                    android:id="@+id/error_msg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:text="Unable to fetch data! Please check your internet connection..."
+                    android:textAlignment="center"
+                    android:textAppearance="@style/body1" />
 
-            <Button
-                android:id="@+id/retry_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_large"
-                android:text="@string/retry"
-                android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/retry_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:text="@string/retry" />
+
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"

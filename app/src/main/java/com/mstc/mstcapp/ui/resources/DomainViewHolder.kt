@@ -18,12 +18,11 @@ class DomainViewHolder(
         binding.apply {
             domain.text = item.domain
             image.setImageDrawable((ContextCompat.getDrawable(root.context, item.drawable)))
-            val drawable = ResourcesCompat.getDrawable(
+            background.background = ResourcesCompat.getDrawable(
                 root.context.resources,
                 R.drawable.bg_resource,
                 ContextThemeWrapper(root.context, item.style).theme
             )
-            background.background = drawable
         }
     }
 

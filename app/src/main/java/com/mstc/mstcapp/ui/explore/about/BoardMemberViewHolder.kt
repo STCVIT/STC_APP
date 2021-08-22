@@ -34,6 +34,8 @@ class BoardMemberViewHolder(private val binding: ItemBoardMemberBinding) :
             Glide.with(root.context)
                 .load(boardMember.photo)
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .placeholder(R.drawable.loading_placeholder)
+                .fallback(R.drawable.ic_error)
                 .into(image)
         }
     }

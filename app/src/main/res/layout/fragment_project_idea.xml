@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -28,17 +27,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/name1"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/TextInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/margin_small"
-            android:hint="@string/name"
-            app:boxBackgroundColor="@android:color/transparent"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="@dimen/corner_radius"
-            app:boxCornerRadiusBottomStart="@dimen/corner_radius"
-            app:boxCornerRadiusTopEnd="@dimen/corner_radius"
-            app:boxCornerRadiusTopStart="@dimen/corner_radius">
+            android:layout_height="wrap_content"
+            android:hint="@string/name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name"
@@ -49,17 +41,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email1"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/TextInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/margin_small"
-            android:hint="@string/email"
-            app:boxBackgroundColor="@android:color/transparent"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="@dimen/corner_radius"
-            app:boxCornerRadiusBottomStart="@dimen/corner_radius"
-            app:boxCornerRadiusTopEnd="@dimen/corner_radius"
-            app:boxCornerRadiusTopStart="@dimen/corner_radius">
+            android:layout_height="wrap_content"
+            android:hint="@string/email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email"
@@ -70,17 +55,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/phone1"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/TextInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/margin_small"
-            android:hint="@string/phone"
-            app:boxBackgroundColor="@android:color/transparent"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="@dimen/corner_radius"
-            app:boxCornerRadiusBottomStart="@dimen/corner_radius"
-            app:boxCornerRadiusTopEnd="@dimen/corner_radius"
-            app:boxCornerRadiusTopStart="@dimen/corner_radius">
+            android:layout_height="wrap_content"
+            android:hint="@string/phone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/phone"
@@ -91,17 +69,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/idea1"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/TextInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/margin_small"
-            android:hint="@string/idea"
-            app:boxBackgroundColor="@android:color/transparent"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="@dimen/corner_radius"
-            app:boxCornerRadiusBottomStart="@dimen/corner_radius"
-            app:boxCornerRadiusTopEnd="@dimen/corner_radius"
-            app:boxCornerRadiusTopStart="@dimen/corner_radius">
+            android:layout_height="wrap_content"
+            android:hint="@string/idea">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/idea"
@@ -112,17 +83,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/description1"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:hint="@string/description"
-            app:boxBackgroundColor="@android:color/transparent"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="@dimen/corner_radius"
-            app:boxCornerRadiusBottomStart="@dimen/corner_radius"
-            app:boxCornerRadiusTopEnd="@dimen/corner_radius"
-            app:boxCornerRadiusTopStart="@dimen/corner_radius">
+            android:hint="@string/description">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/description"

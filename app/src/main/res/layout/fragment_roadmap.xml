@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -14,22 +15,35 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ProgressBar
-                android:id="@+id/loading"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            <LinearLayout
+                android:id="@+id/errorLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:indeterminate="true"
-                android:indeterminateTint="@color/colorPrimary"
-                android:visibility="gone" />
+                android:orientation="vertical"
+                android:padding="@dimen/margin_large"
+                android:visibility="gone"
+                tools:visibility="visible">
 
-            <Button
-                android:id="@+id/retry_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/retry"
-                android:visibility="gone" />
+                <TextView
+                    android:id="@+id/error_msg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:text="Unable to fetch data! Please check your internet connection..."
+                    android:textAlignment="center"
+                    android:textAppearance="@style/body1" />
+
+
+                <Button
+                    android:id="@+id/retry_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:text="@string/retry" />
+
+            </LinearLayout>
+
 
             <ImageView
                 android:id="@+id/roadmapImage"

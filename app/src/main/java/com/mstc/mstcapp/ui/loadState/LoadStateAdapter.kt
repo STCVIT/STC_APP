@@ -14,10 +14,9 @@ class LoadStateAdapter(
         if (loadState is LoadState.Error && loadState.error.message.toString() == "HTTP 404 Not Found") {
             Log.e(TAG, "onBindViewHolder: End Reached")
             return
-        } else {
-            Log.e(TAG, "onBindViewHolder: binding load state" )
-            holder.bind(loadState)
         }
+        Log.e(TAG, "onBindViewHolder: binding load state")
+        holder.bind(loadState)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): LoadStateViewHolder {

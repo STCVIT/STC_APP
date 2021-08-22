@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.mstc.mstcapp.databinding.FragmentAboutBinding
-import com.mstc.mstcapp.databinding.FragmentSwipeRecyclerBinding
 import com.mstc.mstcapp.model.Result
 import com.mstc.mstcapp.model.explore.BoardMember
 
@@ -41,19 +40,22 @@ class AboutFragment : Fragment() {
                     run {
                         when (result) {
                             is Result.Loading -> {
-                                retryButton.visibility = View.GONE
+                                errorLayout.visibility = View.GONE
                                 swipeRefreshLayout.isRefreshing = true
                                 if (result.data != null) {
+                                    helper.visibility = View.VISIBLE
                                     boardMemberAdapter.list = result.data
                                 }
                             }
                             is Result.Success<List<BoardMember>> -> {
                                 boardMemberAdapter.list = result.data
-                                retryButton.visibility = View.GONE
+                                errorLayout.visibility = View.GONE
                                 swipeRefreshLayout.isRefreshing = false
+                                helper.visibility = View.VISIBLE
                             }
                             else -> {
-                                retryButton.visibility = View.VISIBLE
+                                helper.visibility = View.GONE
+                                errorLayout.visibility = View.VISIBLE
                                 swipeRefreshLayout.isRefreshing = false
                             }
                         }

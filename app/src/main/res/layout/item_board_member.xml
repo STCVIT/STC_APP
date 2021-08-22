@@ -5,14 +5,7 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/margin_medium"
-    android:layout_marginVertical="@dimen/margin_small"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="0dp"
-    tools:cardBackgroundColor="@color/colorTertiaryBlue">
+    style="@style/item_recycler_view">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

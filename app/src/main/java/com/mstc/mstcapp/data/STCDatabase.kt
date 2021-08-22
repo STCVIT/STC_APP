@@ -1,6 +1,7 @@
 package com.mstc.mstcapp.data
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -12,19 +13,21 @@ import com.mstc.mstcapp.model.resource.Detail
 import com.mstc.mstcapp.model.resource.Resource
 import com.mstc.mstcapp.model.resource.Roadmap
 
-@Database(entities = [
-    Detail::class,
-    Roadmap::class,
-    Resource::class,
-    BoardMember::class,
-    Event::class,
-    Project::class
-], version = 1, exportSchema = false)
+private const val TAG = "STCDatabase"
+@Database(
+    entities = [
+        Detail::class,
+        Roadmap::class,
+        Resource::class,
+        BoardMember::class,
+        Event::class,
+        Project::class
+    ], version = 1, exportSchema = false
+)
 abstract class STCDatabase : RoomDatabase() {
     abstract fun databaseDao(): DatabaseDao
 
     companion object {
-
         @Volatile
         private var INSTANCE: STCDatabase? = null
 
@@ -37,10 +40,11 @@ abstract class STCDatabase : RoomDatabase() {
         private fun buildDatabase(context: Context) =
             Room.databaseBuilder(
                 context.applicationContext,
-                STCDatabase::class.java, "STCDatabase.db")
+                STCDatabase::class.java, "STCDatabase.db"
+            )
                 .addCallback(object : Callback() {
-                    override fun onOpen(db: SupportSQLiteDatabase) {
-                        super.onOpen(db)
+                    override fun onCreate(db: SupportSQLiteDatabase) {
+                        super.onCreate(db)
                         val repository = ResourceRepository(context = context, INSTANCE!!)
                         repository.getBoardMembers()
                         repository.getProjects()

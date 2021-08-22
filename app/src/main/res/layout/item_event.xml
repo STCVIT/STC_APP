@@ -3,14 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardView"
+    style="@style/item_recycler_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/margin_medium"
-    android:layout_marginVertical="@dimen/margin_small"
-    android:animateLayoutChanges="true"
-    app:cardBackgroundColor="@color/colorTertiaryYellow"
-    app:cardCornerRadius="@dimen/corner_radius"
-    app:cardElevation="0dp">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -64,6 +59,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small"
+                android:ellipsize="end"
+                android:maxLines="3"
                 android:textAppearance="@style/body1"
                 tools:text="@string/placeholder_text_long" />
         </LinearLayout>

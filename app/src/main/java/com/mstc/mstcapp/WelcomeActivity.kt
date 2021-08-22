@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -23,10 +22,8 @@ class WelcomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(
-            this,
-            R.layout.activity_welcome
-        ) as ActivityWelcomeBinding
+        binding = ActivityWelcomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         val sharedPreferences =
             context.getSharedPreferences(Constants.STC_SHARED_PREFERENCES, MODE_PRIVATE)
         pagerAdapter = WelcomePagerAdapter(supportFragmentManager)

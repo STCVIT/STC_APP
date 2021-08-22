@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
@@ -16,26 +17,37 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:animateLayoutChanges="true">
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
 
-            <ProgressBar
-                android:id="@+id/loading"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            <LinearLayout
+                android:id="@+id/errorLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:indeterminate="true"
-                android:indeterminateTint="@color/colorPrimary"
-                android:visibility="gone" />
+                android:orientation="vertical"
+                android:padding="@dimen/margin_large"
+                android:visibility="gone"
+                tools:visibility="visible">
 
-            <Button
-                android:id="@+id/retry_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_large"
-                android:text="@string/retry"
-                android:visibility="gone" />
+                <TextView
+                    android:id="@+id/error_msg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:text="Unable to fetch data! Please check your internet connection..."
+                    android:textAlignment="center"
+                    android:textAppearance="@style/body1" />
+
+
+                <Button
+                    android:id="@+id/retry_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:text="@string/retry" />
+
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"

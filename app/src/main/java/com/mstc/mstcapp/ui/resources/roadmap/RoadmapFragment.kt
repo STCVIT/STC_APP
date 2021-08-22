@@ -2,13 +2,9 @@ package com.mstc.mstcapp.ui.resources.roadmap
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -17,6 +13,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.mstc.mstcapp.R
 import com.mstc.mstcapp.databinding.FragmentRoadmapBinding
 import com.mstc.mstcapp.model.Result
 import com.mstc.mstcapp.model.resource.Roadmap
@@ -43,7 +40,7 @@ class RoadmapFragment(val domain: String) : Fragment() {
                 .observe(viewLifecycleOwner, { result ->
                     when (result) {
                         is Result.Loading -> {
-                            retryButton.visibility = GONE
+                            errorLayout.visibility = View.GONE
                             swipeRefreshLayout.isRefreshing = true
                             result.data?.let {
                                 setImage(it.image)
@@ -53,7 +50,7 @@ class RoadmapFragment(val domain: String) : Fragment() {
                             setImage(result.data.image)
                         }
                         else -> {
-                            retryButton.visibility = VISIBLE
+                            errorLayout.visibility = View.VISIBLE
                             swipeRefreshLayout.isRefreshing = false
                         }
                     }
@@ -68,10 +65,11 @@ class RoadmapFragment(val domain: String) : Fragment() {
     }
 
     private fun setImage(image: String) {
-        binding.apply{
+        binding.apply {
             Glide.with(requireContext())
                 .load(image)
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .fallback(R.drawable.ic_error)
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(
                         e: GlideException?,
@@ -79,7 +77,7 @@ class RoadmapFragment(val domain: String) : Fragment() {
                         target: Target<Drawable>?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        retryButton.visibility = VISIBLE
+                        errorLayout.visibility = View.VISIBLE
                         swipeRefreshLayout.isRefreshing = false
                         return false
                     }
@@ -91,7 +89,7 @@ class RoadmapFragment(val domain: String) : Fragment() {
                         dataSource: DataSource?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        retryButton.visibility = GONE
+                        errorLayout.visibility = View.GONE
                         swipeRefreshLayout.isRefreshing = false
                         return false
                     }

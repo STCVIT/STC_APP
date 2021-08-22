@@ -4,13 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
-import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.BaseTransientBottomBar
@@ -26,47 +24,16 @@ private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-    var isHome = false
     val context: Context = this
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-
-        binding.drawerLayout.apply {
-            findViewById<View>(R.id.share)
-                .setOnClickListener { share() }
-            findViewById<View>(R.id.feedback)
-                .setOnClickListener {
-                    openURL(
-                        context,
-                        "market://details?id=" + context.packageName
-                    )
-                }
-            findViewById<View>(R.id.idea)
-                .setOnClickListener { openIdeaDialog() }
-            findViewById<View>(R.id.instagram)
-                .setOnClickListener { openURL(context, Constants.INSTAGRAM_URL) }
-            findViewById<View>(R.id.facebook)
-                .setOnClickListener { openURL(context, Constants.FACEBOOK_URL) }
-            findViewById<View>(R.id.linkedin)
-                .setOnClickListener { openURL(context, Constants.LINKEDIN_URL) }
-            findViewById<View>(R.id.github)
-                .setOnClickListener { openURL(context, Constants.GITHUB_URL) }
-            findViewById<View>(R.id.privacy_policy)
-                .setOnClickListener { openURL(context, Constants.PRIVACY_URL) }
-        }
-//        val navBuilder = NavOptions.Builder()
-//        navBuilder
-//            .setEnterAnim(android.R.anim.slide_in_left)
-//            .setExitAnim(android.R.anim.fade_out)
-//            .setExitAnim(android.R.anim.fade_out)
-//            .setPopEnterAnim(R.anim.slide_out_left)
-//            .setPopExitAnim(R.anim.slide_in_right)
-
+        initDrawer()
         binding.apply {
             selectTab(home)
             home.setOnClickListener {
@@ -77,16 +44,20 @@ class MainActivity : AppCompatActivity() {
 
             resources.setOnClickListener {
                 selectTab(resources)
-                if (navController.currentDestination?.id != R.id.navigation_home)
-                    navController.popBackStack()
-                navController.navigate(R.id.navigation_resources)
+                navController.apply {
+                    if (currentDestination?.id != R.id.navigation_home)
+                        popBackStack()
+                    navigate(R.id.navigation_resources)
+                }
             }
 
             explore.setOnClickListener {
                 selectTab(explore)
-                if (navController.currentDestination?.id != R.id.navigation_home)
-                    navController.popBackStack()
-                navController.navigate(R.id.navigation_explore)
+                navController.apply {
+                    if (currentDestination?.id != R.id.navigation_home)
+                        popBackStack()
+                    navigate(R.id.navigation_explore)
+                }
             }
 
             val toggle = ActionBarDrawerToggle(
@@ -110,9 +81,8 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (navController.currentDestination?.id == R.id.navigation_home) {
             exitCount++
-            val view = findViewById<View>(android.R.id.content)
             Snackbar.make(
-                context, view, "Press back again to exit",
+                context, findViewById(android.R.id.content), "Press back again to exit",
                 BaseTransientBottomBar.LENGTH_SHORT
             ).addCallback(object : Snackbar.Callback() {
                 override fun onDismissed(transientBottomBar: Snackbar, event: Int) {
@@ -128,6 +98,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun initDrawer() {
+        binding.navigationDrawer.apply {
+            share.setOnClickListener { share() }
+            feedback.setOnClickListener {
+                openURL(
+                    context,
+                    "market://details?id=" + context.packageName
+                )
+            }
+            idea.setOnClickListener {
+                ProjectIdeaFragment
+                    .newInstance()
+                    .show(supportFragmentManager, "projectFragment")
+            }
+            instagram.setOnClickListener { openURL(context, Constants.INSTAGRAM_URL) }
+            facebook.setOnClickListener { openURL(context, Constants.FACEBOOK_URL) }
+            linkedin.setOnClickListener { openURL(context, Constants.LINKEDIN_URL) }
+            github.setOnClickListener { openURL(context, Constants.GITHUB_URL) }
+            privacyPolicy.setOnClickListener { openURL(context, Constants.PRIVACY_URL) }
+        }
+    }
+
     private fun selectTab(chip: Chip) {
         for (j in arrayOf(binding.home, binding.resources, binding.explore)) {
             setUnselected(j)
@@ -138,21 +130,24 @@ class MainActivity : AppCompatActivity() {
     private fun setUnselected(chip: Chip) {
         chip.chipBackgroundColor =
             ColorStateList.valueOf(ContextCompat.getColor(context, R.color.white))
-        chip.setTextColor(ContextCompat.getColor(context, R.color.textColorPrimary))
-        chip.chipIconTint =
-            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.textColorPrimary))
+        ColorStateList.valueOf(ContextCompat.getColor(context, R.color.textColorPrimary))
+            .also {
+                chip.chipIconTint = it
+                chip.setTextColor(it)
+            }
     }
 
     private fun setSelected(chip: Chip) {
         chip.chipBackgroundColor =
             ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorTertiaryBlue))
-        chip.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
-        chip.chipIconTint =
-            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorPrimary))
+        ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorPrimary))
+            .also {
+                chip.setTextColor(it)
+                chip.chipIconTint = it
+            }
     }
 
     private fun share() {
-        val intent = Intent(Intent.ACTION_SEND)
         val rand = Random()
         val messages =
             arrayOf(
@@ -169,17 +164,14 @@ class MainActivity : AppCompatActivity() {
             
             Guess what, it is FREE!
             """.trimIndent()
-        intent.type = "text/plain"
-        intent.putExtra(Intent.EXTRA_TEXT, message)
+
+        val intent = Intent(Intent.ACTION_SEND)
+            .also {
+                it.type = "text/plain"
+                it.putExtra(Intent.EXTRA_TEXT, message)
+            }
         startActivity(Intent.createChooser(intent, "Share Using"))
     }
-
-    private fun openIdeaDialog() {
-        val fm = supportFragmentManager
-        val projectIdeaFragment: ProjectIdeaFragment = ProjectIdeaFragment.newInstance()
-        projectIdeaFragment.show(fm, "projectFragment")
-    }
-
 
     companion object {
         private val fetchedData = HashMap<String, Boolean>()

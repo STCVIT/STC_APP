@@ -1,11 +1,7 @@
 package com.mstc.mstcapp.ui.home
 
 import android.graphics.BitmapFactory
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.util.Base64
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -24,32 +20,19 @@ class FeedViewHolder(
     private val binding: ItemFeedBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private val MAX_LINES = 3
-
     fun bind(feed: Feed) {
         binding.apply {
             title.text = feed.title
+            description.text = feed.description
+            description.maxLines = if (feed.expand) 100 else 3
 
-            description.post {
-                run {
-                    description.text = feed.description
-                    if (description.lineCount > MAX_LINES) {
-                        feed.expand = true
-                        collapseDescription(feed)
-                    }
-                }
-            }
             image.setOnClickListener { openURL(root.context, feed.link) }
 
             linearLayout.setOnClickListener {
-                description.text = feed.description
-                if (description.lineCount > MAX_LINES) {
-                    if (feed.expand) collapseDescription(feed)
-                    else expandDescription(feed)
-                } else {
-                    Log.i(TAG, "bind: does not exceed limit")
-                }
+                feed.expand = !feed.expand
+                description.maxLines = if (feed.expand) 100 else 3
             }
+
             cardView.apply {
                 setCardBackgroundColor(
                     ContextCompat.getColor(
@@ -61,64 +44,11 @@ class FeedViewHolder(
                         }
                     )
                 )
-//                layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-//                layoutTransition.setDuration(200)
             }
         }
         loadImage(feed)
     }
 
-    private fun collapseDescription(feed: Feed) {
-        binding.description.apply {
-            val lastCharShown: Int =
-                layout.getLineVisibleEnd(MAX_LINES - 1)
-            maxLines = MAX_LINES
-            val moreString = "Read More"
-            val actionDisplayText: String =
-                feed.description.substring(
-                    0,
-                    lastCharShown - "  $moreString".length - 3
-                ) + "...  $moreString"
-            val truncatedSpannableString = SpannableString(actionDisplayText)
-            val startIndex = actionDisplayText.indexOf(moreString)
-            truncatedSpannableString.setSpan(
-                ForegroundColorSpan(
-                    context.getColor(
-                        R.color.colorPrimary
-                    )
-                ),
-                startIndex,
-                startIndex + moreString.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            text = truncatedSpannableString
-
-        }
-        feed.expand = false
-    }
-
-    private fun expandDescription(feed: Feed) {
-        binding.description.apply {
-            val suffix = "Read Less"
-            maxLines = 100
-            val actionDisplayText =
-                "${feed.description}  $suffix"
-            val truncatedSpannableString = SpannableString(actionDisplayText)
-            val startIndex = actionDisplayText.indexOf(suffix)
-            truncatedSpannableString.setSpan(
-                ForegroundColorSpan(
-                    context.getColor(
-                        R.color.colorPrimary
-                    )
-                ),
-                startIndex,
-                startIndex + suffix.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            text = truncatedSpannableString
-        }
-        feed.expand = true
-    }
 
     private fun loadImage(feed: Feed) = runBlocking {
         binding.apply {
@@ -149,8 +79,7 @@ class FeedViewHolder(
         fun create(parent: ViewGroup): FeedViewHolder {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_feed, parent, false)
-            val binding = ItemFeedBinding.bind(view)
-            return FeedViewHolder(binding)
+            return FeedViewHolder(ItemFeedBinding.bind(view))
         }
     }
 

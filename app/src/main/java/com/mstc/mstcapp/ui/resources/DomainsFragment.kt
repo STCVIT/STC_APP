@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.transition.TransitionInflater
 import com.mstc.mstcapp.R
 import com.mstc.mstcapp.databinding.FragmentResourcesBinding
 import com.mstc.mstcapp.model.Domain
@@ -21,13 +20,6 @@ class DomainsFragment : Fragment() {
 
     private lateinit var binding: FragmentResourcesBinding
     private lateinit var list: ArrayList<Domain>
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        val inflater = TransitionInflater.from(requireContext())
-//        enterTransition = inflater.inflateTransition(R.transition.fade)
-//        exitTransition = inflater.inflateTransition(R.transition.fade)
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,9 +51,10 @@ class DomainsFragment : Fragment() {
         }
     }
 
-    private fun viewResource(Domain: Domain) {
+    private fun viewResource(domain: Domain) {
         val bundle = Bundle()
-        bundle.putSerializable("domain", Domain)
+        bundle.putSerializable("domain", domain)
+        bundle.putString("key","iuwh8291712")
         NavHostFragment.findNavController(this@DomainsFragment)
             .navigate(
                 R.id.action_navigation_resources_to_navigation_view_resource_activity,

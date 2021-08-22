@@ -44,8 +44,7 @@ class ResourceViewHolder(
         fun create(parent: ViewGroup): ResourceViewHolder {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_resource, parent, false)
-            val binding = ItemResourceBinding.bind(view)
-            return ResourceViewHolder(binding)
+            return ResourceViewHolder(ItemResourceBinding.bind(view))
         }
     }
 }

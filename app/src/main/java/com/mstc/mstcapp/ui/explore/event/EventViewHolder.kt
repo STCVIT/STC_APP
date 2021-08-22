@@ -1,11 +1,7 @@
 package com.mstc.mstcapp.ui.explore.event
 
 import android.graphics.BitmapFactory
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.util.Base64
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -28,15 +24,9 @@ class EventViewHolder(private val binding: ItemEventBinding) :
     fun bind(event: Event) {
         binding.apply {
             title.text = event.title
-            description.post {
-                run {
-                    description.text = event.description
-                    if (description.lineCount > MAX_LINES) {
-                        event.expand = true
-                        collapseDescription(event)
-                    }
-                }
-            }
+            description.text = event.description
+
+            description.maxLines = if (event.expand) 100 else 3
 
             status.text = event.status
             status.setTextColor(
@@ -52,19 +42,15 @@ class EventViewHolder(private val binding: ItemEventBinding) :
             loadImage(event)
             image.setOnClickListener { openURL(root.context, event.link) }
             linearLayout.setOnClickListener {
-                    description.text = event.description
-                    if (description.lineCount > MAX_LINES) {
-                        if (event.expand) collapseDescription(event)
-                        else expandDescription(event)
-                    } else {
-                        Log.i(TAG, "bind: does not exceed limit")
-                    }
-                }
+                event.expand = !event.expand
+                description.maxLines = if (event.expand) 100 else 3
+
+            }
             cardView.apply {
                 setCardBackgroundColor(
                     ContextCompat.getColor(
                         context,
-                        when (layoutPosition % 3){
+                        when (layoutPosition % 3) {
                             0 -> R.color.colorTertiaryBlue
                             1 -> R.color.colorTertiaryRed
                             else -> R.color.colorTertiaryYellow
@@ -74,57 +60,6 @@ class EventViewHolder(private val binding: ItemEventBinding) :
             }
         }
 
-    }
-
-    private fun collapseDescription(event: Event) {
-        binding.description.apply {
-            val lastCharShown: Int =
-                layout.getLineVisibleEnd(MAX_LINES - 1)
-            maxLines = MAX_LINES
-            val moreString = "Read More"
-            val actionDisplayText: String =
-                event.description.substring(
-                    0,
-                    lastCharShown - "  $moreString".length - 3
-                ) + "...  $moreString"
-            val truncatedSpannableString = SpannableString(actionDisplayText)
-            val startIndex = actionDisplayText.indexOf(moreString)
-            truncatedSpannableString.setSpan(
-                ForegroundColorSpan(
-                    context.getColor(
-                        R.color.colorPrimary
-                    )
-                ),
-                startIndex,
-                startIndex + moreString.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            text = truncatedSpannableString
-        }
-        event.expand = false
-    }
-
-    private fun expandDescription(event: Event) {
-        binding.description.apply {
-            val suffix = "Read Less"
-            maxLines = 100
-            val actionDisplayText =
-                "${event.description}  $suffix"
-            val truncatedSpannableString = SpannableString(actionDisplayText)
-            val startIndex = actionDisplayText.indexOf(suffix)
-            truncatedSpannableString.setSpan(
-                ForegroundColorSpan(
-                    context.getColor(
-                        R.color.colorPrimary
-                    )
-                ),
-                startIndex,
-                startIndex + suffix.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            text = truncatedSpannableString
-        }
-        event.expand = true
     }
 
     private fun loadImage(event: Event) = runBlocking {
@@ -156,8 +91,7 @@ class EventViewHolder(private val binding: ItemEventBinding) :
         fun create(parent: ViewGroup): EventViewHolder {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_event, parent, false)
-            val binding = ItemEventBinding.bind(view)
-            return EventViewHolder(binding)
+            return EventViewHolder(ItemEventBinding.bind(view))
         }
     }
 }

@@ -23,6 +23,6 @@ class AboutViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun refreshBoard() {
-        viewModelScope.launch { repository.refreshBoard() }
+        viewModelScope.launch { repository.getBoardMembers() }
     }
 }

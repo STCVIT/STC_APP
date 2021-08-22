@@ -36,7 +36,7 @@ class EventFragment : Fragment() {
                     run {
                         when (result) {
                             is Result.Loading -> {
-                                retryButton.visibility = View.GONE
+                                errorLayout.visibility = View.GONE
                                 swipeRefreshLayout.isRefreshing = true
                                 result.data?.let {
                                     eventAdapter.list = it
@@ -44,11 +44,11 @@ class EventFragment : Fragment() {
                             }
                             is Result.Success<List<Event>> -> {
                                 eventAdapter.list = result.data
-                                retryButton.visibility = View.GONE
+                                errorLayout.visibility = View.GONE
                                 swipeRefreshLayout.isRefreshing = false
                             }
                             else -> {
-                                retryButton.visibility = View.VISIBLE
+                                errorLayout.visibility = View.VISIBLE
                                 swipeRefreshLayout.isRefreshing = false
                             }
                         }

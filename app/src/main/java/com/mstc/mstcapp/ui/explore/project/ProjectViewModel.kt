@@ -23,6 +23,6 @@ class ProjectViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun refreshProjects() {
-        viewModelScope.launch { repository.refreshProjects() }
+        viewModelScope.launch { repository.getProjects() }
     }
 }

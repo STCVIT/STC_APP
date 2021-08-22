@@ -4,7 +4,6 @@ import android.graphics.Rect
 import android.text.SpannableString
 import android.text.Spanned
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.core.content.ContextCompat
@@ -29,30 +28,20 @@ class ProjectViewHolder(
     fun bind(project: Project) {
         binding.apply {
             title.text = project.title
-            details.post {
-                run {
-                    details.text = project.description
-                    if (details.lineCount < 3)
-                        viewMore.visibility = View.GONE
-                    else
-                        viewMore.visibility = View.VISIBLE
-                }
+
+            viewProject.setOnClickListener {
+                openURL(root.context, project.link)
             }
-            viewMore.setOnClickListener {
-                project.expand = !project.expand
-                viewMore.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        root.context,
-                        if (!project.expand) R.drawable.ic_baseline_keyboard_arrow_down_24
-                        else R.drawable.ic_baseline_keyboard_arrow_up_24
-                    )
-                )
-                makeSpan(project)
+
+            details.post {
+                run { details.text = project.description }
             }
 
             Glide.with(root.context)
                 .load(project.image)
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .placeholder(R.drawable.loading_placeholder)
+                .fallback(R.drawable.ic_error)
                 .into(image)
 
             image.viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
@@ -68,7 +57,10 @@ class ProjectViewHolder(
                 }
             })
             image.clipToOutline = true
-            root.setOnClickListener { openURL(root.context, project.link) }
+            root.setOnClickListener {
+                project.expand = !project.expand
+                makeSpan(project)
+            }
             cardView.apply {
                 setCardBackgroundColor(
                     ContextCompat.getColor(
@@ -88,10 +80,10 @@ class ProjectViewHolder(
         binding.apply {
             var text = project.description
             details.text = text
-            if (details.lineCount > 3 && !project.expand) {
+            if (details.lineCount > 4 && !project.expand) {
                 val lastCharShown: Int =
                     details.layout.getLineVisibleEnd(1)
-                text = project.description.substring(0, lastCharShown) + "..."
+                text = project.description.substring(0, lastCharShown) + " ..."
             }
             val spannableString = SpannableString(text)
             val allTextStart = 0
@@ -120,8 +112,7 @@ class ProjectViewHolder(
         fun create(parent: ViewGroup): ProjectViewHolder {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_project, parent, false)
-            val binding = ItemProjectBinding.bind(view)
-            return ProjectViewHolder(binding)
+            return ProjectViewHolder(ItemProjectBinding.bind(view))
         }
     }
 }

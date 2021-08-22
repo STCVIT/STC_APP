@@ -23,7 +23,7 @@ class RoadmapViewModel(application: Application) : AndroidViewModel(application)
 
     fun refreshRoadmap(domain: String) {
         viewModelScope.launch {
-            repository.refreshRoadmap(domain) }
+            repository.getDomainRoadmap(domain) }
     }
 
 }

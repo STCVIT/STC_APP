@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import com.mstc.mstcapp.databinding.ActivityViewResourceBinding
 import com.mstc.mstcapp.model.Domain
 import com.mstc.mstcapp.ui.resources.ViewPagerAdapter
@@ -19,11 +18,8 @@ class ViewResourceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         domainModel = intent.getSerializableExtra("domain") as Domain
         setTheme(domainModel.style)
-        binding = DataBindingUtil.setContentView(
-            this,
-            R.layout.activity_view_resource
-        ) as ActivityViewResourceBinding
-
+        binding = ActivityViewResourceBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         binding.apply {
             setSupportActionBar(toolbar)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)

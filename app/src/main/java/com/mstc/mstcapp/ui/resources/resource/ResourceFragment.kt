@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.mstc.mstcapp.databinding.FragmentSwipeRecyclerBinding
 import com.mstc.mstcapp.model.Result
 import com.mstc.mstcapp.model.resource.Resource
@@ -30,12 +33,18 @@ class ResourceFragment(val domain: String) : Fragment() {
         val resourceAdapter = ResourceAdapter()
         binding.apply {
             recyclerView.adapter = resourceAdapter
+            recyclerView.addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(),
+                    LinearLayoutManager.VERTICAL
+                )
+            )
             viewModel.getResources(domain)
                 .observe(viewLifecycleOwner, { result ->
                     run {
                         when (result) {
                             is Result.Loading -> {
-                                retryButton.visibility = View.GONE
+                                errorLayout.visibility = View.GONE
                                 swipeRefreshLayout.isRefreshing = true
                                 result.data?.let {
                                     resourceAdapter.list = it
@@ -43,12 +52,12 @@ class ResourceFragment(val domain: String) : Fragment() {
                             }
                             is Result.Success<List<Resource>> -> {
                                 resourceAdapter.list = result.data
-                                retryButton.visibility = View.GONE
+                                errorLayout.visibility = View.GONE
                                 swipeRefreshLayout.isRefreshing = false
                             }
                             else -> {
                                 Log.i(TAG, "onActivityCreated: $result")
-                                retryButton.visibility = View.VISIBLE
+                                errorLayout.visibility = View.VISIBLE
                                 swipeRefreshLayout.isRefreshing = false
                             }
 

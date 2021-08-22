@@ -38,6 +38,7 @@ class ProjectIdeaFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         progressDialog = ProgressDialog(requireContext())
+        progressDialog.setMessage("Posting idea...")
         binding.apply {
             post.setOnClickListener {
                 val projectIdeaModel = ProjectIdea(
@@ -47,22 +48,19 @@ class ProjectIdeaFragment : BottomSheetDialogFragment() {
                     idea.text.toString(),
                     description.text.toString()
                 )
-                if (projectIdeaModel.name.isEmpty())
-                    name1.error = "Cannot be empty!"
-                else if (projectIdeaModel.phone.isEmpty())
-                    phone1.error = "Cannot be empty!"
-                else if (projectIdeaModel.phone.length != 10)
-                    phone1.error = "Invalid Phone Number"
-                else if (projectIdeaModel.email.isEmpty())
-                    email1.error = "Cannot be empty!"
-                else if (!projectIdeaModel.email.matches(Regex("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")))
-                    email1.error = "Invalid Email Address"
-                else if (projectIdeaModel.idea.isEmpty())
-                    idea1.error = "Cannot be empty!"
-                else if (projectIdeaModel.description.isEmpty())
-                    description1.error = "Cannot be empty!"
-                else
-                    lifecycleScope.launch { postData(projectIdeaModel) }
+                when {
+                    projectIdeaModel.name.isEmpty() -> name1.error = "Cannot be empty!"
+                    projectIdeaModel.phone.isEmpty() -> phone1.error = "Cannot be empty!"
+                    projectIdeaModel.phone.length != 10 -> phone1.error = "Invalid Phone Number"
+                    projectIdeaModel.email.isEmpty() -> email1.error = "Cannot be empty!"
+                    !projectIdeaModel.email.matches(
+                        Regex("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")
+                    ) -> email1.error = "Invalid Email Address"
+                    projectIdeaModel.idea.isEmpty() -> idea1.error = "Cannot be empty!"
+                    projectIdeaModel.description.isEmpty() -> description1.error =
+                        "Cannot be empty!"
+                    else -> lifecycleScope.launch { postData(projectIdeaModel) }
+                }
             }
         }
     }
@@ -71,19 +69,25 @@ class ProjectIdeaFragment : BottomSheetDialogFragment() {
         progressDialog.show()
         val service: RetrofitService = RetrofitService.create()
         val response = service.postIdea(projectIdeaModel)
-        if (response.isSuccessful) {
-            Log.d(TAG, "postData() returned: ${response.body()}")
-            progressDialog.dismiss()
-            dismiss()
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Idea Posted Successfully")
-                .setMessage(
-                    "Your idea has been posted successfully! " +
-                            "Please feel free to check out the resources while we contact you."
-                )
-                .setPositiveButton("Dismiss") { dialog: DialogInterface, _: Int -> dialog.dismiss() }
-                .show()
-        } else {
+        try {
+            if (response.isSuccessful) {
+                Log.d(TAG, "postData() returned: ${response.body()}")
+                progressDialog.dismiss()
+                dismiss()
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Idea Posted Successfully")
+                    .setMessage(
+                        "Your idea has been posted successfully! " +
+                                "Please feel free to check out the resources while we contact you."
+                    )
+                    .setPositiveButton("Dismiss") { dialog: DialogInterface, _: Int -> dialog.dismiss() }
+                    .show()
+            } else {
+                Toast.makeText(context, "Could not post idea! Try Again", Toast.LENGTH_SHORT).show()
+                Log.e(TAG, "postData: Failed! ${response.code()}")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "postData: ", e)
             Toast.makeText(context, "Could not post idea! Try Again", Toast.LENGTH_SHORT).show()
             Log.e(TAG, "postData: Failed! ${response.code()}")
         }

@@ -8,12 +8,14 @@
         <item name="android:alertDialogTheme">@style/AlertDialog</item>
         <item name="android:statusBarColor">#2025CB</item>
         <item name="android:windowLightStatusBar">false</item>
+    </style>
 
-        <item name="android:windowActivityTransitions">true</item>
-<!--        <item name="android:windowEnterTransition">@transition/domain_transition</item>-->
-<!--        <item name="android:windowExitTransition">@transition/domain_transition</item>-->
-
-
+    <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusBottomEnd">@dimen/corner_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/corner_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/corner_radius</item>
+        <item name="boxCornerRadiusTopStart">@dimen/corner_radius</item>
+        <item name="android:layout_marginTop">@dimen/margin_small</item>
     </style>
 
     <style name="BottomNavigationChip">
@@ -54,6 +56,19 @@
         <item name="fontFamily">@font/dm_sans</item>
     </style>
 
+    <style name="item_recycler_view" parent="CardView">
+        <item name="android:layout_marginTop">@dimen/margin_small</item>
+        <item name="android:layout_marginBottom">@dimen/margin_small</item>
+        <item name="android:layout_marginLeft">@dimen/margin_medium</item>
+        <item name="android:layout_marginRight">@dimen/margin_medium</item>
+
+        <item name="cardCornerRadius">@dimen/corner_radius</item>
+        <item name="cardElevation">0dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="cardBackgroundColor">@color/colorTertiaryBlue</item>
+    </style>
 
     <style name="resources_red">
         <item name="color_background">@color/colorTertiaryRed</item>

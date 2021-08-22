@@ -8,7 +8,7 @@ import com.mstc.mstcapp.ui.resources.resource.ResourceFragment
 import com.mstc.mstcapp.ui.resources.roadmap.RoadmapFragment
 
 class ViewPagerAdapter(fm: FragmentManager, private val domain: String) :
-    FragmentPagerAdapter(fm) {
+    FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> DetailsFragment(domain)

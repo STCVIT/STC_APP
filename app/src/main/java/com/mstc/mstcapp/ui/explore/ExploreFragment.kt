@@ -14,13 +14,6 @@ class ExploreFragment : Fragment() {
     var viewPagerAdapter: ViewPagerAdapter? = null
     lateinit var binding: FragmentExploreBinding
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        val inflater = TransitionInflater.from(requireContext())
-//        enterTransition = inflater.inflateTransition(R.transition.fade)
-//        exitTransition = inflater.inflateTransition(R.transition.fade)
-//    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,

@@ -6,6 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.mstc.mstcapp.model.Feed
 
+private const val TAG = "FeedDatabase"
+
 @Database(
     entities = [
         FeedRemoteKey::class,
@@ -33,7 +35,6 @@ abstract class FeedDatabase : RoomDatabase() {
             Room.databaseBuilder(
                 context.applicationContext,
                 FeedDatabase::class.java, "FeedDatabase.db"
-            )
-                .build()
+            ).build()
     }
 }

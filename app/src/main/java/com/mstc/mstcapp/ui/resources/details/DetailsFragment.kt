@@ -35,22 +35,32 @@ class DetailsFragment(val domain: String) : Fragment() {
                         is Result.Loading -> {
                             Log.i(TAG, "onActivityCreated: $result")
                             swipeRefreshLayout.isRefreshing = true
-                            retryButton.visibility = View.GONE
+                            errorLayout.visibility = View.GONE
                             result.data?.let {
-                                description.text = it.description
+                                description.apply {
+                                    text = it.description
+                                    visibility = View.VISIBLE
+                                }
+                                cardView.visibility = View.VISIBLE
                                 salary.text = it.expectation
                             }
                         }
                         is Result.Success<Detail> -> {
-                            retryButton.visibility = View.GONE
                             swipeRefreshLayout.isRefreshing = false
-                            description.text = result.data.description
+                            errorLayout.visibility = View.GONE
+                            description.apply {
+                                text = result.data.description
+                                visibility = View.VISIBLE
+                            }
                             salary.text = result.data.expectation
+                            cardView.visibility = View.VISIBLE
                         }
                         else -> {
                             Log.e(TAG, "onActivityCreated: $result")
-                            retryButton.visibility = View.VISIBLE
+                            errorLayout.visibility = View.VISIBLE
                             swipeRefreshLayout.isRefreshing = false
+                            cardView.visibility = View.GONE
+                            description.visibility = View.GONE
                         }
                     }
                 }

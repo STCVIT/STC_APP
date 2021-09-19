@@ -27,8 +27,8 @@ class Project(
 ){
     init {
         description = description
-            .trim()
             .replace("  "," ")
+            .trim()
     }
     @Ignore
     var expand:Boolean = false

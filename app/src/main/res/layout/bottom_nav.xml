@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.google.android.material.chip.Chip
+        android:id="@+id/home"
+        style="@style/BottomNavigationChip"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="@string/title_home"
+        app:chipIcon="@drawable/ic_home"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/resources"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:textEndPadding="8dp" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/resources"
+        style="@style/BottomNavigationChip"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="@string/title_resources"
+        app:chipIcon="@drawable/ic_resource"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/explore"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/home"
+        app:layout_constraintTop_toTopOf="parent"
+        app:textEndPadding="8dp" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/explore"
+        style="@style/BottomNavigationChip"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="@string/title_explore"
+        app:chipIcon="@drawable/ic_explore"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/resources"
+        app:layout_constraintTop_toTopOf="parent"
+        app:textEndPadding="8dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

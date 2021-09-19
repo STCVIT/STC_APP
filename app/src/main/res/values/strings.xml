@@ -46,8 +46,9 @@
     <string name="more">Read More</string>
     <string name="retry">Retry</string>
     <string name="no_results">No results</string>
-    <string name="error_feed">Unable to fetch feed! Please try again</string>
-    <string name="placeholder_text_long">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent porttitor tellus a varius suscipit. Mauris vel odio ac justo venenatis sodales.</string>
+    <string name="error_data">Unable to fetch data! Please try again</string>
     <string name="about_text">Student Technical Community is a student community in VIT Vellore aimed at enhancing skills of its members in various domains through quality projects and events tailored for cutting edge skill development</string>
     <string name="the_team">The Team</string>
+    <string name="bg">background</string>
+    <string name="feed_intro">Explore our Projects, events, medium articles and more.</string>
 </resources>

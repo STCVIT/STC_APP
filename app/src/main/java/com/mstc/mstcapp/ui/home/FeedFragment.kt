@@ -9,23 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.mstc.mstcapp.MainActivity
-import com.mstc.mstcapp.databinding.FragmentSwipeRecyclerBinding
 import com.mstc.mstcapp.data.feed.FeedInjection
+import com.mstc.mstcapp.databinding.FragmentSwipeRecyclerBinding
 import com.mstc.mstcapp.ui.loadState.LoadStateAdapter
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-
-private const val TAG = "FeedFragment"
-
 class FeedFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = FeedFragment()
-    }
 
     private lateinit var binding: FragmentSwipeRecyclerBinding
 
@@ -59,6 +50,8 @@ class FeedFragment : Fragment() {
     ) {
         val feedAdapter = FeedAdapter()
         val header = LoadStateAdapter { feedAdapter.retry() }
+
+        introText.visibility = View.VISIBLE
 
         recyclerView.adapter = feedAdapter.withLoadStateHeaderAndFooter(
             header = header,
@@ -142,18 +135,6 @@ class FeedFragment : Fragment() {
                 // Show the retry state if initial load or refresh fails.
                 errorLayout.isVisible =
                     loadState.mediator?.refresh is LoadState.Error && feedAdapter.itemCount == 0
-                // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
-//                val errorState = loadState.source.append as? LoadState.Error
-//                    ?: loadState.source.prepend as? LoadState.Error
-//                    ?: loadState.append as? LoadState.Error
-//                    ?: loadState.prepend as? LoadState.Error
-//                errorState?.let {
-//                    Toast.makeText(
-//                        requireContext(),
-//                        "\uD83D\uDE28 Wooops ${it.error}",
-//                        Toast.LENGTH_LONG
-//                    ).show()
-//                }
             }
         }
     }

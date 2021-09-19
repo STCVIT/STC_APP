@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName
 class Detail(
     @SerializedName("description")
     var description: String,
+
     @SerializedName("domain")
     val domain: String,
 
@@ -20,7 +21,7 @@ class Detail(
 ){
     init {
         description = description
-            .trim()
             .replace("  "," ")
+            .trim()
     }
 }

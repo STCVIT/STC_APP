@@ -1,27 +1,25 @@
 package com.mstc.mstcapp.ui.resources.resource
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.mstc.mstcapp.R
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import com.mstc.mstcapp.model.resource.Resource
 
-class ResourceAdapter() : RecyclerView.Adapter<ResourceViewHolder>() {
+class ResourceAdapter() : ListAdapter<Resource, ResourceViewHolder>(DiffCallback) {
 
-    var list = listOf<Resource>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResourceViewHolder =
+        ResourceViewHolder.create(parent)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResourceViewHolder {
-        return ResourceViewHolder.create(parent)
-    }
 
     override fun onBindViewHolder(holder: ResourceViewHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int = list.size
+    companion object DiffCallback : DiffUtil.ItemCallback<Resource>() {
+        override fun areItemsTheSame(oldItem: Resource, newItem: Resource): Boolean =
+            oldItem.id == newItem.id
 
+        override fun areContentsTheSame(oldItem: Resource, newItem: Resource): Boolean =
+            oldItem.title == newItem.title && oldItem.description == newItem.description
+    }
 }

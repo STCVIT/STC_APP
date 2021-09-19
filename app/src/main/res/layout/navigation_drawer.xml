@@ -1,235 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:paddingBottom="40dp">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="5dp"
+        android:gravity="center_vertical"
+        android:paddingVertical="@dimen/margin_medium"
+        android:paddingStart="@dimen/margin_large"
+        android:text="@string/app_name"
+        android:textAppearance="@style/heading1"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlSymmetry" />
+
+
+    <TextView
+        android:id="@+id/share"
+        style="@style/drawer_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:orientation="vertical"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:text="@string/refer_a_friend"
+        app:drawableStartCompat="@drawable/ic_invitation"
+        app:layout_constraintBottom_toTopOf="@+id/divider1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/textView" />
 
-        <RelativeLayout
-            android:id="@+id/share"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:paddingHorizontal="24dp"
-            android:paddingVertical="@dimen/margin_medium">
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/feedback"
+        app:layout_constraintTop_toBottomOf="@+id/share" />
 
-            <ImageView
-                android:id="@+id/i1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/refer_a_friend"
-                android:src="@drawable/ic_invitation" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="@dimen/margin_medium"
-                android:layout_toStartOf="@id/a1"
-                android:layout_toEndOf="@id/i1"
-                android:text="@string/refer_a_friend"
-                android:textColor="@color/textColorPrimary" />
-
-            <ImageView
-                android:id="@+id/a1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/view"
-                android:src="@drawable/ic_arrow" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
-
-        <RelativeLayout
-            android:id="@+id/feedback"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:contentDescription="@string/feedback"
-            android:focusable="true"
-            android:paddingHorizontal="24dp"
-            android:paddingVertical="@dimen/margin_medium">
-
-            <ImageView
-                android:id="@+id/i2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/feedback"
-                android:src="@drawable/ic_help" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="@dimen/margin_medium"
-                android:layout_toStartOf="@id/a2"
-                android:layout_toEndOf="@id/i2"
-                android:text="@string/feedback"
-                android:textColor="@color/textColorPrimary" />
-
-            <ImageView
-                android:id="@+id/a2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/view"
-                android:src="@drawable/ic_arrow" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
-
-        <RelativeLayout
-            android:id="@+id/idea"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:paddingHorizontal="24dp"
-            android:paddingVertical="@dimen/margin_medium">
-
-            <ImageView
-                android:id="@+id/i3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/project_idea_helper"
-                android:src="@drawable/ic_message" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="@dimen/margin_medium"
-                android:layout_toStartOf="@id/a3"
-                android:layout_toEndOf="@id/i3"
-                android:text="@string/project_idea_helper"
-                android:textColor="@color/textColorPrimary" />
-
-            <ImageView
-                android:id="@+id/a3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/view"
-                android:src="@drawable/ic_arrow" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
-
-    </LinearLayout>
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/feedback"
+        style="@style/drawer_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:text="@string/feedback"
+        app:drawableStartCompat="@drawable/ic_help"
+        app:layout_constraintBottom_toTopOf="@+id/divider2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider1" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/idea"
+        app:layout_constraintTop_toBottomOf="@+id/feedback" />
+
+    <TextView
+        android:id="@+id/idea"
+        style="@style/drawer_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="@string/project_idea_helper"
+        app:drawableStartCompat="@drawable/ic_message"
+        app:layout_constraintBottom_toTopOf="@+id/divider3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/share"
+        app:layout_constraintTop_toBottomOf="@+id/idea" />
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_large"
+        android:text="@string/follow_us_on"
+        android:textColor="@color/textColorPrimary"
+        app:layout_constraintBottom_toTopOf="@id/instagram"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <ImageButton
+        android:id="@+id/instagram"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_large"
+        android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="@string/instagram"
+        android:src="@drawable/ic_instagram"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toStartOf="@+id/facebook"
+        app:layout_constraintStart_toStartOf="@+id/guideline1" />
+
+    <ImageButton
+        android:id="@+id/facebook"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="@dimen/margin_small"
+        android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="@string/facebook"
+        android:src="@drawable/ic_facebook"
+        app:layout_constraintBottom_toBottomOf="@+id/instagram"
+        app:layout_constraintEnd_toStartOf="@+id/linkedin"
+        app:layout_constraintStart_toEndOf="@+id/instagram"
+        app:layout_constraintTop_toTopOf="@+id/instagram" />
+
+    <ImageButton
+        android:id="@+id/linkedin"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="@dimen/margin_small"
+        android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="@string/linked_in"
+        android:src="@drawable/ic_linkedin"
+        app:layout_constraintBottom_toBottomOf="@+id/facebook"
+        app:layout_constraintEnd_toStartOf="@+id/github"
+        app:layout_constraintStart_toEndOf="@+id/facebook"
+        app:layout_constraintTop_toTopOf="@+id/facebook" />
+
+    <ImageButton
+        android:id="@+id/github"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="@string/github"
+        android:src="@drawable/ic_github"
+        app:layout_constraintBottom_toBottomOf="@+id/linkedin"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/linkedin"
+        app:layout_constraintTop_toTopOf="@+id/linkedin" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:text="@string/illustration_credits"
+        android:textColor="@color/textColorSecondary"
+        app:layout_constraintBottom_toTopOf="@+id/privacy_policy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:id="@+id/privacy_policy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingHorizontal="@dimen/margin_medium"
+        android:paddingVertical="@dimen/margin_small"
+        android:text="@string/privacy_policy"
+        android:textColor="@color/textColorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/follow_us_on"
-            android:textColor="@color/textColorPrimary" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
 
-        <com.google.android.flexbox.FlexboxLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_large"
-            app:alignContent="center"
-            app:alignItems="center"
-            app:flexWrap="wrap"
-            app:justifyContent="space_evenly">
-
-            <ImageButton
-                android:id="@+id/instagram"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:contentDescription="@string/instagram"
-                android:src="@drawable/ic_instagram" />
-
-            <ImageButton
-                android:id="@+id/facebook"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:contentDescription="@string/facebook"
-                android:src="@drawable/ic_facebook" />
-
-            <ImageButton
-                android:id="@+id/linkedin"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:contentDescription="@string/linked_in"
-                android:src="@drawable/ic_linkedin" />
-
-            <ImageButton
-                android:id="@+id/github"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:contentDescription="@string/github"
-                android:src="@drawable/ic_github" />
-        </com.google.android.flexbox.FlexboxLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_large"
-            android:text="@string/illustration_credits"
-            android:textColor="@color/textColorSecondary" />
-
-
-        <TextView
-            android:id="@+id/privacy_policy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:paddingHorizontal="@dimen/margin_small"
-            android:paddingVertical="@dimen/margin_small"
-            android:text="@string/privacy_policy"
-            android:textColor="@color/textColorSecondary" />
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

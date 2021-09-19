@@ -5,7 +5,8 @@
     android:id="@+id/cardView"
     style="@style/item_recycler_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:cardBackgroundColor="@color/colorTertiaryBlue">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,19 +19,30 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:contentDescription="@string/event_image"
-            android:foreground="?android:attr/selectableItemBackground"
+            android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_backend" />
+            tools:src="@tools:sample/backgrounds/scenic" />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small"
+            android:background="@drawable/bg_project"
+            android:padding="@dimen/margin_small"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:backgroundTint="@color/red"
+            tools:text="COMPLETED" />
 
         <LinearLayout
-            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:foreground="?android:attr/selectableItemBackground"
             android:orientation="vertical"
             android:padding="@dimen/margin_medium"
             app:layout_constraintEnd_toEndOf="parent"
@@ -38,31 +50,32 @@
             app:layout_constraintTop_toBottomOf="@id/image">
 
             <TextView
-                android:id="@+id/status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/body1"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold"
-                tools:text="COMPLETED" />
-
-            <TextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small"
                 android:textAppearance="@style/heading1"
-                tools:text="Event Title" />
+                tools:text="@tools:sample/full_names" />
 
             <TextView
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small"
-                android:ellipsize="end"
-                android:maxLines="3"
                 android:textAppearance="@style/body1"
-                tools:text="@string/placeholder_text_long" />
+                tools:maxLines="3"
+                tools:text="@tools:sample/lorem/random" />
+
+            <TextView
+                android:id="@+id/view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="?attr/selectableItemBackground"
+                android:drawablePadding="@dimen/margin_small"
+                android:padding="@dimen/margin_small"
+                android:text="@string/view"
+                app:drawableLeftCompat="@drawable/ic_view" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

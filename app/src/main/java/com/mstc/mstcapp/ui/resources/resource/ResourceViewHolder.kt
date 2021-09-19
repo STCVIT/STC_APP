@@ -21,8 +21,8 @@ class ResourceViewHolder(
             share.setOnClickListener { shareResource(resource.title, resource.link) }
             root.setOnClickListener { openURL(root.context, resource.link) }
         }
-    }
 
+    }
 
     private fun shareResource(title: String, link: String) {
         val intent = Intent(Intent.ACTION_SEND)
@@ -35,8 +35,7 @@ class ResourceViewHolder(
      To keep receiving amazing articles like these, check out the STC app here 
      
      ${Constants.PLAY_STORE_URL}
-     """.trimIndent()
-        )
+     """.trimIndent())
         binding.root.context.startActivity(Intent.createChooser(intent, "Share Using"))
     }
 

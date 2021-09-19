@@ -10,8 +10,6 @@ import com.mstc.mstcapp.databinding.FragmentSwipeRecyclerBinding
 import com.mstc.mstcapp.model.Result
 import com.mstc.mstcapp.model.explore.Event
 
-private const val TAG = "EventFragment"
-
 class EventFragment : Fragment() {
     private lateinit var viewModel: EventViewModel
     private lateinit var eventAdapter: EventAdapter
@@ -39,11 +37,11 @@ class EventFragment : Fragment() {
                                 errorLayout.visibility = View.GONE
                                 swipeRefreshLayout.isRefreshing = true
                                 result.data?.let {
-                                    eventAdapter.list = it
+                                    eventAdapter.submitList(it)
                                 }
                             }
                             is Result.Success<List<Event>> -> {
-                                eventAdapter.list = result.data
+                                eventAdapter.submitList(result.data)
                                 errorLayout.visibility = View.GONE
                                 swipeRefreshLayout.isRefreshing = false
                             }

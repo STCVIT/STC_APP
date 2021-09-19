@@ -47,11 +47,11 @@ class ResourceFragment(val domain: String) : Fragment() {
                                 errorLayout.visibility = View.GONE
                                 swipeRefreshLayout.isRefreshing = true
                                 result.data?.let {
-                                    resourceAdapter.list = it
+                                    resourceAdapter.submitList(it)
                                 }
                             }
                             is Result.Success<List<Resource>> -> {
-                                resourceAdapter.list = result.data
+                                resourceAdapter.submitList(result.data)
                                 errorLayout.visibility = View.GONE
                                 swipeRefreshLayout.isRefreshing = false
                             }

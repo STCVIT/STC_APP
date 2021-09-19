@@ -2,18 +2,30 @@ package com.mstc.mstcapp
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.google.android.material.appbar.AppBarLayout
 import com.mstc.mstcapp.databinding.ActivityViewResourceBinding
 import com.mstc.mstcapp.model.Domain
 import com.mstc.mstcapp.ui.resources.ViewPagerAdapter
 import java.util.*
+import kotlin.math.abs
+
+private const val TAG = "ViewResourceActivity"
+
+private enum class State {
+    EXPANDED, COLLAPSED, IDLE
+}
 
 class ViewResourceActivity : AppCompatActivity() {
     private val context: Context = this
     lateinit var binding: ActivityViewResourceBinding
     private lateinit var domainModel: Domain
+    private var state: State? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         domainModel = intent.getSerializableExtra("domain") as Domain
@@ -30,16 +42,53 @@ class ViewResourceActivity : AppCompatActivity() {
                 )
             )
             toolbarTitle.text = domainModel.domain.uppercase(Locale.getDefault())
-            toolbarImage.post {
-                run {
-                    toolbarImage.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            context,
-                            domainModel.drawable
-                        )
-                    )
+            toolbarImage.setImageDrawable(
+                ContextCompat.getDrawable(
+                    context,
+                    domainModel.drawable
+                )
+            )
+            Log.i(TAG, "onCreate: ${toolbar.title}  , ${collapsingToolbarLayout.title}")
+            appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+                when {
+                    verticalOffset == 0 -> {
+                        if (state != State.EXPANDED) {
+                            Log.d(TAG, "Expanded")
+                            toolbarImage.animation = AnimationUtils.loadAnimation(
+                                this@ViewResourceActivity,
+                                android.R.anim.fade_in
+                            )
+                            toolbarImage.postOnAnimation {
+                                toolbarImage.visibility = View.VISIBLE
+                                toolbarTitle.visibility = View.VISIBLE
+                                toolbarDescription.visibility = View.VISIBLE
+                            }
+                        }
+                        state = State.EXPANDED
+                    }
+                    abs(verticalOffset) >= appBarLayout.totalScrollRange -> {
+                        if (state != State.COLLAPSED) {
+                            Log.d(TAG, "Collapsed")
+                        }
+                        state = State.COLLAPSED
+                    }
+                    else -> {
+                        if (state != State.IDLE) {
+                            Log.d(TAG, "Idle")
+                            toolbarImage.animation = AnimationUtils.loadAnimation(
+                                this@ViewResourceActivity,
+                                android.R.anim.fade_out
+                            )
+                            toolbarImage.postOnAnimation {
+                                toolbarImage.visibility = View.INVISIBLE
+                                toolbarTitle.visibility = View.INVISIBLE
+                                toolbarDescription.visibility = View.INVISIBLE
+                            }
+                        }
+                        state = State.IDLE
+                    }
                 }
-            }
+            })
         }
         showData()
     }
@@ -53,7 +102,6 @@ class ViewResourceActivity : AppCompatActivity() {
         binding.apply {
             viewPager.adapter = viewPagerAdapter
             tabLayout.setupWithViewPager(binding.viewPager)
-
             collapsingToolbarLayout.title = domainModel.domain.uppercase(Locale.getDefault())
         }
     }
@@ -72,7 +120,7 @@ class ViewResourceActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        overridePendingTransition(R.anim.slide_in_right, android.R.anim.fade_out);
+        overridePendingTransition(R.anim.slide_in_right, android.R.anim.fade_out)
     }
 
     override fun finish() {

@@ -21,11 +21,13 @@ class ResourceRepository(
     private val context: Context,
     private val stcDatabase: STCDatabase,
 ) {
-    private var service: RetrofitService = RetrofitService.create()
-    private var sharedPreferences: SharedPreferences =
+    private val service: RetrofitService by lazy { RetrofitService.create() }
+    private val sharedPreferences: SharedPreferences by lazy {
         context.getSharedPreferences(Constants.STC_SHARED_PREFERENCES, MODE_PRIVATE)
+    }
 
-    fun getBoardMembers() = liveData {
+    fun getBoardMembers(forceRefresh: Boolean = false) = liveData {
+        Log.i(TAG, "getBoardMembers: $forceRefresh")
         val disposable = emitSource(
             stcDatabase.databaseDao().getBoardMembers().map {
                 Result.Loading(it)
@@ -40,13 +42,13 @@ class ResourceRepository(
             nextCheck = cal.time.time
         }
         try {
-            if (lastChecked == -1L || nextCheck <= Date().time)
+            if (forceRefresh || (lastChecked == -1L || nextCheck <= Date().time))
                 if (isNetworkAvailable(context)) {
                     fetchBoardMembers()
                     disposable.dispose()
                 }
             emitSource(stcDatabase.databaseDao().getBoardMembers().map {
-                if (it != null && it.isNotEmpty()) Result.Success(it)
+                if (it.isNotEmpty()) Result.Success(it)
                 else Result.Error(NullPointerException("Null"))
             })
         } catch (exception: IOException) {
@@ -140,7 +142,7 @@ class ResourceRepository(
                 disposable.dispose()
             }
             emitSource(stcDatabase.databaseDao().getResources(domain).map {
-                if (it != null && it.isNotEmpty()) Result.Success(it)
+                if (it.isNotEmpty()) Result.Success(it)
                 else Result.Error(NullPointerException("Null"))
             })
         } catch (exception: IOException) {
@@ -164,7 +166,7 @@ class ResourceRepository(
                 disposable.dispose()
             }
             emitSource(stcDatabase.databaseDao().getProjects().map {
-                if (it != null && it.isNotEmpty()) Result.Success(it)
+                if (it.isNotEmpty()) Result.Success(it)
                 else Result.Error(NullPointerException("Null"))
             })
         } catch (exception: IOException) {
@@ -188,7 +190,7 @@ class ResourceRepository(
                 disposable.dispose()
             }
             emitSource(stcDatabase.databaseDao().getEvents().map {
-                if (it != null && it.isNotEmpty()) Result.Success(it)
+                if (it.isNotEmpty()) Result.Success(it)
                 else Result.Error(NullPointerException("Null"))
             })
         } catch (exception: IOException) {
@@ -202,17 +204,21 @@ class ResourceRepository(
 
 
     private suspend fun fetchDetails(domain: String) {
-        val response = service.getDetails(domain)
-        if (response.isSuccessful) {
-            Log.d(TAG, "fetchDetails() returned: ${response.body()}")
-            stcDatabase.withTransaction {
-                response.body()?.let {
-                    stcDatabase.databaseDao().deleteDetails(domain)
-                    stcDatabase.databaseDao().insertDetails(it)
-                    MainActivity.setFetchedData(domain + "_details")
+        try {
+            val response = service.getDetails(domain)
+            if (response.isSuccessful) {
+                Log.d(TAG, "fetchDetails() returned: ${response.body()}")
+                stcDatabase.withTransaction {
+                    response.body()?.let {
+                        stcDatabase.databaseDao().deleteDetails(domain)
+                        stcDatabase.databaseDao().insertDetails(it)
+                        MainActivity.setFetchedData(domain + "_details")
+                    }
                 }
-            }
-        } else Log.e(TAG, "fetchDetails: " + response.code())
+            } else Log.e(TAG, "fetchDetails: " + response.code())
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
     }
 

@@ -1,6 +1,9 @@
 package com.mstc.mstcapp.ui.home
 
 import android.graphics.BitmapFactory
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,24 +17,32 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-private const val TAG = "FeedViewHolder"
-
 class FeedViewHolder(
     private val binding: ItemFeedBinding
 ) : RecyclerView.ViewHolder(binding.root) {
+    private val MAX_LINES = 3
 
     fun bind(feed: Feed) {
         binding.apply {
             title.text = feed.title
-            description.text = feed.description
-            description.maxLines = if (feed.expand) 100 else 3
 
-            image.setOnClickListener { openURL(root.context, feed.link) }
+            view.setOnClickListener { openURL(root.context, feed.link) }
+            description.post {
+                run {
 
-            linearLayout.setOnClickListener {
-                feed.expand = !feed.expand
-                description.maxLines = if (feed.expand) 100 else 3
+                    description.text = feed.description
+                    if (description.lineCount > MAX_LINES) {
+                        feed.expand = true
+                        collapseDescription(feed)
+                        description.setOnClickListener {
+                            feed.expand = !feed.expand
+                            if (!feed.expand) collapseDescription(feed)
+                            else expandDescription(feed)
+                        }
+                    }
+                }
             }
+
 
             cardView.apply {
                 setCardBackgroundColor(
@@ -73,6 +84,53 @@ class FeedViewHolder(
                 }
             }
         }
+    }
+
+    private fun collapseDescription(feed: Feed) {
+        binding.description.apply {
+            val lastCharShown: Int =
+                layout.getLineVisibleEnd(MAX_LINES - 1)
+            val moreString = "...more"
+            val actionDisplayText: String =
+                feed.description.substring(
+                    0,
+                    lastCharShown - moreString.length
+                ) + moreString
+            val truncatedSpannableString = SpannableString(actionDisplayText)
+            val startIndex = actionDisplayText.indexOf(moreString)
+            truncatedSpannableString.setSpan(
+                ForegroundColorSpan(
+                    context.getColor(
+                        R.color.gray
+                    )
+                ),
+                startIndex,
+                startIndex + moreString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            text = truncatedSpannableString
+        }
+        feed.expand = false
+    }
+
+    private fun expandDescription(feed: Feed) {
+        binding.description.apply {
+            val suffix = "...View Less"
+            val actionDisplayText =
+                "${feed.description}  $suffix"
+            val truncatedSpannableString = SpannableString(actionDisplayText)
+            val startIndex = actionDisplayText.indexOf(suffix)
+            truncatedSpannableString.setSpan(
+                ForegroundColorSpan(
+                    context.getColor(R.color.gray)
+                ),
+                startIndex,
+                startIndex + suffix.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            text = truncatedSpannableString
+        }
+        feed.expand = true
     }
 
     companion object {

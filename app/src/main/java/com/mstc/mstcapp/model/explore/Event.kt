@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName
 import com.mstc.mstcapp.util.Functions
 import java.util.*
 
+
 @Entity(tableName = "EVENTS")
 class Event(
     @SerializedName("title")
@@ -31,26 +32,27 @@ class Event(
     @SerializedName("_id")
     val id: String,
 ) {
+    @Ignore
+    var status: String
+
     init {
         description = description
+            .replace("  ", " ")
             .trim()
-            .replace("  "," ")
+        val startDate1 = Date(Functions.timestampToEpochSeconds(startDate))
+        val endDate1 = Date(Functions.timestampToEpochSeconds(endDate))
+        status = when {
+            startDate1.after(Date()) -> "UPCOMING"
+            startDate1.before(Date()) && endDate1.after(Date()) -> "ONGOING"
+            else -> "COMPLETED"
+        }
     }
 
-    @Ignore
-    val status: String = statusString()
+    override fun toString(): String {
+        return "$title,$description,$link,$startDate,$endDate"
+    }
 
     @Ignore
     var expand: Boolean = false
 
-    private fun statusString(): String {
-        val startDate1 = Date(Functions.timestampToEpochSeconds(startDate))
-        val endDate1 = Date(Functions.timestampToEpochSeconds(endDate))
-        return if (startDate1.after(Date()))
-            "UPCOMING"
-        else if (startDate1.before(Date()) && endDate1.after(Date()))
-            "ONGOING"
-        else
-            "COMPLETED"
-    }
 }

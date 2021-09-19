@@ -2,6 +2,7 @@ package com.mstc.mstcapp.ui.explore.about
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -11,7 +12,7 @@ import com.mstc.mstcapp.model.Result
 import com.mstc.mstcapp.model.explore.BoardMember
 import kotlinx.coroutines.launch
 
-class AboutViewModel(application: Application) : AndroidViewModel(application) {
+class BoardMemberViewModel(application: Application) : AndroidViewModel(application) {
 
     val context: Context by lazy { application.applicationContext }
 
@@ -23,6 +24,6 @@ class AboutViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun refreshBoard() {
-        viewModelScope.launch { repository.getBoardMembers() }
+        viewModelScope.launch { repository.refreshBoard() }
     }
 }

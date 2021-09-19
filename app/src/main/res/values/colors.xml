@@ -21,4 +21,6 @@
 
     <color name="ic_launcher_background">#332CAB</color>
     <color name="gray">#828282</color>
+    <color name="green">#00875A</color>
+    <color name="red">#DE350B</color>
 </resources>

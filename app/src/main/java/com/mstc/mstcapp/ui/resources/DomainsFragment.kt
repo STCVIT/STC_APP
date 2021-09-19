@@ -35,7 +35,7 @@ class DomainsFragment : Fragment() {
             layoutManager = GridLayoutManager(context, 2)
             init()
             val domainAdapter = DomainAdapter()
-            domainAdapter.list = list
+            domainAdapter.submitList(list)
             adapter = domainAdapter
             addOnItemTouchListener(
                 RecyclerTouchListener(context,
@@ -76,7 +76,7 @@ class DomainsFragment : Fragment() {
             /**
              *  ADD A NEW RESOURCE HERE
              *
-             * To add a new domain, create a new object of Domain with the following parameters
+             * To add a new domain, create a new object of [Domain] with the following parameters
              * domain - Same name as in backend
              * drawable - The drawable resource file to display in the list and in collapsing toolbar
              * style - Since this app uses 3 tertiary colors

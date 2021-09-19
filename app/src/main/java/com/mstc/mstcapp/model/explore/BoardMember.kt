@@ -24,10 +24,13 @@ class BoardMember(
     @PrimaryKey
     @SerializedName("_id")
     val id: String,
-){
+) {
+    override fun toString() = "$name,$position,$link,$phrase"
+
     init {
         phrase = phrase
+            .replace("  ", " ")
             .trim()
-            .replace("  "," ")
     }
+
 }

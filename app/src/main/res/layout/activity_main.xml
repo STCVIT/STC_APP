@@ -1,89 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawerLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:elevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/title_home"
+                app:titleTextAppearance="@style/heading1"
+                app:titleTextColor="@color/white" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <fragment
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/appBarLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:elevation="@dimen/corner_radius"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:navigationIcon="@drawable/ic_navigation"
-                    app:title="@string/app_name"
-                    app:titleTextAppearance="@style/ExpandedToolbarTitle" />
-            </com.google.android.material.appbar.AppBarLayout>
-
-            <fragment
-                android:id="@+id/nav_host_fragment"
-                android:name="androidx.navigation.fragment.NavHostFragment"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:defaultNavHost="true"
-                app:layout_constraintBottom_toTopOf="@id/flexbox"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-                app:navGraph="@navigation/mobile_navigation" />
-
-            <com.google.android.flexbox.FlexboxLayout
-                android:id="@+id/flexbox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:alignContent="space_around"
-                app:flexWrap="nowrap"
-                app:justifyContent="space_around"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/home"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:text="@string/title_home"
-                    style="@style/BottomNavigationChip"
-                    app:chipIcon="@drawable/ic_home" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/resources"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:text="@string/title_resources"
-                    app:chipIcon="@drawable/ic_resource"
-                    style="@style/BottomNavigationChip" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/explore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:text="@string/title_explore"
-                    app:chipIcon="@drawable/ic_explore"
-                    style="@style/BottomNavigationChip"/>
-            </com.google.android.flexbox.FlexboxLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toTopOf="@id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:navGraph="@navigation/mobile_navigation" />
 
         <include
-            android:id="@+id/navigationDrawer"
-            layout="@layout/navigation_drawer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="start" />
-    </androidx.drawerlayout.widget.DrawerLayout>
-</layout>
+            android:id="@+id/bottomNav"
+            layout="@layout/bottom_nav"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintGuide_percent="0.93"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/navigationDrawer"
+        layout="@layout/navigation_drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start" />
+</androidx.drawerlayout.widget.DrawerLayout>

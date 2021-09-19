@@ -39,11 +39,11 @@ class ProjectFragment : Fragment() {
                                 errorLayout.visibility = View.GONE
                                 swipeRefreshLayout.isRefreshing = true
                                 result.data?.let {
-                                    projectAdapter.list = it
+                                    projectAdapter.submitList(it)
                                 }
                             }
                             is Result.Success<List<Project>> -> {
-                                projectAdapter.list = result.data
+                                projectAdapter.submitList(result.data)
                                 errorLayout.visibility = View.GONE
                                 swipeRefreshLayout.isRefreshing = false
                             }

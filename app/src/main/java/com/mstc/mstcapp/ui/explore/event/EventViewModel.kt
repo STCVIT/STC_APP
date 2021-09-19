@@ -11,8 +11,6 @@ import com.mstc.mstcapp.model.Result
 import com.mstc.mstcapp.model.explore.Event
 import kotlinx.coroutines.launch
 
-private const val TAG = "EventViewModel"
-
 class EventViewModel(application: Application) : AndroidViewModel(application) {
     val context: Context by lazy { application.applicationContext }
     private val repository =
@@ -23,6 +21,6 @@ class EventViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun refreshEvents() {
-        viewModelScope.launch { repository.getEvents() }
+        viewModelScope.launch { repository.refreshEvents() }
     }
 }

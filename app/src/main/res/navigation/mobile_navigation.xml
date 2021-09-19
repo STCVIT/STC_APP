@@ -10,7 +10,6 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_swipe_recycler" />
 
-
     <fragment
         android:id="@+id/navigation_explore"
         android:name="com.mstc.mstcapp.ui.explore.ExploreFragment"
@@ -26,6 +25,7 @@
             android:id="@+id/action_navigation_resources_to_navigation_view_resource_activity"
             app:destination="@id/navigation_view_resource_activity" />
     </fragment>
+
     <activity
         android:id="@+id/navigation_view_resource_activity"
         android:name="com.mstc.mstcapp.ViewResourceActivity"
@@ -35,4 +35,10 @@
             android:name="domain"
             app:argType="com.mstc.mstcapp.model.Domain" />
     </activity>
+
+    <dialog
+        android:id="@+id/projectIdeaDialog"
+        android:name="com.mstc.mstcapp.ui.ProjectIdeaFragment"
+        android:label="ProjectIdeaDialog"
+        tools:layout="@layout/dialog_project_idea" />
 </navigation>

@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/contentDescription"
-                android:padding="@dimen/margin_large" />
+                android:padding="@dimen/margin_large"/>
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

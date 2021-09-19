@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName
 class Resource(
     @SerializedName("title")
     val title: String,
+
     @SerializedName("link")
     val link: String,
 
@@ -23,7 +24,7 @@ class Resource(
 ){
     init {
         description = description
-            .trim()
             .replace("  "," ")
+            .trim()
     }
 }

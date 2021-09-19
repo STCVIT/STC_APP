@@ -1,6 +1,10 @@
 package com.mstc.mstcapp.ui.explore.event
 
+import android.content.res.ColorStateList
 import android.graphics.BitmapFactory
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -17,35 +21,40 @@ import kotlinx.coroutines.runBlocking
 
 private const val TAG = "EventViewHolder"
 
-class EventViewHolder(private val binding: ItemEventBinding) :
-    RecyclerView.ViewHolder(binding.root) {
+class EventViewHolder(
+    private val binding: ItemEventBinding
+) : RecyclerView.ViewHolder(binding.root) {
     private val MAX_LINES = 3
 
     fun bind(event: Event) {
         binding.apply {
             title.text = event.title
-            description.text = event.description
-
-            description.maxLines = if (event.expand) 100 else 3
-
+            view.setOnClickListener { openURL(root.context, event.link) }
+            description.post {
+                run {
+                    description.text = event.description
+                    if (description.lineCount > MAX_LINES) {
+                        event.expand = true
+                        collapseDescription(event)
+                        description.setOnClickListener {
+                            event.expand = !event.expand
+                            if (!event.expand) collapseDescription(event)
+                            else expandDescription(event)
+                        }
+                    }
+                }
+            }
             status.text = event.status
-            status.setTextColor(
+            status.backgroundTintList = ColorStateList.valueOf(
                 ContextCompat.getColor(
                     root.context,
                     when (event.status) {
-                        "UPCOMING" -> R.color.colorSecondaryBlue
+                        "UPCOMING" -> R.color.green
                         "ONGOING" -> R.color.colorSecondaryYellow
-                        else -> R.color.colorSecondaryRed
+                        else -> R.color.red
                     }
                 )
             )
-            loadImage(event)
-            image.setOnClickListener { openURL(root.context, event.link) }
-            linearLayout.setOnClickListener {
-                event.expand = !event.expand
-                description.maxLines = if (event.expand) 100 else 3
-
-            }
             cardView.apply {
                 setCardBackgroundColor(
                     ContextCompat.getColor(
@@ -59,12 +68,13 @@ class EventViewHolder(private val binding: ItemEventBinding) :
                 )
             }
         }
-
+        loadImage(event)
     }
 
+
     private fun loadImage(event: Event) = runBlocking {
-        launch(Dispatchers.Default) {
-            binding.image.apply {
+        binding.apply {
+            launch(Dispatchers.Default) {
                 try {
                     val decodedString: ByteArray =
                         Base64.decode(
@@ -73,11 +83,11 @@ class EventViewHolder(private val binding: ItemEventBinding) :
                         )
                     val picture =
                         BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
-                    setImageBitmap(picture)
+                    image.setImageBitmap(picture)
                 } catch (e: Exception) {
-                    setImageDrawable(
+                    image.setImageDrawable(
                         ContextCompat.getDrawable(
-                            context,
+                            image.context,
                             R.drawable.ic_error
                         )
                     )
@@ -85,6 +95,53 @@ class EventViewHolder(private val binding: ItemEventBinding) :
                 }
             }
         }
+    }
+
+    private fun collapseDescription(event: Event) {
+        binding.description.apply {
+            val lastCharShown: Int =
+                layout.getLineVisibleEnd(MAX_LINES - 1)
+            val moreString = "...more"
+            val actionDisplayText: String =
+                event.description.substring(
+                    0,
+                    lastCharShown - moreString.length
+                ) + moreString
+            val truncatedSpannableString = SpannableString(actionDisplayText)
+            val startIndex = actionDisplayText.indexOf(moreString)
+            truncatedSpannableString.setSpan(
+                ForegroundColorSpan(
+                    context.getColor(
+                        R.color.gray
+                    )
+                ),
+                startIndex,
+                startIndex + moreString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            text = truncatedSpannableString
+        }
+        event.expand = false
+    }
+
+    private fun expandDescription(event: Event) {
+        binding.description.apply {
+            val suffix = "...View Less"
+            val actionDisplayText =
+                "${event.description}  $suffix"
+            val truncatedSpannableString = SpannableString(actionDisplayText)
+            val startIndex = actionDisplayText.indexOf(suffix)
+            truncatedSpannableString.setSpan(
+                ForegroundColorSpan(
+                    context.getColor(R.color.gray)
+                ),
+                startIndex,
+                startIndex + suffix.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            text = truncatedSpannableString
+        }
+        event.expand = true
     }
 
     companion object {

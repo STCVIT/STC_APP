@@ -17,8 +17,8 @@ class Feed(
 ) {
     init {
         description = description
-            .trim()
             .replace("  "," ")
+            .trim()
     }
 
     @Ignore

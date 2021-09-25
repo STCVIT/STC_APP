@@ -18,7 +18,10 @@ class FeedRepository(
         val pagingSourceFactory = { feedDatabase.feedDao().getFeed() }
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
-            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+            config = PagingConfig(
+                pageSize = NETWORK_PAGE_SIZE,
+                enablePlaceholders = false,
+            ),
             remoteMediator = FeedRemoteMediator(
                 service,
                 feedDatabase

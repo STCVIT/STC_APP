@@ -8,6 +8,8 @@ import androidx.lifecycle.lifecycleScope
 import com.mstc.mstcapp.util.Constants.Companion.STC_SHARED_PREFERENCES
 import kotlinx.coroutines.*
 
+private const val TAG = "SplashActivity"
+
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

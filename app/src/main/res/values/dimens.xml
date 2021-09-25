@@ -5,5 +5,4 @@
     <dimen name="margin_medium">16dp</dimen>
     <dimen name="margin_large">32dp</dimen>
     <dimen name="corner_radius">5dp</dimen>
-    <dimen name="elevation">5dp</dimen>
 </resources>

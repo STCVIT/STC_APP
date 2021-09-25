@@ -42,9 +42,8 @@ class BoardMemberViewHolder(private val binding: ItemBoardMemberBinding) :
 
     companion object {
         fun create(parent: ViewGroup): BoardMemberViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_board_member, parent, false)
-            val binding = ItemBoardMemberBinding.bind(view)
+            val binding =
+                ItemBoardMemberBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             return BoardMemberViewHolder(binding)
         }
     }

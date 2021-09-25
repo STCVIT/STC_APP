@@ -9,10 +9,12 @@
     tools:cardBackgroundColor="@color/colorTertiaryBlue">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground">
 
         <ImageView
             android:id="@+id/image"
@@ -20,6 +22,7 @@
             android:layout_height="0dp"
             android:contentDescription="@string/event_image"
             android:scaleType="centerCrop"
+            app:layout_constraintBottom_toTopOf="@+id/title"
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,42 +43,31 @@
             tools:backgroundTint="@color/red"
             tools:text="COMPLETED" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_small"
+            android:paddingHorizontal="@dimen/margin_medium"
+            android:textAppearance="@style/heading1"
+            app:layout_constraintBottom_toTopOf="@+id/description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image">
+            app:layout_constraintTop_toBottomOf="@+id/image"
+            tools:text="@tools:sample/full_names" />
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_small"
-                android:textAppearance="@style/heading1"
-                tools:text="@tools:sample/full_names" />
-
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_small"
-                android:textAppearance="@style/body1"
-                tools:maxLines="3"
-                tools:text="@tools:sample/lorem/random" />
-
-            <TextView
-                android:id="@+id/view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:background="?attr/selectableItemBackground"
-                android:drawablePadding="@dimen/margin_small"
-                android:padding="@dimen/margin_small"
-                android:text="@string/view"
-                app:drawableLeftCompat="@drawable/ic_view" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_medium"
+            android:paddingHorizontal="@dimen/margin_medium"
+            android:textAppearance="@style/body1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            tools:text="@tools:sample/lorem/random" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

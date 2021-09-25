@@ -10,6 +10,8 @@ import com.mstc.mstcapp.databinding.FragmentSwipeRecyclerBinding
 import com.mstc.mstcapp.model.Result
 import com.mstc.mstcapp.model.explore.Event
 
+private const val TAG = "EventFragment"
+
 class EventFragment : Fragment() {
     private lateinit var viewModel: EventViewModel
     private lateinit var eventAdapter: EventAdapter

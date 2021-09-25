@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -58,9 +56,7 @@
                     android:id="@+id/description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/body1"
-                    tools:maxLines="5"
-                    tools:text="@tools:sample/lorem/random" />
+                    android:textAppearance="@style/body1" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
@@ -88,8 +84,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_small"
-                            android:textAppearance="@style/heading1"
-                            tools:text="Rs. 7L-9L per annum" />
+                            android:textAppearance="@style/heading1" />
 
                         <TextView
                             android:layout_width="match_parent"

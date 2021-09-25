@@ -1,7 +1,6 @@
 package com.mstc.mstcapp.ui.resources.resource
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.mstc.mstcapp.databinding.FragmentSwipeRecyclerBinding
 import com.mstc.mstcapp.model.Result
 import com.mstc.mstcapp.model.resource.Resource
@@ -56,7 +54,6 @@ class ResourceFragment(val domain: String) : Fragment() {
                                 swipeRefreshLayout.isRefreshing = false
                             }
                             else -> {
-                                Log.i(TAG, "onActivityCreated: $result")
                                 errorLayout.visibility = View.VISIBLE
                                 swipeRefreshLayout.isRefreshing = false
                             }

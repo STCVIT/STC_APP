@@ -25,12 +25,11 @@ class BoardMember(
     @SerializedName("_id")
     val id: String,
 ) {
-    override fun toString() = "$name,$position,$link,$phrase"
-
     init {
         phrase = phrase
             .replace("  ", " ")
-            .trim()
+            .trimIndent()
     }
 
+    override fun toString(): String = "$id $photo, $name, $position, $link, $phrase"
 }

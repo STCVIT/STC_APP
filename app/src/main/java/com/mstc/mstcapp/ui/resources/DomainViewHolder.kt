@@ -28,9 +28,7 @@ class DomainViewHolder(
 
     companion object {
         fun create(parent: ViewGroup): DomainViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_domain, parent, false)
-            val binding = ItemDomainBinding.bind(view)
+            val binding = ItemDomainBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             return DomainViewHolder(binding)
         }
     }

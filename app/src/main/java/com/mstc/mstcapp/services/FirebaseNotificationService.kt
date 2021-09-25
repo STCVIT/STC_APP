@@ -55,6 +55,7 @@ class FirebaseNotificationService : FirebaseMessagingService() {
             }
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         //ONLY WHEN APP IS IN FOREGROUND
         Log.i(TAG, "onMessageReceived: " + remoteMessage.data)
@@ -63,14 +64,14 @@ class FirebaseNotificationService : FirebaseMessagingService() {
         if (remoteMessage.from == ("/topics/event")) {
             val map: Map<String, String> = remoteMessage.data
             val date = Date(map["startDate"])
-            val sdf = SimpleDateFormat("dd-MM HH:mm a")
+            val sdf = SimpleDateFormat("E HH:mm a")
             val title = map["title"].toString() + " on " + sdf.format(date)
             val description = map["description"]
             sendTopicNotification(title, description)
         } else if (remoteMessage.from == ("/topics/other")) {
             val map: Map<String, String> = remoteMessage.data
             val date = Date(map["startDate"])
-            val sdf = SimpleDateFormat("dd-MM HH:mm a")
+            val sdf = SimpleDateFormat("E HH:mm a")
             val title = map["title"].toString() + " on " + sdf.format(date)
             val description = map["description"]
             sendOtherNotification(title, description)

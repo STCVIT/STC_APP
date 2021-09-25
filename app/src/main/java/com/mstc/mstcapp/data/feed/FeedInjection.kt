@@ -3,8 +3,8 @@ package com.mstc.mstcapp.data.feed
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import androidx.savedstate.SavedStateRegistryOwner
-import com.mstc.mstcapp.util.RetrofitService
 import com.mstc.mstcapp.ui.home.FeedViewModelFactory
+import com.mstc.mstcapp.util.RetrofitService
 
 
 /**

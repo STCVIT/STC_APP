@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.view.ContextThemeWrapper
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import com.mstc.mstcapp.R
 import com.mstc.mstcapp.databinding.FragmentExploreBinding
 
 class ExploreFragment : Fragment() {
@@ -25,7 +22,7 @@ class ExploreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewPagerAdapter = ViewPagerAdapter(childFragmentManager)
-        binding.apply{
+        binding.apply {
             viewPager.adapter = viewPagerAdapter
             tabLayout.setupWithViewPager(binding.viewPager)
         }

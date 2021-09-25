@@ -90,7 +90,7 @@ class ProjectIdeaFragment : BottomSheetDialogFragment() {
                 throw Error(response.message())
             }
         } catch (e: Exception) {
-            Log.e(TAG, "postData: ", e)
+            e.printStackTrace()
             Toast.makeText(context, "Could not post idea! Try Again", Toast.LENGTH_SHORT).show()
             binding.apply {
                 post.text = getString(R.string.post)

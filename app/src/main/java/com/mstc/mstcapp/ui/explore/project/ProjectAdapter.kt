@@ -7,22 +7,19 @@ import com.mstc.mstcapp.model.explore.Project
 
 class ProjectAdapter : ListAdapter<Project, ProjectViewHolder>(DiffCallback) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProjectViewHolder {
-        return ProjectViewHolder.create(parent)
-    }
-
-    override fun onBindViewHolder(holder: ProjectViewHolder, position: Int) {
-        holder.bind(getItem(position))
-    }
-
     companion object DiffCallback : DiffUtil.ItemCallback<Project>() {
-        override fun areItemsTheSame(oldItem: Project, newItem: Project): Boolean {
-            return oldItem.id == newItem.id
-        }
+        override fun areItemsTheSame(oldItem: Project, newItem: Project): Boolean =
+            oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: Project, newItem: Project): Boolean {
-            return oldItem.title == newItem.title || oldItem.description == newItem.description
-        }
+        override fun areContentsTheSame(oldItem: Project, newItem: Project): Boolean =
+            oldItem.toString() == newItem.toString()
+
     }
-}
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProjectViewHolder =
+        ProjectViewHolder.create(parent)
+
+    override fun onBindViewHolder(holder: ProjectViewHolder, position: Int) =
+        holder.bind(getItem(position))
+
+}

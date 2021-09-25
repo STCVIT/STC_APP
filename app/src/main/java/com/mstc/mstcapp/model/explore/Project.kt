@@ -24,12 +24,16 @@ class Project(
     @SerializedName("_id")
     val id: String,
 
-){
+    ) {
     init {
         description = description
-            .replace("  "," ")
-            .trim()
+            .replace("  ", " ")
+            .trimIndent()
     }
+
     @Ignore
-    var expand:Boolean = false
+    var expand: Boolean = false
+
+    override fun toString(): String = "$id, $title, $description, $link"
+
 }

@@ -21,13 +21,11 @@ class ResourceRepository(
     private val context: Context,
     private val stcDatabase: STCDatabase,
 ) {
-    private val service: RetrofitService by lazy { RetrofitService.create() }
-    private val sharedPreferences: SharedPreferences by lazy {
+    private var service: RetrofitService = RetrofitService.create()
+    private var sharedPreferences: SharedPreferences =
         context.getSharedPreferences(Constants.STC_SHARED_PREFERENCES, MODE_PRIVATE)
-    }
 
-    fun getBoardMembers(forceRefresh: Boolean = false) = liveData {
-        Log.i(TAG, "getBoardMembers: $forceRefresh")
+    fun getBoardMembers() = liveData {
         val disposable = emitSource(
             stcDatabase.databaseDao().getBoardMembers().map {
                 Result.Loading(it)
@@ -42,13 +40,13 @@ class ResourceRepository(
             nextCheck = cal.time.time
         }
         try {
-            if (forceRefresh || (lastChecked == -1L || nextCheck <= Date().time))
+            if (lastChecked == -1L || nextCheck <= Date().time)
                 if (isNetworkAvailable(context)) {
                     fetchBoardMembers()
                     disposable.dispose()
                 }
             emitSource(stcDatabase.databaseDao().getBoardMembers().map {
-                if (it.isNotEmpty()) Result.Success(it)
+                if (it != null && it.isNotEmpty()) Result.Success(it)
                 else Result.Error(NullPointerException("Null"))
             })
         } catch (exception: IOException) {
@@ -64,7 +62,6 @@ class ResourceRepository(
         try {
             val response = service.getBoard()
             if (response.code() == 200 && response.isSuccessful) {
-                Log.d(TAG, "getBoardMembers() returned: ${response.body()}")
                 response.body()?.let {
                     stcDatabase.withTransaction {
                         stcDatabase.databaseDao().clearBoardMembers()
@@ -76,7 +73,7 @@ class ResourceRepository(
                 }
             } else Log.e(TAG, "getBoardMembers: " + response.code())
         } catch (e: Exception) {
-            Log.e(TAG, "fetchBoardMembers: ", e)
+            e.printStackTrace()
         }
     }
 
@@ -142,7 +139,7 @@ class ResourceRepository(
                 disposable.dispose()
             }
             emitSource(stcDatabase.databaseDao().getResources(domain).map {
-                if (it.isNotEmpty()) Result.Success(it)
+                if (it != null && it.isNotEmpty()) Result.Success(it)
                 else Result.Error(NullPointerException("Null"))
             })
         } catch (exception: IOException) {
@@ -166,7 +163,7 @@ class ResourceRepository(
                 disposable.dispose()
             }
             emitSource(stcDatabase.databaseDao().getProjects().map {
-                if (it.isNotEmpty()) Result.Success(it)
+                if (it != null && it.isNotEmpty()) Result.Success(it)
                 else Result.Error(NullPointerException("Null"))
             })
         } catch (exception: IOException) {
@@ -190,7 +187,7 @@ class ResourceRepository(
                 disposable.dispose()
             }
             emitSource(stcDatabase.databaseDao().getEvents().map {
-                if (it.isNotEmpty()) Result.Success(it)
+                if (it != null && it.isNotEmpty()) Result.Success(it)
                 else Result.Error(NullPointerException("Null"))
             })
         } catch (exception: IOException) {
@@ -204,21 +201,17 @@ class ResourceRepository(
 
 
     private suspend fun fetchDetails(domain: String) {
-        try {
-            val response = service.getDetails(domain)
-            if (response.isSuccessful) {
-                Log.d(TAG, "fetchDetails() returned: ${response.body()}")
-                stcDatabase.withTransaction {
-                    response.body()?.let {
-                        stcDatabase.databaseDao().deleteDetails(domain)
-                        stcDatabase.databaseDao().insertDetails(it)
-                        MainActivity.setFetchedData(domain + "_details")
-                    }
+        val response = service.getDetails(domain)
+        if (response.isSuccessful) {
+            Log.d(TAG, "fetchDetails() returned: ${response.body()}")
+            stcDatabase.withTransaction {
+                response.body()?.let {
+                    stcDatabase.databaseDao().deleteDetails(domain)
+                    stcDatabase.databaseDao().insertDetails(it)
+                    MainActivity.setFetchedData(domain + "_details")
                 }
-            } else Log.e(TAG, "fetchDetails: " + response.code())
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+            }
+        } else Log.e(TAG, "fetchDetails: " + response.code())
 
     }
 
@@ -237,7 +230,7 @@ class ResourceRepository(
                 }
             } else Log.e(TAG, "fetchRoadmap: " + response.code())
         } catch (e: Exception) {
-            Log.e(TAG, "fetchRoadmap: ", e)
+            e.printStackTrace()
         }
     }
 
@@ -255,7 +248,7 @@ class ResourceRepository(
                 }
             } else Log.e(TAG, "fetchResources: " + response.code())
         } catch (e: Exception) {
-            Log.e(TAG, "fetchResources: ", e)
+            e.printStackTrace()
         }
     }
 
@@ -273,7 +266,7 @@ class ResourceRepository(
                 }
             } else Log.e(TAG, "fetchProjects: " + response.code())
         } catch (e: Exception) {
-            Log.e(TAG, "fetchResources: ", e)
+            e.printStackTrace()
         }
     }
 
@@ -291,7 +284,7 @@ class ResourceRepository(
                 }
             } else Log.e(TAG, "fetchEvents: " + response.code())
         } catch (e: Exception) {
-            Log.e(TAG, "fetchEvents: ", e)
+            e.printStackTrace()
         }
     }
 
@@ -305,7 +298,7 @@ class ResourceRepository(
         try {
             if (isNetworkAvailable(context)) fetchDetails(domain)
         } catch (e: Exception) {
-            Log.e(TAG, "refreshDetails: ", e)
+            e.printStackTrace()
         }
     }
 

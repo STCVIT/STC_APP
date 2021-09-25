@@ -1,12 +1,15 @@
-package com.mstc.mstcapp.ui.explore.event
+package com.mstc.mstcapp.ui.home
 
 import android.content.res.ColorStateList
 import android.graphics.BitmapFactory
-import android.text.Spannable
 import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Base64
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -14,35 +17,33 @@ import com.mstc.mstcapp.R
 import com.mstc.mstcapp.databinding.ItemEventBinding
 import com.mstc.mstcapp.model.explore.Event
 import com.mstc.mstcapp.util.Functions.Companion.openURL
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-
 
 private const val TAG = "EventViewHolder"
 
 class EventViewHolder(
     private val binding: ItemEventBinding
 ) : RecyclerView.ViewHolder(binding.root) {
-    private val MAX_LINES = 3
 
     fun bind(event: Event) {
         binding.apply {
+            description.text = event.description
             title.text = event.title
-            view.setOnClickListener { openURL(root.context, event.link) }
-            description.post {
-                run {
-                    description.text = event.description
-                    if (description.lineCount > MAX_LINES) {
-                        event.expand = true
-                        collapseDescription(event)
-                        description.setOnClickListener {
-                            event.expand = !event.expand
-                            if (!event.expand) collapseDescription(event)
-                            else expandDescription(event)
+            makeSpan(event)
+            loadImage(event)
+            image.setOnClickListener { openURL(root.context, event.link) }
+            title.setOnClickListener { openURL(root.context, event.link) }
+            constraintLayout.setOnClickListener { openURL(root.context, event.link) }
+            root.apply {
+                setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        when (layoutPosition % 3) {
+                            0 -> R.color.colorTertiaryBlue
+                            1 -> R.color.colorTertiaryRed
+                            else -> R.color.colorTertiaryYellow
                         }
-                    }
-                }
+                    )
+                )
             }
             status.text = event.status
             status.backgroundTintList = ColorStateList.valueOf(
@@ -55,100 +56,100 @@ class EventViewHolder(
                     }
                 )
             )
-            cardView.apply {
-                setCardBackgroundColor(
-                    ContextCompat.getColor(
-                        context,
-                        when (layoutPosition % 3) {
-                            0 -> R.color.colorTertiaryBlue
-                            1 -> R.color.colorTertiaryRed
-                            else -> R.color.colorTertiaryYellow
-                        }
-                    )
-                )
-            }
         }
-        loadImage(event)
     }
 
+    private fun ItemEventBinding.makeSpan(event: Event) {
+        var text = event.description
+        description.post {
+            description.text = text
+            if (description.lineCount > 3 && !event.expand) {
+                val lastCharShown: Int =
+                    description.layout.getLineVisibleEnd(1)
+                text = event.description.substring(0, lastCharShown) + "...more"
+            } else if (event.expand) {
+                text = event.description + "...View Less"
+            }
+            val spannableString = SpannableString(text)
+            val extra = object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    openURL(root.context, event.link)
+                }
 
-    private fun loadImage(event: Event) = runBlocking {
-        binding.apply {
-            launch(Dispatchers.Default) {
-                try {
-                    val decodedString: ByteArray =
-                        Base64.decode(
-                            event.image,
-                            Base64.DEFAULT
-                        )
-                    val picture =
-                        BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
-                    image.setImageBitmap(picture)
-                } catch (e: Exception) {
-                    image.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            image.context,
-                            R.drawable.ic_error
-                        )
-                    )
-                    e.printStackTrace()
+                override fun updateDrawState(ds: TextPaint) {
+                    super.updateDrawState(ds)
+                    ds.isUnderlineText = false
+                    ds.color = ContextCompat.getColor(root.context, R.color.textColorPrimary)
                 }
             }
+            val more = object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    event.expand = !event.expand
+                    makeSpan(event)
+                }
+
+                override fun updateDrawState(ds: TextPaint) {
+                    super.updateDrawState(ds)
+                    ds.isUnderlineText = false
+                    ds.color = ContextCompat.getColor(root.context, R.color.gray)
+                }
+            }
+            val allTextStart = 0
+            val allTextEnd = text.length
+            if (text.contains("...")) {
+                spannableString.setSpan(
+                    more,
+                    text.indexOf("..."),
+                    allTextEnd,
+                    Spanned.SPAN_EXCLUSIVE_INCLUSIVE
+                )
+                spannableString.setSpan(
+                    extra,
+                    allTextStart,
+                    text.indexOf("..."),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            } else
+                spannableString.setSpan(
+                    extra,
+                    allTextStart,
+                    allTextEnd,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            description.text = spannableString
+            description.movementMethod = LinkMovementMethod.getInstance()
         }
     }
 
-    private fun collapseDescription(event: Event) {
-        binding.description.apply {
-            val lastCharShown: Int =
-                layout.getLineVisibleEnd(MAX_LINES - 1)
-            val moreString = "...more"
-            val actionDisplayText: String =
-                event.description.substring(
-                    0,
-                    lastCharShown - moreString.length
-                ) + moreString
-            val truncatedSpannableString = SpannableString(actionDisplayText)
-            val startIndex = actionDisplayText.indexOf(moreString)
-            truncatedSpannableString.setSpan(
-                ForegroundColorSpan(
-                    context.getColor(
-                        R.color.gray
+    private fun ItemEventBinding.loadImage(event: Event) {
+        try {
+            image.post {
+                val decodedString: ByteArray =
+                    Base64.decode(
+                        event.image,
+                        Base64.DEFAULT
                     )
-                ),
-                startIndex,
-                startIndex + moreString.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                val picture =
+                    BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+                image.setImageBitmap(picture)
+            }
+        } catch (e: Exception) {
+            image.setImageDrawable(
+                ContextCompat.getDrawable(
+                    image.context,
+                    R.drawable.ic_error
+                )
             )
-            text = truncatedSpannableString
+            e.printStackTrace()
         }
-        event.expand = false
-    }
-
-    private fun expandDescription(event: Event) {
-        binding.description.apply {
-            val suffix = "...View Less"
-            val actionDisplayText =
-                "${event.description}  $suffix"
-            val truncatedSpannableString = SpannableString(actionDisplayText)
-            val startIndex = actionDisplayText.indexOf(suffix)
-            truncatedSpannableString.setSpan(
-                ForegroundColorSpan(
-                    context.getColor(R.color.gray)
-                ),
-                startIndex,
-                startIndex + suffix.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            text = truncatedSpannableString
-        }
-        event.expand = true
     }
 
     companion object {
         fun create(parent: ViewGroup): EventViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_event, parent, false)
-            return EventViewHolder(ItemEventBinding.bind(view))
+            val binding =
+                ItemEventBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return EventViewHolder(binding)
         }
     }
+
 }

@@ -1,7 +1,6 @@
 package com.mstc.mstcapp.ui.resources.details
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,7 +32,6 @@ class DetailsFragment(val domain: String) : Fragment() {
                 run {
                     when (result) {
                         is Result.Loading -> {
-                            Log.i(TAG, "onActivityCreated: $result")
                             swipeRefreshLayout.isRefreshing = true
                             errorLayout.visibility = View.GONE
                             result.data?.let {
@@ -56,7 +54,6 @@ class DetailsFragment(val domain: String) : Fragment() {
                             cardView.visibility = View.VISIBLE
                         }
                         else -> {
-                            Log.e(TAG, "onActivityCreated: $result")
                             errorLayout.visibility = View.VISIBLE
                             swipeRefreshLayout.isRefreshing = false
                             cardView.visibility = View.GONE

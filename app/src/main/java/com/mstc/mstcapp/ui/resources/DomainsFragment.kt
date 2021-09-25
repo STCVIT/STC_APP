@@ -31,7 +31,7 @@ class DomainsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding.recyclerView.apply{
+        binding.recyclerView.apply {
             layoutManager = GridLayoutManager(context, 2)
             init()
             val domainAdapter = DomainAdapter()
@@ -54,7 +54,7 @@ class DomainsFragment : Fragment() {
     private fun viewResource(domain: Domain) {
         val bundle = Bundle()
         bundle.putSerializable("domain", domain)
-        bundle.putString("key","iuwh8291712")
+        bundle.putString("key", "iuwh8291712")
         NavHostFragment.findNavController(this@DomainsFragment)
             .navigate(
                 R.id.action_navigation_resources_to_navigation_view_resource_activity,
@@ -76,7 +76,7 @@ class DomainsFragment : Fragment() {
             /**
              *  ADD A NEW RESOURCE HERE
              *
-             * To add a new domain, create a new object of [Domain] with the following parameters
+             * To add a new domain, create a new object of Domain with the following parameters
              * domain - Same name as in backend
              * drawable - The drawable resource file to display in the list and in collapsing toolbar
              * style - Since this app uses 3 tertiary colors

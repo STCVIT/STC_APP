@@ -2,7 +2,6 @@ package com.mstc.mstcapp
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -35,12 +34,12 @@ class ViewResourceActivity : AppCompatActivity() {
         binding.apply {
             setSupportActionBar(toolbar)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportActionBar?.setHomeAsUpIndicator(
-                ContextCompat.getDrawable(
-                    context,
-                    R.drawable.ic_back
-                )
-            )
+//            supportActionBar?.setHomeAsUpIndicator(
+//                ContextCompat.getDrawable(
+//                    context,
+//                    R.drawable.ic_back
+//                )
+//            )
             toolbarTitle.text = domainModel.domain.uppercase(Locale.getDefault())
             toolbarImage.setImageDrawable(
                 ContextCompat.getDrawable(
@@ -48,12 +47,10 @@ class ViewResourceActivity : AppCompatActivity() {
                     domainModel.drawable
                 )
             )
-            Log.i(TAG, "onCreate: ${toolbar.title}  , ${collapsingToolbarLayout.title}")
             appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
                 when {
                     verticalOffset == 0 -> {
                         if (state != State.EXPANDED) {
-                            Log.d(TAG, "Expanded")
                             toolbarImage.animation = AnimationUtils.loadAnimation(
                                 this@ViewResourceActivity,
                                 android.R.anim.fade_in
@@ -67,14 +64,10 @@ class ViewResourceActivity : AppCompatActivity() {
                         state = State.EXPANDED
                     }
                     abs(verticalOffset) >= appBarLayout.totalScrollRange -> {
-                        if (state != State.COLLAPSED) {
-                            Log.d(TAG, "Collapsed")
-                        }
                         state = State.COLLAPSED
                     }
                     else -> {
                         if (state != State.IDLE) {
-                            Log.d(TAG, "Idle")
                             toolbarImage.animation = AnimationUtils.loadAnimation(
                                 this@ViewResourceActivity,
                                 android.R.anim.fade_out

@@ -1,6 +1,5 @@
 package com.mstc.mstcapp.ui.loadState
 
-import android.util.Log
 import android.view.ViewGroup
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
@@ -11,11 +10,8 @@ class LoadStateAdapter(
     private val retry: () -> Unit,
 ) : LoadStateAdapter<LoadStateViewHolder>() {
     override fun onBindViewHolder(holder: LoadStateViewHolder, loadState: LoadState) {
-        if (loadState is LoadState.Error && loadState.error.message.toString() == "HTTP 404 Not Found") {
-            Log.e(TAG, "onBindViewHolder: End Reached")
+        if (loadState is LoadState.Error && loadState.error.message.toString() == "HTTP 404 Not Found")
             return
-        }
-        Log.e(TAG, "onBindViewHolder: binding load state")
         holder.bind(loadState)
     }
 

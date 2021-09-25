@@ -16,11 +16,11 @@
             android:pivotY="50%" />
     </item>
 
-<!--    <item android:gravity="center">-->
-<!--        <animated-rotate-->
-<!--            android:drawable="@drawable/ic_inner_circle"-->
-<!--            android:pivotX="50%"-->
-<!--            android:pivotY="50%" />-->
-<!--    </item>-->
+    <!--    <item android:gravity="center">-->
+    <!--        <animated-rotate-->
+    <!--            android:drawable="@drawable/ic_inner_circle"-->
+    <!--            android:pivotX="50%"-->
+    <!--            android:pivotY="50%" />-->
+    <!--    </item>-->
 
 </layer-list>

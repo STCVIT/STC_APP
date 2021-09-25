@@ -12,6 +12,8 @@ import com.mstc.mstcapp.databinding.ActivityWelcomeBinding
 import com.mstc.mstcapp.ui.WelcomeFragment
 import com.mstc.mstcapp.util.Constants
 
+private const val TAG = "WelcomeActivity"
+
 class WelcomeActivity : AppCompatActivity() {
     private val context: Context = this
 
@@ -66,8 +68,9 @@ class WelcomeActivity : AppCompatActivity() {
 
     private inner class WelcomePagerAdapter(fragmentManager: FragmentManager) :
         FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        private val NUM_PAGES: Int = 3
 
-        override fun getCount(): Int = 3
+        override fun getCount(): Int = NUM_PAGES
 
         override fun getItem(position: Int): Fragment = WelcomeFragment(position)
 

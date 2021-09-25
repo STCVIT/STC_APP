@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -14,8 +13,6 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.play.core.review.ReviewManagerFactory
-import com.google.android.play.core.tasks.Task
 import com.mstc.mstcapp.databinding.ActivityMainBinding
 import com.mstc.mstcapp.util.Constants
 import com.mstc.mstcapp.util.Functions.Companion.openURL
@@ -121,28 +118,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun feedback() {
-        val manager = ReviewManagerFactory.create(context)
-        val request = manager.requestReviewFlow()
-        request.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                // We got the ReviewInfo object
-                val reviewInfo = task.result
-                val flow: Task<Void> = manager.launchReviewFlow(this, reviewInfo)
-                flow.addOnCompleteListener { task1 ->
-                    if (task1.isSuccessful) Log.i(TAG, "feedback: task completed")
-                    else {
-                        Log.i(TAG, "feedback1->task1: ${task1.exception}")
-                        reviewDialog()
-                    }
-                }
-            } else {
-                Log.i(TAG, "feedback: ${task.exception}")
-                reviewDialog()
-            }
-        }
-    }
-
-    private fun reviewDialog() {
         MaterialAlertDialogBuilder(this)
             .setTitle("Give us a feedback")
             .setMessage("This will redirect you to Google Play Store")

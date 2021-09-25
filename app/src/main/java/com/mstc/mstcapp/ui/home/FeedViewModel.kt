@@ -1,6 +1,5 @@
 package com.mstc.mstcapp.ui.home
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -72,7 +71,6 @@ class FeedViewModel(
     }
 
     override fun onCleared() {
-        Log.i(TAG, "onCleared: ")
         savedStateHandle[LAST_SEARCH_QUERY] = state.value.query
         savedStateHandle[LAST_QUERY_SCROLLED] = state.value.lastQueryScrolled
         super.onCleared()

@@ -66,9 +66,11 @@ class FeedRemoteMediator(
                     val prevKey = if (page == FEED_STARTING_PAGE_INDEX) null else page - 1
                     val nextKey = if (endOfPaginationReached) null else page + 1
                     val keys = feeds.map {
-                        FeedRemoteKey(feedId = it.id,
+                        FeedRemoteKey(
+                            feedId = it.id,
                             prevKey = prevKey,
-                            nextKey = nextKey)
+                            nextKey = nextKey
+                        )
                     }
                     feedDatabase.feedKeyDao().insertAll(keys)
                     feedDatabase.feedDao().insertAll(it)

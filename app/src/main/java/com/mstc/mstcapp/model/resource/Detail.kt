@@ -8,7 +8,6 @@ import com.google.gson.annotations.SerializedName
 class Detail(
     @SerializedName("description")
     var description: String,
-
     @SerializedName("domain")
     val domain: String,
 
@@ -18,10 +17,12 @@ class Detail(
     @PrimaryKey
     @SerializedName("_id")
     val id: String,
-){
+) {
     init {
         description = description
-            .replace("  "," ")
-            .trim()
+            .replace("  ", " ")
+            .trimIndent()
     }
+    override fun toString(): String = "$id, $domain, $description, $expectation"
+
 }

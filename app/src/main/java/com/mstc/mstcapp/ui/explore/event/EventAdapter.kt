@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.mstc.mstcapp.model.explore.Event
+import com.mstc.mstcapp.ui.home.EventViewHolder
 
 private const val TAG = "EventAdapter"
 
@@ -15,15 +16,14 @@ class EventAdapter : ListAdapter<Event, EventViewHolder>(DiffCallback) {
 
         override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean =
             oldItem.toString() == newItem.toString()
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder =
         EventViewHolder.create(parent)
 
-    override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: EventViewHolder, position: Int) =
         holder.bind(getItem(position))
-    }
-
 
 }
 

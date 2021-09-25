@@ -17,10 +17,13 @@ class Feed(
 ) {
     init {
         description = description
-            .replace("  "," ")
-            .trim()
+            .replace("  ", " ")
+            .trimIndent()
     }
 
     @Ignore
     var expand: Boolean = false
+
+    override fun toString(): String = "$id, $title, $description, $link"
+
 }

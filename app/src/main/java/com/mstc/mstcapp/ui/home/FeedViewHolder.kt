@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mstc.mstcapp.R
 import com.mstc.mstcapp.databinding.ItemFeedBinding
 import com.mstc.mstcapp.model.Feed
-import com.mstc.mstcapp.util.Functions.Companion.openURL
+import com.mstc.mstcapp.util.Functions
 
 private const val TAG = "FeedViewHolder"
 
@@ -29,9 +29,9 @@ class FeedViewHolder(
             title.text = feed.title
             makeSpan(feed)
             loadImage(feed)
-            image.setOnClickListener { openURL(root.context, feed.link) }
-            title.setOnClickListener { openURL(root.context, feed.link) }
-            constraintLayout.setOnClickListener { openURL(root.context, feed.link) }
+            image.setOnClickListener { Functions.openLinkWithAnimation(root, feed.link) }
+            title.setOnClickListener { Functions.openLinkWithAnimation(root, feed.link) }
+            constraintLayout.setOnClickListener { Functions.openLinkWithAnimation(root, feed.link) }
             root.apply {
                 setCardBackgroundColor(
                     ContextCompat.getColor(
@@ -54,15 +54,13 @@ class FeedViewHolder(
             if (description.lineCount > 3 && !feed.expand) {
                 val lastCharShown: Int =
                     description.layout.getLineVisibleEnd(1)
-                text = feed.description.substring(0, lastCharShown) + "...more"
+                text = feed.description.substring(0, lastCharShown) + "…more"
             } else if (feed.expand) {
-                text = feed.description + "...View Less"
+                text = feed.description + "…View Less"
             }
             val spannableString = SpannableString(text)
             val extra = object : ClickableSpan() {
-                override fun onClick(widget: View) {
-                    openURL(root.context, feed.link)
-                }
+                override fun onClick(widget: View) { Functions.openLinkWithAnimation(root, feed.link) }
 
                 override fun updateDrawState(ds: TextPaint) {
                     super.updateDrawState(ds)
@@ -84,17 +82,17 @@ class FeedViewHolder(
             }
             val allTextStart = 0
             val allTextEnd = text.length
-            if (text.contains("...")) {
+            if (text.contains("…")) {
                 spannableString.setSpan(
                     more,
-                    text.indexOf("..."),
+                    text.indexOf("…"),
                     allTextEnd,
                     Spanned.SPAN_EXCLUSIVE_INCLUSIVE
                 )
                 spannableString.setSpan(
                     extra,
                     allTextStart,
-                    text.indexOf("..."),
+                    text.indexOf("…"),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
             } else

@@ -10,15 +10,9 @@ import com.mstc.mstcapp.databinding.FragmentAboutBinding
 import com.mstc.mstcapp.model.Result
 import com.mstc.mstcapp.model.explore.BoardMember
 
-private const val TAG = "AboutFragment"
+class BoardMemberFragment : Fragment() {
 
-class AboutFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = AboutFragment()
-    }
-
-    private lateinit var memberViewModel: BoardMemberViewModel
+    private lateinit var viewModel: BoardMemberViewModel
     private lateinit var binding: FragmentAboutBinding
     private lateinit var boardMemberAdapter: BoardMemberAdapter
     override fun onCreateView(
@@ -31,11 +25,11 @@ class AboutFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        memberViewModel = ViewModelProvider(this).get(BoardMemberViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(BoardMemberViewModel::class.java)
         boardMemberAdapter = BoardMemberAdapter()
         binding.apply {
             recyclerView.adapter = boardMemberAdapter
-            memberViewModel.getBoard()
+            viewModel.getBoard()
                 .observe(viewLifecycleOwner, { result ->
                     run {
                         when (result) {
@@ -61,10 +55,10 @@ class AboutFragment : Fragment() {
                         }
                     }
                 })
-            retryButton.setOnClickListener { memberViewModel.refreshBoard() }
+            retryButton.setOnClickListener { viewModel.refreshBoard() }
 
             swipeRefreshLayout.setOnRefreshListener {
-                memberViewModel.refreshBoard()
+                viewModel.refreshBoard()
                 swipeRefreshLayout.isRefreshing = false
             }
         }

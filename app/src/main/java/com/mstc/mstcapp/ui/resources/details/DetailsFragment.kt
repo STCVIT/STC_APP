@@ -10,8 +10,6 @@ import com.mstc.mstcapp.databinding.FragmentDetailsBinding
 import com.mstc.mstcapp.model.Result
 import com.mstc.mstcapp.model.resource.Detail
 
-private const val TAG = "DetailsFragment"
-
 class DetailsFragment(val domain: String) : Fragment() {
     private lateinit var binding: FragmentDetailsBinding
     private lateinit var viewModel: DetailsViewModel

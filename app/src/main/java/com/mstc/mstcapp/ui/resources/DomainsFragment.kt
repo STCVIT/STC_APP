@@ -5,8 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.navigation.fragment.findNavController
 import com.mstc.mstcapp.R
 import com.mstc.mstcapp.databinding.FragmentResourcesBinding
 import com.mstc.mstcapp.model.Domain
@@ -29,11 +28,16 @@ class DomainsFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        binding.recyclerView.apply {
-            layoutManager = GridLayoutManager(context, 2)
-            init()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        init()
+        binding.apply {
+            bindRecyclerView()
+        }
+    }
+
+    private fun FragmentResourcesBinding.bindRecyclerView() {
+        recyclerView.apply {
             val domainAdapter = DomainAdapter()
             domainAdapter.submitList(list)
             adapter = domainAdapter
@@ -52,14 +56,11 @@ class DomainsFragment : Fragment() {
     }
 
     private fun viewResource(domain: Domain) {
-        val bundle = Bundle()
-        bundle.putSerializable("domain", domain)
-        bundle.putString("key", "iuwh8291712")
-        NavHostFragment.findNavController(this@DomainsFragment)
-            .navigate(
-                R.id.action_navigation_resources_to_navigation_view_resource_activity,
-                bundle
+        findNavController().navigate(
+            DomainsFragmentDirections.actionNavigationResourcesToNavigationViewResourceActivity(
+                domain
             )
+        )
     }
 
     private fun init() {
@@ -76,11 +77,12 @@ class DomainsFragment : Fragment() {
             /**
              *  ADD A NEW RESOURCE HERE
              *
-             * To add a new domain, create a new object of Domain with the following parameters
+             * To add a new domain, create a new object of [Domain] with the following parameters
              * domain - Same name as in backend
              * drawable - The drawable resource file to display in the list and in collapsing toolbar
              * style - Since this app uses 3 tertiary colors
              * @see Domain
+             * @sample Domain("domain_name", drawable_resource, style[1/2/3])
              *
              * <i>This is the only place you have to add a domain</i>
              **/

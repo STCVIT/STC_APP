@@ -23,6 +23,6 @@ class BoardMemberViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     fun refreshBoard() {
-        viewModelScope.launch { repository.getBoardMembers() }
+        viewModelScope.launch { repository.refreshBoard() }
     }
 }

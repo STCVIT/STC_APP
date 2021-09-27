@@ -26,8 +26,7 @@ class FeedAdapter : PagingDataAdapter<Feed, FeedViewHolder>(UIMODEL_COMPARATOR) 
             holder.bind(feed)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder {
-        return FeedViewHolder.create(parent)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder =
+        FeedViewHolder.create(parent)
 }
 

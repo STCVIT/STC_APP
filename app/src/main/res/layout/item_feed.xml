@@ -10,10 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/image"
@@ -32,8 +29,8 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_medium"
-            android:paddingHorizontal="@dimen/margin_medium"
             android:textAppearance="@style/heading1"
             app:layout_constraintBottom_toTopOf="@+id/description"
             app:layout_constraintEnd_toEndOf="parent"
@@ -45,14 +42,14 @@
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_small"
             android:layout_marginBottom="@dimen/margin_medium"
-            android:paddingHorizontal="@dimen/margin_medium"
             android:textAppearance="@style/body1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title"
-            tools:text="@string/placeholder_text_long" />
+            tools:text="@tools:sample/lorem/random" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

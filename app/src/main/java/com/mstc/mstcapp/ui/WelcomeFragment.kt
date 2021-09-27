@@ -18,6 +18,7 @@ class WelcomeFragment(val position: Int) : Fragment() {
         R.drawable.ic_onboarding_2,
         R.drawable.ic_onboarding_3
     )
+
     private val texts = intArrayOf(
         R.string.on_boarding_1,
         R.string.on_boarding_2,
@@ -35,12 +36,14 @@ class WelcomeFragment(val position: Int) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.textView.text = getString(texts[position])
-        binding.imageView.setImageDrawable(
-            ContextCompat.getDrawable(
-                requireContext(),
-                images[position]
+        binding.apply {
+            textView.text = getString(texts[position])
+            imageView.setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    images[position]
+                )
             )
-        )
+        }
     }
 }

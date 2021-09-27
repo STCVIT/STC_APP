@@ -9,7 +9,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.mstc.mstcapp.R
 import com.mstc.mstcapp.databinding.ItemBoardMemberBinding
 import com.mstc.mstcapp.model.explore.BoardMember
-import com.mstc.mstcapp.util.Functions.Companion.openURL
+import com.mstc.mstcapp.util.Functions
 
 class BoardMemberViewHolder(private val binding: ItemBoardMemberBinding) :
     RecyclerView.ViewHolder(binding.root) {
@@ -19,7 +19,9 @@ class BoardMemberViewHolder(private val binding: ItemBoardMemberBinding) :
             name.text = boardMember.name
             position.text = boardMember.position
             phrase.text = boardMember.phrase
-            root.setOnClickListener { openURL(root.context, boardMember.link) }
+            root.setOnClickListener {
+                Functions.openLinkWithAnimation(root, boardMember.link)
+            }
             cardView.setCardBackgroundColor(
                 ContextCompat.getColor(
                     root.context,

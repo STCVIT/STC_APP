@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mstc.mstcapp.databinding.ItemResourceBinding
 import com.mstc.mstcapp.model.resource.Resource
 import com.mstc.mstcapp.util.Constants
-import com.mstc.mstcapp.util.Functions.Companion.openURL
+import com.mstc.mstcapp.util.Functions.Companion.openLinkWithAnimation
 
 class ResourceViewHolder(
     private val binding: ItemResourceBinding
@@ -18,7 +18,7 @@ class ResourceViewHolder(
             title.text = resource.title
             description.text = resource.description
             share.setOnClickListener { shareResource(resource.title, resource.link) }
-            root.setOnClickListener { openURL(root.context, resource.link) }
+            root.setOnClickListener { openLinkWithAnimation(root, resource.link) }
         }
     }
 
@@ -41,7 +41,8 @@ class ResourceViewHolder(
 
     companion object {
         fun create(parent: ViewGroup): ResourceViewHolder {
-            val binding = ItemResourceBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            val binding =
+                ItemResourceBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             return ResourceViewHolder(binding)
         }
     }

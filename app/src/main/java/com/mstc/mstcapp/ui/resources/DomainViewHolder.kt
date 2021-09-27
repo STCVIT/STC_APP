@@ -1,5 +1,6 @@
 package com.mstc.mstcapp.ui.resources
 
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.view.ContextThemeWrapper
@@ -23,12 +24,27 @@ class DomainViewHolder(
                 R.drawable.bg_resource,
                 ContextThemeWrapper(root.context, item.style).theme
             )
+            root.apply {
+                setOnClickListener {
+                    foreground = ColorDrawable(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.colorHighlight
+                        )
+                    )
+                    postDelayed({
+                        foreground = null
+                        invalidate()
+                    }, 100)
+                }
+            }
         }
     }
 
     companion object {
         fun create(parent: ViewGroup): DomainViewHolder {
-            val binding = ItemDomainBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            val binding =
+                ItemDomainBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             return DomainViewHolder(binding)
         }
     }

@@ -19,18 +19,22 @@
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/colorTertiaryRed">
 
         <TextView
             android:id="@+id/domain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginHorizontal="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_medium"
             android:textAllCaps="true"
             android:textAppearance="@style/heading1"
             android:textSize="14sp"
-            tools:text="@string/domain" />
+            tools:text="@tools:sample/full_names" />
 
         <ImageView
             android:id="@+id/image"
@@ -42,6 +46,4 @@
             android:contentDescription="@string/domain"
             tools:src="@drawable/ic_app_dev" />
     </RelativeLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

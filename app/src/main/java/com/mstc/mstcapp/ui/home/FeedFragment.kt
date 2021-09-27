@@ -136,18 +136,7 @@ class FeedFragment : Fragment() {
                 // Show the retry state if initial load or refresh fails.
                 errorLayout.isVisible =
                     loadState.mediator?.refresh is LoadState.Error && feedAdapter.itemCount == 0
-                // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
-//                val errorState = loadState.source.append as? LoadState.Error
-//                    ?: loadState.source.prepend as? LoadState.Error
-//                    ?: loadState.append as? LoadState.Error
-//                    ?: loadState.prepend as? LoadState.Error
-//                errorState?.let {
-//                    Toast.makeText(
-//                        requireContext(),
-//                        "\uD83D\uDE28 Wooops ${it.error}",
-//                        Toast.LENGTH_LONG
-//                    ).show()
-//                }
+
             }
         }
     }

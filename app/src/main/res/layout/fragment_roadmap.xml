@@ -29,7 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_medium"
-                    android:text="Unable to fetch data! Please check your internet connection..."
+                    android:text="@string/error_text"
                     android:textAlignment="center"
                     android:textAppearance="@style/body1" />
 

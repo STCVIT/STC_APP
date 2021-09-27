@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mstc.mstcapp.R
 import com.mstc.mstcapp.databinding.ItemEventBinding
 import com.mstc.mstcapp.model.explore.Event
-import com.mstc.mstcapp.util.Functions.Companion.openURL
+import com.mstc.mstcapp.util.Functions
 
 private const val TAG = "EventViewHolder"
 
@@ -30,9 +30,9 @@ class EventViewHolder(
             title.text = event.title
             makeSpan(event)
             loadImage(event)
-            image.setOnClickListener { openURL(root.context, event.link) }
-            title.setOnClickListener { openURL(root.context, event.link) }
-            constraintLayout.setOnClickListener { openURL(root.context, event.link) }
+            image.setOnClickListener { Functions.openLinkWithAnimation(root, event.link) }
+            title.setOnClickListener { Functions.openLinkWithAnimation(root, event.link) }
+            constraintLayout.setOnClickListener { Functions.openLinkWithAnimation(root, event.link) }
             root.apply {
                 setCardBackgroundColor(
                     ContextCompat.getColor(
@@ -66,14 +66,14 @@ class EventViewHolder(
             if (description.lineCount > 3 && !event.expand) {
                 val lastCharShown: Int =
                     description.layout.getLineVisibleEnd(1)
-                text = event.description.substring(0, lastCharShown) + "...more"
+                text = event.description.substring(0, lastCharShown) + "…more"
             } else if (event.expand) {
-                text = event.description + "...View Less"
+                text = event.description + "…View Less"
             }
             val spannableString = SpannableString(text)
             val extra = object : ClickableSpan() {
                 override fun onClick(widget: View) {
-                    openURL(root.context, event.link)
+                    Functions.openLinkWithAnimation(root, event.link)
                 }
 
                 override fun updateDrawState(ds: TextPaint) {
@@ -96,17 +96,17 @@ class EventViewHolder(
             }
             val allTextStart = 0
             val allTextEnd = text.length
-            if (text.contains("...")) {
+            if (text.contains("…")) {
                 spannableString.setSpan(
                     more,
-                    text.indexOf("..."),
+                    text.indexOf("…"),
                     allTextEnd,
                     Spanned.SPAN_EXCLUSIVE_INCLUSIVE
                 )
                 spannableString.setSpan(
                     extra,
                     allTextStart,
-                    text.indexOf("..."),
+                    text.indexOf("…"),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
             } else

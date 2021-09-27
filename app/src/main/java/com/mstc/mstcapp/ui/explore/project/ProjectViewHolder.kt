@@ -17,7 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.mstc.mstcapp.R
 import com.mstc.mstcapp.databinding.ItemProjectBinding
 import com.mstc.mstcapp.model.explore.Project
-import com.mstc.mstcapp.util.Functions.Companion.openURL
+import com.mstc.mstcapp.util.Functions
 import com.mstc.mstcapp.util.ImageWrap
 
 
@@ -69,7 +69,7 @@ class ProjectViewHolder(
                     )
                 )
             }
-            relativeLayout.setOnClickListener { openURL(root.context, project.link) }
+            relativeLayout.setOnClickListener { Functions.openLinkWithAnimation(relativeLayout, project.link) }
         }
     }
 
@@ -79,9 +79,9 @@ class ProjectViewHolder(
         if (details.lineCount > 3 && !project.expand) {
             val lastCharShown: Int =
                 details.layout.getLineVisibleEnd(1)
-            text = project.description.substring(0, lastCharShown) + "...more"
+            text = project.description.substring(0, lastCharShown) + "…more"
         } else if (project.expand) {
-            text = project.description + "...View Less"
+            text = project.description + "…View Less"
         }
         val spannableString = SpannableString(text)
 
@@ -97,9 +97,7 @@ class ProjectViewHolder(
 
         val span = ImageWrap(lines - 1, finalWidth)
         val extra = object : ClickableSpan() {
-            override fun onClick(widget: View) {
-                openURL(root.context, project.link)
-            }
+            override fun onClick(widget: View) { Functions.openLinkWithAnimation(relativeLayout, project.link) }
 
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
@@ -124,17 +122,17 @@ class ProjectViewHolder(
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
-        if (text.contains("...")) {
+        if (text.contains("…")) {
             spannableString.setSpan(
                 more,
-                text.indexOf("..."),
+                text.indexOf("…"),
                 allTextEnd,
                 Spanned.SPAN_EXCLUSIVE_INCLUSIVE
             )
             spannableString.setSpan(
                 extra,
                 allTextStart,
-                text.indexOf("..."),
+                text.indexOf("…"),
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
         } else
@@ -148,6 +146,7 @@ class ProjectViewHolder(
         details.text = spannableString
         details.movementMethod = LinkMovementMethod.getInstance()
     }
+
 
     companion object {
         fun create(parent: ViewGroup): ProjectViewHolder {

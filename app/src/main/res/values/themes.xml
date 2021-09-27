@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme.STC" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -8,7 +8,7 @@
         <item name="android:alertDialogTheme">@style/AlertDialog</item>
         <item name="android:statusBarColor">#2025CB</item>
         <item name="android:windowLightStatusBar">false</item>
-        <item name="android:colorControlHighlight">#F0F1FF</item>
+        <item name="android:colorControlHighlight">@color/colorHighlight</item>
     </style>
 
     <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -29,6 +29,9 @@
     <style name="heading1" parent="TextAppearance.AppCompat.Headline">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:fontFamily">@font/dm_sans</item>
+        <item name="fontWeight">500</item>
+        <item name="android:fontWeight" tools:targetApi="o">500</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -62,13 +65,11 @@
         <item name="android:layout_marginBottom">@dimen/margin_small</item>
         <item name="android:layout_marginLeft">@dimen/margin_medium</item>
         <item name="android:layout_marginRight">@dimen/margin_medium</item>
-
         <item name="cardCornerRadius">@dimen/corner_radius</item>
         <item name="cardElevation">0dp</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
-        <item name="android:foreground">?android:attr/selectableItemBackground</item>
-        <item name="cardBackgroundColor">@color/colorTertiaryBlue</item>
+        <!--        <item name="android:foreground">?attr/selectableItemBackground</item>-->
     </style>
 
     <style name="resources_red">
@@ -96,9 +97,10 @@
         <item name="color_salary_card">#FFF7EB</item>
     </style>
 
-    <style name="ExpandedToolbarTitle" parent="Theme.STC">
+    <style name="ExpandedToolbarTitle" parent="heading1">
         <item name="android:textColor">@android:color/transparent</item>
         <item name="android:textSize">0sp</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="drawer_item" parent="Widget.MaterialComponents.TextView">
@@ -112,6 +114,5 @@
         <item name="android:textAppearance">@style/body1</item>
         <item name="drawableEndCompat">@drawable/ic_arrow</item>
     </style>
-
 
 </resources>

@@ -23,6 +23,6 @@ class EventViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun refreshEvents() {
-        viewModelScope.launch { repository.getEvents() }
+        viewModelScope.launch { repository.refreshEvents() }
     }
 }

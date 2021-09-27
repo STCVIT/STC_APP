@@ -7,14 +7,13 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.navigation.navArgs
 import com.google.android.material.appbar.AppBarLayout
 import com.mstc.mstcapp.databinding.ActivityViewResourceBinding
 import com.mstc.mstcapp.model.Domain
 import com.mstc.mstcapp.ui.resources.ViewPagerAdapter
 import java.util.*
 import kotlin.math.abs
-
-private const val TAG = "ViewResourceActivity"
 
 private enum class State {
     EXPANDED, COLLAPSED, IDLE
@@ -24,65 +23,16 @@ class ViewResourceActivity : AppCompatActivity() {
     private val context: Context = this
     lateinit var binding: ActivityViewResourceBinding
     private lateinit var domainModel: Domain
+    private val safeArgs: ViewResourceActivityArgs by navArgs()
     private var state: State? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        domainModel = intent.getSerializableExtra("domain") as Domain
+        domainModel = safeArgs.domain
         setTheme(domainModel.style)
         binding = ActivityViewResourceBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.apply {
-            setSupportActionBar(toolbar)
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//            supportActionBar?.setHomeAsUpIndicator(
-//                ContextCompat.getDrawable(
-//                    context,
-//                    R.drawable.ic_back
-//                )
-//            )
-            toolbarTitle.text = domainModel.domain.uppercase(Locale.getDefault())
-            toolbarImage.setImageDrawable(
-                ContextCompat.getDrawable(
-                    context,
-                    domainModel.drawable
-                )
-            )
-            appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
-                when {
-                    verticalOffset == 0 -> {
-                        if (state != State.EXPANDED) {
-                            toolbarImage.animation = AnimationUtils.loadAnimation(
-                                this@ViewResourceActivity,
-                                android.R.anim.fade_in
-                            )
-                            toolbarImage.postOnAnimation {
-                                toolbarImage.visibility = View.VISIBLE
-                                toolbarTitle.visibility = View.VISIBLE
-                                toolbarDescription.visibility = View.VISIBLE
-                            }
-                        }
-                        state = State.EXPANDED
-                    }
-                    abs(verticalOffset) >= appBarLayout.totalScrollRange -> {
-                        state = State.COLLAPSED
-                    }
-                    else -> {
-                        if (state != State.IDLE) {
-                            toolbarImage.animation = AnimationUtils.loadAnimation(
-                                this@ViewResourceActivity,
-                                android.R.anim.fade_out
-                            )
-                            toolbarImage.postOnAnimation {
-                                toolbarImage.visibility = View.INVISIBLE
-                                toolbarTitle.visibility = View.INVISIBLE
-                                toolbarDescription.visibility = View.INVISIBLE
-                            }
-                        }
-                        state = State.IDLE
-                    }
-                }
-            })
-        }
+        binding.bindAppBar()
         showData()
     }
 
@@ -97,6 +47,53 @@ class ViewResourceActivity : AppCompatActivity() {
             tabLayout.setupWithViewPager(binding.viewPager)
             collapsingToolbarLayout.title = domainModel.domain.uppercase(Locale.getDefault())
         }
+    }
+
+    private fun ActivityViewResourceBinding.bindAppBar(){
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbarTitle.text = domainModel.domain.uppercase(Locale.getDefault())
+        toolbarImage.setImageDrawable(
+            ContextCompat.getDrawable(
+                context,
+                domainModel.drawable
+            )
+        )
+        appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+            when {
+                verticalOffset == 0 -> {
+                    if (state != State.EXPANDED) {
+                        toolbarImage.animation = AnimationUtils.loadAnimation(
+                            this@ViewResourceActivity,
+                            android.R.anim.fade_in
+                        )
+                        toolbarImage.postOnAnimation {
+                            toolbarImage.visibility = View.VISIBLE
+                            toolbarTitle.visibility = View.VISIBLE
+                            toolbarDescription.visibility = View.VISIBLE
+                        }
+                    }
+                    state = State.EXPANDED
+                }
+                abs(verticalOffset) >= appBarLayout.totalScrollRange -> {
+                    state = State.COLLAPSED
+                }
+                else -> {
+                    if (state != State.IDLE) {
+                        toolbarImage.animation = AnimationUtils.loadAnimation(
+                            this@ViewResourceActivity,
+                            android.R.anim.fade_out
+                        )
+                        toolbarImage.postOnAnimation {
+                            toolbarImage.visibility = View.INVISIBLE
+                            toolbarTitle.visibility = View.INVISIBLE
+                            toolbarDescription.visibility = View.INVISIBLE
+                        }
+                    }
+                    state = State.IDLE
+                }
+            }
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

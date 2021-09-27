@@ -24,6 +24,4 @@ class EventAdapter : ListAdapter<Event, EventViewHolder>(DiffCallback) {
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) =
         holder.bind(getItem(position))
-
 }
-

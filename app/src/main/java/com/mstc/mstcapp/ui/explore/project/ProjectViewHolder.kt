@@ -1,6 +1,7 @@
 package com.mstc.mstcapp.ui.explore.project
 
 import android.graphics.Rect
+import android.graphics.Typeface
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
@@ -69,7 +70,12 @@ class ProjectViewHolder(
                     )
                 )
             }
-            relativeLayout.setOnClickListener { Functions.openLinkWithAnimation(relativeLayout, project.link) }
+            relativeLayout.setOnClickListener {
+                Functions.openLinkWithAnimation(
+                    relativeLayout,
+                    project.link
+                )
+            }
         }
     }
 
@@ -86,7 +92,7 @@ class ProjectViewHolder(
         val spannableString = SpannableString(text)
 
         val allTextStart = 0
-        val allTextEnd = text.length - 1
+        val allTextEnd = text.length
 
         val lines: Int
         val bounds = Rect()
@@ -97,7 +103,9 @@ class ProjectViewHolder(
 
         val span = ImageWrap(lines - 1, finalWidth)
         val extra = object : ClickableSpan() {
-            override fun onClick(widget: View) { Functions.openLinkWithAnimation(relativeLayout, project.link) }
+            override fun onClick(widget: View) {
+                Functions.openLinkWithAnimation(relativeLayout, project.link)
+            }
 
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
@@ -113,6 +121,7 @@ class ProjectViewHolder(
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
                 ds.isUnderlineText = false
+                ds.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
             }
         }
         spannableString.setSpan(
@@ -125,14 +134,14 @@ class ProjectViewHolder(
         if (text.contains("…")) {
             spannableString.setSpan(
                 more,
-                text.indexOf("…"),
+                text.indexOf("…") + 1,
                 allTextEnd,
                 Spanned.SPAN_EXCLUSIVE_INCLUSIVE
             )
             spannableString.setSpan(
                 extra,
                 allTextStart,
-                text.indexOf("…"),
+                text.indexOf("…") + 1,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
         } else

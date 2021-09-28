@@ -1,6 +1,7 @@
 package com.mstc.mstcapp.ui.home
 
 import android.graphics.BitmapFactory
+import android.graphics.Typeface
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
@@ -60,7 +61,9 @@ class FeedViewHolder(
             }
             val spannableString = SpannableString(text)
             val extra = object : ClickableSpan() {
-                override fun onClick(widget: View) { Functions.openLinkWithAnimation(root, feed.link) }
+                override fun onClick(widget: View) {
+                    Functions.openLinkWithAnimation(root, feed.link)
+                }
 
                 override fun updateDrawState(ds: TextPaint) {
                     super.updateDrawState(ds)
@@ -78,6 +81,7 @@ class FeedViewHolder(
                     super.updateDrawState(ds)
                     ds.isUnderlineText = false
                     ds.color = ContextCompat.getColor(root.context, R.color.gray)
+                    ds.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
                 }
             }
             val allTextStart = 0
@@ -85,14 +89,14 @@ class FeedViewHolder(
             if (text.contains("…")) {
                 spannableString.setSpan(
                     more,
-                    text.indexOf("…"),
+                    text.indexOf("…") + 1,
                     allTextEnd,
                     Spanned.SPAN_EXCLUSIVE_INCLUSIVE
                 )
                 spannableString.setSpan(
                     extra,
                     allTextStart,
-                    text.indexOf("…"),
+                    text.indexOf("…") + 1,
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
             } else

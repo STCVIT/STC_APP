@@ -70,15 +70,14 @@ class FirebaseNotificationService : FirebaseMessagingService() {
             sendTopicNotification(title, description)
         } else if (remoteMessage.from == ("/topics/other")) {
             val map: Map<String, String> = remoteMessage.data
-            val date = Date(map["startDate"])
-            val sdf = SimpleDateFormat("E HH:mm a")
-            val title = map["title"].toString() + " on " + sdf.format(date)
+            val title = map["title"].toString()
             val description = map["description"]
             sendOtherNotification(title, description)
         }
     }
 
     override fun onDeletedMessages() {}
+
     override fun onNewToken(token: String) {
         Log.d(TAG, "Refreshed token : $token")
     }
@@ -94,9 +93,14 @@ class FirebaseNotificationService : FirebaseMessagingService() {
         val defaultSoundUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder: NotificationCompat.Builder =
             NotificationCompat.Builder(this, EVENT_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_stc_white)
+                .setSmallIcon(R.drawable.ic_stat_name)
                 .setContentTitle(title)
                 .setContentText(messageBody)
+                .setStyle(
+                    NotificationCompat.BigTextStyle()
+                        .setBigContentTitle(title)
+                        .bigText(messageBody)
+                )
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setColor(ContextCompat.getColor(this, R.color.log_bg_color))
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -119,9 +123,14 @@ class FirebaseNotificationService : FirebaseMessagingService() {
         val defaultSoundUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder: NotificationCompat.Builder =
             NotificationCompat.Builder(this, OTHER_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_stc_white)
+                .setSmallIcon(R.drawable.ic_stat_name)
                 .setContentTitle(title)
                 .setContentText(messageBody)
+                .setStyle(
+                    NotificationCompat.BigTextStyle()
+                        .setBigContentTitle(title)
+                        .bigText(messageBody)
+                )
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setColor(ContextCompat.getColor(this, R.color.log_bg_color))
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -130,7 +139,7 @@ class FirebaseNotificationService : FirebaseMessagingService() {
                 .setContentIntent(pendingIntent)
         val notificationManagerCompat: NotificationManagerCompat =
             NotificationManagerCompat.from(this)
-        notificationManagerCompat.notify(0, notificationBuilder.build())
+        notificationManagerCompat.notify((Math.random() * 100).toInt(), notificationBuilder.build())
     }
 
     //ANDROID 8.0 AND ABOVE

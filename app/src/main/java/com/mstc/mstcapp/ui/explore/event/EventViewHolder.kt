@@ -2,6 +2,7 @@ package com.mstc.mstcapp.ui.home
 
 import android.content.res.ColorStateList
 import android.graphics.BitmapFactory
+import android.graphics.Typeface
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
@@ -32,7 +33,12 @@ class EventViewHolder(
             loadImage(event)
             image.setOnClickListener { Functions.openLinkWithAnimation(root, event.link) }
             title.setOnClickListener { Functions.openLinkWithAnimation(root, event.link) }
-            constraintLayout.setOnClickListener { Functions.openLinkWithAnimation(root, event.link) }
+            constraintLayout.setOnClickListener {
+                Functions.openLinkWithAnimation(
+                    root,
+                    event.link
+                )
+            }
             root.apply {
                 setCardBackgroundColor(
                     ContextCompat.getColor(
@@ -92,6 +98,7 @@ class EventViewHolder(
                     super.updateDrawState(ds)
                     ds.isUnderlineText = false
                     ds.color = ContextCompat.getColor(root.context, R.color.gray)
+                    ds.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
                 }
             }
             val allTextStart = 0
@@ -99,14 +106,14 @@ class EventViewHolder(
             if (text.contains("…")) {
                 spannableString.setSpan(
                     more,
-                    text.indexOf("…"),
+                    text.indexOf("…") + 1,
                     allTextEnd,
                     Spanned.SPAN_EXCLUSIVE_INCLUSIVE
                 )
                 spannableString.setSpan(
                     extra,
                     allTextStart,
-                    text.indexOf("…"),
+                    text.indexOf("…") + 1,
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
             } else

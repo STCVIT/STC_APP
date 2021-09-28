@@ -72,7 +72,7 @@ class DomainsFragment : Fragment() {
             Domain("Frontend", R.drawable.ic_frontend, style2),
             Domain("Backend", R.drawable.ic_backend, style3),
             Domain("Design", R.drawable.ic_design, style1),
-            Domain("Machine Learning", R.drawable.ic_ml, style2),
+            Domain("Data Science", R.drawable.ic_ml, style2),
             Domain("Competitive Coding", R.drawable.ic_cc, style3),
             /**
              *  ADD A NEW RESOURCE HERE

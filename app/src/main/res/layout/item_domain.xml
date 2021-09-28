@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_small"
             android:contentDescription="@string/domain"
             tools:src="@drawable/ic_app_dev" />
     </RelativeLayout>

@@ -6,19 +6,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.mstc.mstcapp.ui.home.FeedFragment"
+        android:name="in.stcvit.stcapp.ui.home.FeedFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_swipe_recycler" />
 
     <fragment
         android:id="@+id/navigation_explore"
-        android:name="com.mstc.mstcapp.ui.explore.ExploreFragment"
+        android:name="in.stcvit.stcapp.ui.explore.ExploreFragment"
         android:label="@string/title_explore"
         tools:layout="@layout/fragment_explore" />
 
     <fragment
         android:id="@+id/navigation_resources"
-        android:name="com.mstc.mstcapp.ui.resources.DomainsFragment"
+        android:name="in.stcvit.stcapp.ui.resources.DomainsFragment"
         android:label="@string/title_resources"
         tools:layout="@layout/fragment_resources">
         <action
@@ -28,17 +28,17 @@
 
     <activity
         android:id="@+id/navigation_view_resource_activity"
-        android:name="com.mstc.mstcapp.ViewResourceActivity"
+        android:name="in.stcvit.stcapp.ViewResourceActivity"
         android:label="View Resources"
         tools:layout="@layout/activity_view_resource">
         <argument
             android:name="domain"
-            app:argType="com.mstc.mstcapp.model.Domain" />
+            app:argType="in.stcvit.stcapp.model.Domain" />
     </activity>
 
     <dialog
         android:id="@+id/projectIdeaDialog"
-        android:name="com.mstc.mstcapp.ui.ProjectIdeaFragment"
+        android:name="in.stcvit.stcapp.ui.ProjectIdeaFragment"
         android:label="ProjectIdeaDialog"
         tools:layout="@layout/dialog_project_idea" />
 </navigation>
